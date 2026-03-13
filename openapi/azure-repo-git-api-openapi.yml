@@ -1,0 +1,2170 @@
+openapi: 3.1.0
+info:
+  title: Azure Repos Git API
+  description: >-
+    REST API for managing Git repositories, branches, commits, pull requests,
+    pushes, and items in Azure Repos. Provides full programmatic control over
+    Git-based source code hosted in Azure DevOps, including creating and
+    reviewing pull requests, managing branches and tags, browsing repository
+    content, and pushing commits.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: https://azure.microsoft.com/en-us/support/legal/
+externalDocs:
+  description: Azure DevOps Git REST API Reference
+  url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+servers:
+  - url: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure DevOps Services
+    variables:
+      organization:
+        description: The name of the Azure DevOps organization
+        default: myorganization
+      project:
+        description: Project ID or project name
+        default: myproject
+security:
+  - oauth2: []
+  - basicAuth: []
+tags:
+  - name: Repositories
+    description: >-
+      Operations for managing Git repositories including creating, listing,
+      updating, and deleting repositories within a project.
+  - name: Pull Requests
+    description: >-
+      Operations for creating, retrieving, updating, and completing pull
+      requests. Includes managing reviewers, labels, and merge options.
+  - name: Commits
+    description: >-
+      Operations for accessing commit details and commit history within
+      a repository, including diffs and changes.
+  - name: Refs
+    description: >-
+      Operations for managing branches and tags (refs) including listing,
+      creating, updating, and deleting refs.
+  - name: Pushes
+    description: >-
+      Operations for listing and creating pushes, which represent one or
+      more commits pushed to a repository branch.
+  - name: Items
+    description: >-
+      Operations for retrieving files, folders, and submodules from a
+      repository. Files are blobs, folders are trees.
+  - name: Pull Request Reviewers
+    description: >-
+      Operations for managing reviewers on pull requests, including adding,
+      removing, and updating reviewer votes.
+  - name: Pull Request Threads
+    description: >-
+      Operations for managing comment threads on pull requests, including
+      creating threads and replying to comments.
+  - name: Stats
+    description: >-
+      Operations for retrieving branch statistics such as commit counts
+      ahead and behind relative to the default branch.
+paths:
+  /git/repositories:
+    get:
+      operationId: repositories_list
+      summary: List repositories
+      description: >-
+        Retrieve all Git repositories in the specified project. Each repository
+        includes its ID, name, default branch, remote URL, SSH URL, and web
+        URL. Optionally include reference links and hidden repositories.
+      tags:
+        - Repositories
+      parameters:
+        - $ref: '#/components/parameters/includeLinks'
+        - name: includeAllUrls
+          in: query
+          description: >-
+            Set to true to include all remote URLs in the response. Defaults
+            to false.
+          schema:
+            type: boolean
+        - name: includeHidden
+          in: query
+          description: >-
+            Set to true to include hidden repositories. Defaults to false.
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successfully retrieved list of repositories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Total number of repositories returned
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitRepository'
+        '401':
+          description: Unauthorized - authentication credentials are missing or invalid
+        '404':
+          description: Project not found
+    post:
+      operationId: repositories_create
+      summary: Create a repository
+      description: >-
+        Create a new Git repository in the specified project. Provide the
+        repository name and optionally a parent repository for forking.
+      tags:
+        - Repositories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: Name of the new repository
+                project:
+                  type: object
+                  description: Project reference for the new repository
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: Project ID
+                parentRepository:
+                  type: object
+                  description: >-
+                    Parent repository reference for creating a fork
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: ID of the parent repository to fork from
+                    project:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+      responses:
+        '201':
+          description: Repository created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepository'
+        '400':
+          description: Bad request - invalid repository name or parameters
+        '401':
+          description: Unauthorized
+        '409':
+          description: Conflict - repository with the same name already exists
+
+  /git/repositories/{repositoryId}:
+    get:
+      operationId: repositories_get
+      summary: Get a repository
+      description: >-
+        Retrieve a specific Git repository by its ID or name. Returns full
+        repository details including default branch, clone URLs, project
+        reference, and size.
+      tags:
+        - Repositories
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+      responses:
+        '200':
+          description: Successfully retrieved repository
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepository'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+    patch:
+      operationId: repositories_update
+      summary: Update a repository
+      description: >-
+        Update a Git repository with a new name or a new default branch.
+        Only the fields provided in the request body are updated.
+      tags:
+        - Repositories
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: New name for the repository
+                defaultBranch:
+                  type: string
+                  description: >-
+                    New default branch reference (e.g., refs/heads/main)
+      responses:
+        '200':
+          description: Repository updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepository'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+    delete:
+      operationId: repositories_delete
+      summary: Delete a repository
+      description: >-
+        Delete a Git repository from the project. This operation is
+        irreversible and removes all branches, commits, and pull requests
+        associated with the repository.
+      tags:
+        - Repositories
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+      responses:
+        '204':
+          description: Repository deleted successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+
+  /git/repositories/{repositoryId}/pullrequests:
+    get:
+      operationId: pullRequests_list
+      summary: List pull requests
+      description: >-
+        Retrieve all pull requests matching specified criteria for a
+        repository. Supports filtering by status, creator, reviewer, source
+        branch, target branch, and time range. The description field is
+        truncated to 400 characters in the result.
+      tags:
+        - Pull Requests
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - name: searchCriteria.status
+          in: query
+          description: >-
+            Filter by pull request status. Defaults to active if unset.
+          schema:
+            type: string
+            enum:
+              - active
+              - abandoned
+              - completed
+              - all
+              - notSet
+        - name: searchCriteria.creatorId
+          in: query
+          description: Filter by the identity ID of the pull request creator
+          schema:
+            type: string
+            format: uuid
+        - name: searchCriteria.reviewerId
+          in: query
+          description: Filter by the identity ID of a reviewer
+          schema:
+            type: string
+            format: uuid
+        - name: searchCriteria.sourceRefName
+          in: query
+          description: >-
+            Filter by source branch name (e.g., refs/heads/feature)
+          schema:
+            type: string
+        - name: searchCriteria.targetRefName
+          in: query
+          description: >-
+            Filter by target branch name (e.g., refs/heads/main)
+          schema:
+            type: string
+        - name: searchCriteria.repositoryId
+          in: query
+          description: Filter by target repository ID
+          schema:
+            type: string
+            format: uuid
+        - name: searchCriteria.sourceRepositoryId
+          in: query
+          description: Filter by source repository ID
+          schema:
+            type: string
+            format: uuid
+        - name: searchCriteria.includeLinks
+          in: query
+          description: Whether to include the _links field on shallow references
+          schema:
+            type: boolean
+        - name: searchCriteria.minTime
+          in: query
+          description: >-
+            Filter pull requests created or closed after this date based
+            on queryTimeRangeType
+          schema:
+            type: string
+            format: date-time
+        - name: searchCriteria.maxTime
+          in: query
+          description: >-
+            Filter pull requests created or closed before this date based
+            on queryTimeRangeType
+          schema:
+            type: string
+            format: date-time
+        - name: searchCriteria.queryTimeRangeType
+          in: query
+          description: >-
+            The type of time range for minTime and maxTime. Defaults to
+            created if unset.
+          schema:
+            type: string
+            enum:
+              - created
+              - closed
+        - name: $top
+          in: query
+          description: Number of pull requests to retrieve
+          schema:
+            type: integer
+            format: int32
+        - name: $skip
+          in: query
+          description: Number of pull requests to skip
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successfully retrieved list of pull requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Total number of pull requests returned
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitPullRequest'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+    post:
+      operationId: pullRequests_create
+      summary: Create a pull request
+      description: >-
+        Create a new pull request in the specified repository. Requires source
+        and target branch references, a title, and optionally a description,
+        reviewers, and work item references.
+      tags:
+        - Pull Requests
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - sourceRefName
+                - targetRefName
+                - title
+              properties:
+                sourceRefName:
+                  type: string
+                  description: >-
+                    Source branch reference (e.g., refs/heads/feature-branch)
+                targetRefName:
+                  type: string
+                  description: >-
+                    Target branch reference (e.g., refs/heads/main)
+                title:
+                  type: string
+                  description: Title of the pull request
+                description:
+                  type: string
+                  description: Description of the pull request
+                isDraft:
+                  type: boolean
+                  description: Whether this is a draft pull request
+                reviewers:
+                  type: array
+                  description: List of reviewers to add
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: Identity ID of the reviewer
+                workItemRefs:
+                  type: array
+                  description: Work items to link to the pull request
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Work item ID
+                      url:
+                        type: string
+                        description: Work item URL
+      responses:
+        '201':
+          description: Pull request created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPullRequest'
+        '400':
+          description: Bad request - invalid branch names or parameters
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+        '409':
+          description: >-
+            Conflict - an active pull request already exists for the same
+            source and target branches
+
+  /git/repositories/{repositoryId}/pullrequests/{pullRequestId}:
+    get:
+      operationId: pullRequests_get
+      summary: Get a pull request
+      description: >-
+        Retrieve a specific pull request by its ID. Returns full pull request
+        details including status, reviewers, merge status, source and target
+        branches, and linked work items.
+      tags:
+        - Pull Requests
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - $ref: '#/components/parameters/pullRequestId'
+      responses:
+        '200':
+          description: Successfully retrieved pull request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPullRequest'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pull request or repository not found
+    patch:
+      operationId: pullRequests_update
+      summary: Update a pull request
+      description: >-
+        Update properties of an existing pull request such as title,
+        description, status (to abandon or reactivate), auto-complete
+        settings, and completion options including merge strategy.
+      tags:
+        - Pull Requests
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - $ref: '#/components/parameters/pullRequestId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Updated title
+                description:
+                  type: string
+                  description: Updated description
+                status:
+                  type: string
+                  enum:
+                    - active
+                    - abandoned
+                    - completed
+                  description: >-
+                    Set to abandoned to close, completed to merge, or active
+                    to reactivate
+                targetRefName:
+                  type: string
+                  description: Updated target branch
+                autoCompleteSetBy:
+                  type: object
+                  description: >-
+                    Set to enable auto-complete. Set to empty object to disable.
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                completionOptions:
+                  $ref: '#/components/schemas/GitPullRequestCompletionOptions'
+      responses:
+        '200':
+          description: Pull request updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPullRequest'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pull request or repository not found
+        '409':
+          description: Conflict - merge conflicts exist
+
+  /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/reviewers:
+    get:
+      operationId: pullRequestReviewers_list
+      summary: List pull request reviewers
+      description: >-
+        Retrieve all reviewers for a specific pull request, including their
+        vote status and whether they are required reviewers.
+      tags:
+        - Pull Request Reviewers
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - $ref: '#/components/parameters/pullRequestId'
+      responses:
+        '200':
+          description: Successfully retrieved reviewers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IdentityRefWithVote'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pull request or repository not found
+
+  /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/reviewers/{reviewerId}:
+    put:
+      operationId: pullRequestReviewers_createOrUpdate
+      summary: Add or update a reviewer
+      description: >-
+        Add a reviewer to a pull request or update an existing reviewer's
+        vote. Vote values are 10 (approved), 5 (approved with suggestions),
+        0 (no vote), -5 (waiting for author), and -10 (rejected).
+      tags:
+        - Pull Request Reviewers
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - $ref: '#/components/parameters/pullRequestId'
+        - name: reviewerId
+          in: path
+          required: true
+          description: ID of the reviewer identity
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IdentityRefWithVote'
+      responses:
+        '200':
+          description: Reviewer added or updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdentityRefWithVote'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pull request or repository not found
+    delete:
+      operationId: pullRequestReviewers_delete
+      summary: Remove a reviewer
+      description: >-
+        Remove a reviewer from a pull request. Required reviewers added by
+        branch policy cannot be removed.
+      tags:
+        - Pull Request Reviewers
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - $ref: '#/components/parameters/pullRequestId'
+        - name: reviewerId
+          in: path
+          required: true
+          description: ID of the reviewer identity to remove
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Reviewer removed successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pull request or repository not found
+
+  /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads:
+    get:
+      operationId: pullRequestThreads_list
+      summary: List pull request threads
+      description: >-
+        Retrieve all comment threads for a pull request. Threads contain
+        comments, code review discussions, and system-generated messages.
+      tags:
+        - Pull Request Threads
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - $ref: '#/components/parameters/pullRequestId'
+      responses:
+        '200':
+          description: Successfully retrieved threads
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitPullRequestCommentThread'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pull request or repository not found
+    post:
+      operationId: pullRequestThreads_create
+      summary: Create a comment thread
+      description: >-
+        Create a new comment thread on a pull request. Threads can be
+        associated with specific file paths and line ranges for inline
+        code review comments.
+      tags:
+        - Pull Request Threads
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - $ref: '#/components/parameters/pullRequestId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitPullRequestCommentThread'
+      responses:
+        '200':
+          description: Thread created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPullRequestCommentThread'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pull request or repository not found
+
+  /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/commits:
+    get:
+      operationId: pullRequestCommits_list
+      summary: List pull request commits
+      description: >-
+        Retrieve the list of commits associated with a pull request.
+        Returns commits from the source branch that are not yet in the
+        target branch.
+      tags:
+        - Pull Requests
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - $ref: '#/components/parameters/pullRequestId'
+      responses:
+        '200':
+          description: Successfully retrieved commits
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitCommitRef'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pull request or repository not found
+
+  /git/repositories/{repositoryId}/commits:
+    get:
+      operationId: commits_list
+      summary: List commits
+      description: >-
+        Retrieve commit history for a repository. Supports filtering by
+        branch, author, date range, item path, and various search criteria.
+        Results are ordered by commit date descending.
+      tags:
+        - Commits
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - name: searchCriteria.itemVersion.version
+          in: query
+          description: >-
+            Branch name or tag to search (e.g., main, develop)
+          schema:
+            type: string
+        - name: searchCriteria.itemVersion.versionType
+          in: query
+          description: Type of version identifier
+          schema:
+            type: string
+            enum:
+              - branch
+              - tag
+              - commit
+        - name: searchCriteria.itemPath
+          in: query
+          description: >-
+            Path of an item to filter commits that changed this path
+          schema:
+            type: string
+        - name: searchCriteria.fromDate
+          in: query
+          description: Start date for filtering commits
+          schema:
+            type: string
+            format: date-time
+        - name: searchCriteria.toDate
+          in: query
+          description: End date for filtering commits
+          schema:
+            type: string
+            format: date-time
+        - name: searchCriteria.author
+          in: query
+          description: Filter by author name or email
+          schema:
+            type: string
+        - name: searchCriteria.$top
+          in: query
+          description: Maximum number of commits to return
+          schema:
+            type: integer
+            format: int32
+        - name: searchCriteria.$skip
+          in: query
+          description: Number of commits to skip
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successfully retrieved commits
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitCommitRef'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+
+  /git/repositories/{repositoryId}/commits/{commitId}:
+    get:
+      operationId: commits_get
+      summary: Get a commit
+      description: >-
+        Retrieve a specific commit by its SHA-1 ID. Returns the full commit
+        details including author, committer, message, parent commits, and
+        optionally the list of changes.
+      tags:
+        - Commits
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - name: commitId
+          in: path
+          required: true
+          description: The SHA-1 hash of the commit
+          schema:
+            type: string
+        - name: changeCount
+          in: query
+          description: Maximum number of changes to include
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successfully retrieved commit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitCommitRef'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Commit or repository not found
+
+  /git/repositories/{repositoryId}/refs:
+    get:
+      operationId: refs_list
+      summary: List refs (branches and tags)
+      description: >-
+        Retrieve all refs (branches and tags) for a repository. Supports
+        filtering by name prefix, peeling tags to their target objects,
+        and including statuses such as build and policy check results.
+      tags:
+        - Refs
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - name: filter
+          in: query
+          description: >-
+            Filter refs by name prefix (e.g., heads/main, tags/v1)
+          schema:
+            type: string
+        - name: includeLinks
+          in: query
+          description: Include reference links in the response
+          schema:
+            type: boolean
+        - name: includeStatuses
+          in: query
+          description: Include status information for each ref
+          schema:
+            type: boolean
+        - name: includeMyBranches
+          in: query
+          description: Include only branches owned by the authenticated user
+          schema:
+            type: boolean
+        - name: peelTags
+          in: query
+          description: >-
+            Annotated tags will populate the PeeledObjectId property
+          schema:
+            type: boolean
+        - name: $top
+          in: query
+          description: Maximum number of refs to return
+          schema:
+            type: integer
+            format: int32
+        - name: continuationToken
+          in: query
+          description: Continuation token for paging through results
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved refs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitRef'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+    post:
+      operationId: refs_update
+      summary: Create, update, or delete refs
+      description: >-
+        Create, update, or delete one or more refs (branches or tags) in a
+        single atomic operation. To create a ref, set oldObjectId to
+        0000000000000000000000000000000000000000. To delete a ref, set
+        newObjectId to 0000000000000000000000000000000000000000.
+      tags:
+        - Refs
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - name
+                  - oldObjectId
+                  - newObjectId
+                properties:
+                  name:
+                    type: string
+                    description: >-
+                      Full ref name (e.g., refs/heads/new-branch)
+                  oldObjectId:
+                    type: string
+                    description: >-
+                      Current object ID of the ref. Use all zeros for creation.
+                  newObjectId:
+                    type: string
+                    description: >-
+                      New object ID for the ref. Use all zeros for deletion.
+      responses:
+        '200':
+          description: Refs updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitRefUpdateResult'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+
+  /git/repositories/{repositoryId}/pushes:
+    get:
+      operationId: pushes_list
+      summary: List pushes
+      description: >-
+        Retrieve a list of pushes to a repository. Each push includes
+        the pusher identity, date, and references to the commits and
+        ref updates included in the push.
+      tags:
+        - Pushes
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - name: $top
+          in: query
+          description: Number of pushes to return
+          schema:
+            type: integer
+            format: int32
+        - name: $skip
+          in: query
+          description: Number of pushes to skip
+          schema:
+            type: integer
+            format: int32
+        - name: searchCriteria.fromDate
+          in: query
+          description: Start date for filtering pushes
+          schema:
+            type: string
+            format: date-time
+        - name: searchCriteria.toDate
+          in: query
+          description: End date for filtering pushes
+          schema:
+            type: string
+            format: date-time
+        - name: searchCriteria.pusherId
+          in: query
+          description: Filter by pusher identity ID
+          schema:
+            type: string
+            format: uuid
+        - name: searchCriteria.refName
+          in: query
+          description: >-
+            Filter by branch name (e.g., refs/heads/main)
+          schema:
+            type: string
+        - name: searchCriteria.includeRefUpdates
+          in: query
+          description: Include ref update details in results
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successfully retrieved pushes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitPush'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+    post:
+      operationId: pushes_create
+      summary: Create a push
+      description: >-
+        Push changes to a repository. A push includes one or more ref
+        updates and associated commits. Used to create branches, push
+        commits, and create initial commits for new repositories.
+      tags:
+        - Pushes
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refUpdates
+                - commits
+              properties:
+                refUpdates:
+                  type: array
+                  description: List of ref updates to apply
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: Full ref name
+                      oldObjectId:
+                        type: string
+                        description: Current commit ID of the ref
+                commits:
+                  type: array
+                  description: List of commits to push
+                  items:
+                    type: object
+                    properties:
+                      comment:
+                        type: string
+                        description: Commit message
+                      changes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            changeType:
+                              type: string
+                              enum:
+                                - add
+                                - edit
+                                - delete
+                                - rename
+                            item:
+                              type: object
+                              properties:
+                                path:
+                                  type: string
+                            newContent:
+                              type: object
+                              properties:
+                                content:
+                                  type: string
+                                contentType:
+                                  type: string
+                                  enum:
+                                    - rawText
+                                    - base64Encoded
+      responses:
+        '201':
+          description: Push created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPush'
+        '400':
+          description: Bad request - invalid push data
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+        '409':
+          description: Conflict - ref has been updated since oldObjectId
+
+  /git/repositories/{repositoryId}/pushes/{pushId}:
+    get:
+      operationId: pushes_get
+      summary: Get a push
+      description: >-
+        Retrieve a specific push by its ID. Returns the push details
+        including commits, ref updates, pusher identity, and date.
+      tags:
+        - Pushes
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - name: pushId
+          in: path
+          required: true
+          description: ID of the push
+          schema:
+            type: integer
+            format: int32
+        - name: includeCommits
+          in: query
+          description: Number of commits to include
+          schema:
+            type: integer
+            format: int32
+        - name: includeRefUpdates
+          in: query
+          description: Include ref update details
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successfully retrieved push
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPush'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Push or repository not found
+
+  /git/repositories/{repositoryId}/items:
+    get:
+      operationId: items_list
+      summary: List items (files and folders)
+      description: >-
+        Get a list of items (files, folders, and submodules) in a repository
+        path. Files are represented as blobs, folders as trees, and
+        submodules as commits.
+      tags:
+        - Items
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - name: scopePath
+          in: query
+          description: >-
+            The path scope for items (e.g., /src or /README.md)
+          schema:
+            type: string
+        - name: recursionLevel
+          in: query
+          description: Level of recursion for folder listing
+          schema:
+            type: string
+            enum:
+              - none
+              - oneLevel
+              - oneLevelPlusNestedEmptyFolders
+              - full
+        - name: versionDescriptor.version
+          in: query
+          description: Branch name, tag, or commit to get items from
+          schema:
+            type: string
+        - name: versionDescriptor.versionType
+          in: query
+          description: Type of version identifier
+          schema:
+            type: string
+            enum:
+              - branch
+              - tag
+              - commit
+        - name: includeContentMetadata
+          in: query
+          description: Include content metadata for items
+          schema:
+            type: boolean
+        - name: latestProcessedChange
+          in: query
+          description: Include the latest change for each item
+          schema:
+            type: boolean
+        - name: includeLinks
+          in: query
+          description: Include reference links
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successfully retrieved items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitItem'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository or path not found
+
+  /git/repositories/{repositoryId}/stats/branches:
+    get:
+      operationId: stats_list
+      summary: List branch statistics
+      description: >-
+        Retrieve statistics for all branches in a repository, including
+        the number of commits ahead and behind relative to the default
+        branch or a specified base version.
+      tags:
+        - Stats
+      parameters:
+        - $ref: '#/components/parameters/repositoryId'
+        - name: baseVersionDescriptor.version
+          in: query
+          description: Base branch or commit to compare against
+          schema:
+            type: string
+        - name: baseVersionDescriptor.versionType
+          in: query
+          description: Type of the base version
+          schema:
+            type: string
+            enum:
+              - branch
+              - tag
+              - commit
+      responses:
+        '200':
+          description: Successfully retrieved branch statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitBranchStats'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 authorization code flow for Azure DevOps Services.
+        Requires the vso.code scope for read operations and vso.code_write
+        for write operations.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+          tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+          scopes:
+            vso.code: >-
+              Read source code and metadata about commits, changesets,
+              branches, and other version control artifacts
+            vso.code_write: >-
+              Read, create, and manage pull requests and code
+            vso.code_manage: >-
+              Read, create, manage, and delete repositories and branches
+    basicAuth:
+      type: http
+      scheme: basic
+      description: >-
+        HTTP Basic authentication using a Personal Access Token (PAT).
+        Use any string for the username and the PAT as the password.
+
+  parameters:
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
+    pullRequestId:
+      name: pullRequestId
+      in: path
+      required: true
+      description: ID of the pull request
+      schema:
+        type: integer
+        format: int32
+    includeLinks:
+      name: includeLinks
+      in: query
+      description: Include reference links in the response
+      schema:
+        type: boolean
+
+  schemas:
+    GitRepository:
+      type: object
+      description: >-
+        Represents a Git repository in Azure DevOps, including its metadata,
+        URLs, project reference, and configuration such as default branch.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the repository
+        name:
+          type: string
+          description: Name of the repository
+        url:
+          type: string
+          format: uri
+          description: REST API URL for the repository
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        defaultBranch:
+          type: string
+          description: >-
+            Default branch reference (e.g., refs/heads/main)
+        remoteUrl:
+          type: string
+          format: uri
+          description: HTTPS clone URL for the repository
+        sshUrl:
+          type: string
+          description: SSH clone URL for the repository
+        webUrl:
+          type: string
+          format: uri
+          description: Web URL to browse the repository in the Azure DevOps portal
+        size:
+          type: integer
+          format: int64
+          description: Compressed size of the repository in bytes
+        isFork:
+          type: boolean
+          description: True if the repository was created as a fork
+        isDisabled:
+          type: boolean
+          description: True if the repository is disabled
+        isInMaintenance:
+          type: boolean
+          description: True if the repository is in maintenance mode
+        parentRepository:
+          $ref: '#/components/schemas/GitRepositoryRef'
+        _links:
+          type: object
+          description: HAL reference links
+          additionalProperties: true
+
+    GitRepositoryRef:
+      type: object
+      description: Shallow reference to a Git repository
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Repository ID
+        name:
+          type: string
+          description: Repository name
+        url:
+          type: string
+          format: uri
+          description: REST API URL
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        isFork:
+          type: boolean
+          description: True if the repository was created as a fork
+        remoteUrl:
+          type: string
+          description: HTTPS clone URL
+        sshUrl:
+          type: string
+          description: SSH clone URL
+        collection:
+          $ref: '#/components/schemas/TeamProjectCollectionReference'
+
+    GitPullRequest:
+      type: object
+      description: >-
+        Represents all the data associated with a pull request including
+        status, branches, reviewers, merge state, and linked work items.
+      properties:
+        pullRequestId:
+          type: integer
+          format: int32
+          description: Unique ID of the pull request
+        codeReviewId:
+          type: integer
+          format: int32
+          description: Code review ID used internally
+        status:
+          type: string
+          enum:
+            - notSet
+            - active
+            - abandoned
+            - completed
+            - all
+          description: Current status of the pull request
+        title:
+          type: string
+          description: Title of the pull request
+        description:
+          type: string
+          description: Description of the pull request
+        sourceRefName:
+          type: string
+          description: >-
+            Name of the source branch (e.g., refs/heads/feature-branch)
+        targetRefName:
+          type: string
+          description: >-
+            Name of the target branch (e.g., refs/heads/main)
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        creationDate:
+          type: string
+          format: date-time
+          description: Date the pull request was created
+        closedDate:
+          type: string
+          format: date-time
+          description: Date the pull request was closed
+        closedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        isDraft:
+          type: boolean
+          description: Whether this is a draft pull request
+        mergeStatus:
+          type: string
+          enum:
+            - notSet
+            - queued
+            - conflicts
+            - succeeded
+            - rejectedByPolicy
+            - failure
+          description: Current merge status
+        mergeId:
+          type: string
+          format: uuid
+          description: ID of the merge job
+        mergeFailureMessage:
+          type: string
+          description: Message describing merge failure if applicable
+        mergeFailureType:
+          type: string
+          enum:
+            - none
+            - unknown
+            - caseSensitive
+            - objectTooLarge
+          description: Type of merge failure
+        lastMergeSourceCommit:
+          $ref: '#/components/schemas/GitCommitRef'
+        lastMergeTargetCommit:
+          $ref: '#/components/schemas/GitCommitRef'
+        lastMergeCommit:
+          $ref: '#/components/schemas/GitCommitRef'
+        reviewers:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityRefWithVote'
+          description: List of reviewers with their vote status
+        repository:
+          $ref: '#/components/schemas/GitRepository'
+        commits:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitCommitRef'
+          description: Commits included in the pull request
+        completionOptions:
+          $ref: '#/components/schemas/GitPullRequestCompletionOptions'
+        completionQueueTime:
+          type: string
+          format: date-time
+          description: Time the PR entered the completion queue
+        autoCompleteSetBy:
+          $ref: '#/components/schemas/IdentityRef'
+        supportsIterations:
+          type: boolean
+          description: Whether the PR supports multiple iterations
+        forkSource:
+          $ref: '#/components/schemas/GitRepositoryRef'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebApiTagDefinition'
+          description: Labels associated with the pull request
+        workItemRefs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRef'
+          description: Linked work items
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this pull request
+        artifactId:
+          type: string
+          description: >-
+            Artifact ID in format vstfs:///Git/PullRequestId/{projectId}/{repoId}/{prId}
+        _links:
+          type: object
+          additionalProperties: true
+
+    GitPullRequestCompletionOptions:
+      type: object
+      description: >-
+        Options that control how the pull request is completed and merged.
+      properties:
+        mergeCommitMessage:
+          type: string
+          description: Commit message for the merge commit
+        mergeStrategy:
+          type: string
+          enum:
+            - noFastForward
+            - squash
+            - rebase
+            - rebaseMerge
+          description: >-
+            Merge strategy to use. NoFastForward creates a merge commit,
+            squash creates a single commit, rebase replays commits.
+        deleteSourceBranch:
+          type: boolean
+          description: Delete the source branch after merge
+        bypassPolicy:
+          type: boolean
+          description: Bypass branch policies during completion
+        bypassReason:
+          type: string
+          description: Reason for bypassing policies
+        transitionWorkItems:
+          type: boolean
+          description: >-
+            Transition linked work items to the next state on completion
+        squashMerge:
+          type: boolean
+          description: >-
+            Deprecated. Use mergeStrategy instead.
+        autoCompleteIgnoreConfigIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          description: >-
+            Policy configuration IDs that auto-complete should not wait for
+
+    GitPullRequestCommentThread:
+      type: object
+      description: >-
+        A comment thread on a pull request, optionally associated with a
+        specific file and line range for inline code review.
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Unique ID of the thread
+        publishedDate:
+          type: string
+          format: date-time
+          description: Date the thread was published
+        lastUpdatedDate:
+          type: string
+          format: date-time
+          description: Date the thread was last updated
+        status:
+          type: string
+          enum:
+            - unknown
+            - active
+            - fixed
+            - wontFix
+            - closed
+            - byDesign
+            - pending
+          description: Resolution status of the thread
+        comments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              parentCommentId:
+                type: integer
+                format: int32
+              content:
+                type: string
+              publishedDate:
+                type: string
+                format: date-time
+              lastUpdatedDate:
+                type: string
+                format: date-time
+              author:
+                $ref: '#/components/schemas/IdentityRef'
+              commentType:
+                type: string
+                enum:
+                  - unknown
+                  - text
+                  - codeChange
+                  - system
+        threadContext:
+          type: object
+          description: File path and line range for inline comments
+          properties:
+            filePath:
+              type: string
+            rightFileStart:
+              type: object
+              properties:
+                line:
+                  type: integer
+                offset:
+                  type: integer
+            rightFileEnd:
+              type: object
+              properties:
+                line:
+                  type: integer
+                offset:
+                  type: integer
+        properties:
+          type: object
+          additionalProperties: true
+
+    GitCommitRef:
+      type: object
+      description: >-
+        Properties describing a Git commit and associated metadata
+        including author, committer, message, and related resources.
+      properties:
+        commitId:
+          type: string
+          description: SHA-1 hash of the commit
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        comment:
+          type: string
+          description: Commit message
+        commentTruncated:
+          type: boolean
+          description: Whether the comment was truncated
+        changeCounts:
+          type: object
+          description: Counts of change types in the commit
+          additionalProperties:
+            type: integer
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitChange'
+          description: List of changes in the commit
+        parents:
+          type: array
+          items:
+            type: string
+          description: SHA-1 hashes of parent commits
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this commit
+        remoteUrl:
+          type: string
+          format: uri
+          description: Web URL to view the commit
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitStatus'
+          description: Status checks posted against this commit
+        workItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRef'
+          description: Linked work items
+        push:
+          type: object
+          description: Push that included this commit
+          properties:
+            pushId:
+              type: integer
+              format: int32
+            date:
+              type: string
+              format: date-time
+            pushedBy:
+              $ref: '#/components/schemas/IdentityRef'
+            url:
+              type: string
+              format: uri
+
+    GitChange:
+      type: object
+      description: Represents a change to an item in a commit
+      properties:
+        changeId:
+          type: integer
+          format: int32
+          description: ID of the change within the group
+        changeType:
+          type: string
+          enum:
+            - add
+            - edit
+            - delete
+            - rename
+            - merge
+            - lock
+            - branch
+            - rollback
+            - none
+          description: Type of change made to the item
+        item:
+          type: object
+          description: The affected item
+          properties:
+            objectId:
+              type: string
+            originalObjectId:
+              type: string
+            gitObjectType:
+              type: string
+            commitId:
+              type: string
+            path:
+              type: string
+            url:
+              type: string
+        originalPath:
+          type: string
+          description: Original path if the item was renamed
+        url:
+          type: string
+          description: URL to retrieve the item
+
+    GitUserDate:
+      type: object
+      description: User info and date for Git operations
+      properties:
+        name:
+          type: string
+          description: Name of the user
+        email:
+          type: string
+          format: email
+          description: Email address of the user
+        date:
+          type: string
+          format: date-time
+          description: Date of the Git operation
+        imageUrl:
+          type: string
+          format: uri
+          description: Avatar URL for the user
+
+    GitRef:
+      type: object
+      description: >-
+        A Git ref (branch or tag) including its name, object ID, and
+        optional creator and status information.
+      properties:
+        name:
+          type: string
+          description: >-
+            Full ref name (e.g., refs/heads/main, refs/tags/v1.0)
+        objectId:
+          type: string
+          description: SHA-1 hash the ref points to
+        peeledObjectId:
+          type: string
+          description: >-
+            For annotated tags, the SHA-1 of the target object
+        creator:
+          $ref: '#/components/schemas/IdentityRef'
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this ref
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitStatus'
+          description: Status checks for this ref
+        isLocked:
+          type: boolean
+          description: Whether the ref is locked
+        isLockedBy:
+          $ref: '#/components/schemas/IdentityRef'
+
+    GitRefUpdateResult:
+      type: object
+      description: Result of a ref update operation
+      properties:
+        name:
+          type: string
+          description: Full ref name
+        oldObjectId:
+          type: string
+          description: Previous object ID
+        newObjectId:
+          type: string
+          description: New object ID
+        success:
+          type: boolean
+          description: Whether the update succeeded
+        updateStatus:
+          type: string
+          description: Status of the update operation
+        repositoryId:
+          type: string
+          format: uuid
+          description: Repository the ref belongs to
+
+    GitPush:
+      type: object
+      description: >-
+        Represents a push to a repository containing one or more commits
+        and ref updates.
+      properties:
+        pushId:
+          type: integer
+          format: int32
+          description: Unique push ID
+        date:
+          type: string
+          format: date-time
+          description: Date the push was made
+        pushedBy:
+          $ref: '#/components/schemas/IdentityRef'
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this push
+        commits:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitCommitRef'
+          description: Commits included in the push
+        refUpdates:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Full ref name
+              oldObjectId:
+                type: string
+              newObjectId:
+                type: string
+          description: Ref updates included in the push
+        repository:
+          $ref: '#/components/schemas/GitRepository'
+
+    GitItem:
+      type: object
+      description: >-
+        A file, folder, or submodule in a repository. Files are blobs,
+        folders are trees, and submodules are commits.
+      properties:
+        objectId:
+          type: string
+          description: SHA-1 hash of the item
+        gitObjectType:
+          type: string
+          enum:
+            - blob
+            - tree
+            - commit
+            - tag
+          description: Type of Git object
+        commitId:
+          type: string
+          description: Commit the item is associated with
+        path:
+          type: string
+          description: Repository path of the item
+        isFolder:
+          type: boolean
+          description: Whether the item is a folder
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this item
+        content:
+          type: string
+          description: Content of the item if requested
+        contentMetadata:
+          type: object
+          description: Content metadata
+          properties:
+            encoding:
+              type: integer
+            contentType:
+              type: string
+            fileName:
+              type: string
+            extension:
+              type: string
+        latestProcessedChange:
+          $ref: '#/components/schemas/GitCommitRef'
+
+    GitStatus:
+      type: object
+      description: >-
+        Status metadata posted by a service or extension against a commit
+        or pull request, such as build results or policy checks.
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Status identifier
+        state:
+          type: string
+          enum:
+            - notSet
+            - pending
+            - succeeded
+            - failed
+            - error
+            - notApplicable
+          description: State of the status
+        description:
+          type: string
+          description: Status description
+        context:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the status context
+            genre:
+              type: string
+              description: Genre of the status
+        targetUrl:
+          type: string
+          format: uri
+          description: URL with status details
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        creationDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+
+    GitBranchStats:
+      type: object
+      description: >-
+        Branch statistics including commit counts ahead and behind a
+        base version.
+      properties:
+        name:
+          type: string
+          description: Branch name
+        aheadCount:
+          type: integer
+          format: int32
+          description: Number of commits ahead of the base
+        behindCount:
+          type: integer
+          format: int32
+          description: Number of commits behind the base
+        commit:
+          $ref: '#/components/schemas/GitCommitRef'
+        isBaseVersion:
+          type: boolean
+          description: Whether this is the base version
+
+    IdentityRef:
+      type: object
+      description: >-
+        Reference to an Azure DevOps identity (user or group)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identity ID
+        displayName:
+          type: string
+          description: Display name of the identity
+        uniqueName:
+          type: string
+          description: Unique name (typically email)
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this identity
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the identity's avatar image
+        descriptor:
+          type: string
+          description: Graph descriptor for the identity
+        isContainer:
+          type: boolean
+          description: Whether this identity is a group
+
+    IdentityRefWithVote:
+      type: object
+      description: >-
+        Identity information including a vote on a pull request. Vote
+        values are 10 (approved), 5 (approved with suggestions),
+        0 (no vote), -5 (waiting for author), -10 (rejected).
+      allOf:
+        - $ref: '#/components/schemas/IdentityRef'
+        - type: object
+          properties:
+            vote:
+              type: integer
+              format: int16
+              description: >-
+                Vote value: 10=approved, 5=approved with suggestions,
+                0=no vote, -5=waiting for author, -10=rejected
+            reviewerUrl:
+              type: string
+              format: uri
+              description: URL to retrieve reviewer information
+            hasDeclined:
+              type: boolean
+              description: Whether the reviewer has declined to review
+            isFlagged:
+              type: boolean
+              description: Whether the reviewer is flagged for attention
+            isRequired:
+              type: boolean
+              description: Whether this is a required reviewer
+            votedFor:
+              type: array
+              items:
+                $ref: '#/components/schemas/IdentityRefWithVote'
+              description: Groups or teams this reviewer contributed to
+
+    TeamProjectReference:
+      type: object
+      description: Shallow reference to an Azure DevOps team project
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Project ID
+        name:
+          type: string
+          description: Project name
+        description:
+          type: string
+          description: Project description
+        url:
+          type: string
+          format: uri
+          description: REST API URL for the project
+        state:
+          type: string
+          enum:
+            - deleting
+            - new
+            - wellFormed
+            - createPending
+            - all
+            - unchanged
+            - deleted
+          description: Current state of the project
+        visibility:
+          type: string
+          enum:
+            - private
+            - public
+          description: Visibility of the project
+        revision:
+          type: integer
+          format: int64
+          description: Project revision number
+        lastUpdateTime:
+          type: string
+          format: date-time
+          description: Last update time
+
+    TeamProjectCollectionReference:
+      type: object
+      description: Reference to a Team Project Collection
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Collection ID
+        name:
+          type: string
+          description: Collection name
+        url:
+          type: string
+          format: uri
+          description: REST API URL for the collection
+
+    WebApiTagDefinition:
+      type: object
+      description: Tag definition for pull request labels
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Tag ID
+        name:
+          type: string
+          description: Tag name
+        active:
+          type: boolean
+          description: Whether the tag is active
+        url:
+          type: string
+          format: uri
+          description: REST API URL for the tag
+
+    ResourceRef:
+      type: object
+      description: Generic reference to a resource
+      properties:
+        id:
+          type: string
+          description: Resource ID
+        url:
+          type: string
+          format: uri
+          description: Resource URL

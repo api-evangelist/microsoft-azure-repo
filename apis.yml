@@ -9,7 +9,7 @@ tags:
 - DevOps
 - Repositories
 created: '2024-01-01'
-modified: '2024-01-01'
+modified: '2026-03-04'
 url: https://azure.microsoft.com/en-us/services/devops/repos/
 specificationVersion: '0.18'
 apis:
@@ -33,6 +33,12 @@ apis:
     url: https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
   - type: Rate Limits
     url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+  - type: Quickstart
+    url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
+  - type: Client Libraries
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
   contact:
   - FN: Azure DevOps Support
     email:
@@ -55,6 +61,12 @@ apis:
     url: https://github.com/MicrosoftDocs/vsts-rest-api-specs/blob/master/specification/tfvc/7.1/tfvc.json
   - type: Authentication
     url: https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
+  - type: Rate Limits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Client Libraries
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
   contact:
   - FN: Azure DevOps Support
     email:
@@ -75,28 +87,58 @@ apis:
     url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
   - type: OpenAPI
     url: https://github.com/MicrosoftDocs/vsts-rest-api-specs/blob/master/specification/policy/7.1/policy.json
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
+  - type: Authentication
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
+  - type: Rate Limits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
   contact:
   - FN: Azure DevOps Support
     email:
     - email protected
     url: https://azure.microsoft.com/en-us/support/devops/
 common:
+- type: Portal
+  url: https://learn.microsoft.com/en-us/azure/devops/repos/?view=azure-devops
 - type: Getting Started
   url: https://docs.microsoft.com/en-us/azure/devops/repos/get-started/
+- type: Documentation
+  url: https://learn.microsoft.com/en-us/azure/devops/repos/git/?view=azure-devops
+- type: Authentication
+  url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
 - type: Pricing
   url: https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
+- type: Rate Limits
+  url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
 - type: Status
   url: https://status.dev.azure.com/
 - type: Terms of Service
   url: https://azure.microsoft.com/en-us/support/legal/
 - type: Privacy Policy
   url: https://privacy.microsoft.com/en-us/privacystatement
+- type: Change Log
+  url: https://learn.microsoft.com/en-us/azure/devops/release-notes/features-timeline-released
 - type: Blog
   url: https://devblogs.microsoft.com/devops/
 - type: Support
   url: https://azure.microsoft.com/en-us/support/devops/
+- type: Console
+  url: https://dev.azure.com
+- type: Sign Up
+  url: https://learn.microsoft.com/en-us/azure/devops/repos/get-started/sign-up-invite-teammates?view=azure-devops
+- type: Website
+  url: https://azure.microsoft.com/en-us/services/devops/repos/
+- type: SDKs
+  url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
+- type: Community
+  url: https://developercommunity.visualstudio.com/AzureDevOps
+- type: Stack Overflow
+  url: https://stackoverflow.com/questions/tagged/azure-devops
+- type: GitHub Organization
+  url: https://github.com/MicrosoftDocs/vsts-rest-api-specs
+- type: YouTube
+  url: https://www.youtube.com/@AzureDevOps
 maintainers:
-- FN: Microsoft Azure DevOps Team
-  email:
-  - email protected
-  url: https://azure.microsoft.com/en-us/services/devops/
+- FN: Kin Lane
+  email: kin@apievangelist.com
