@@ -4,7 +4,8 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Azure Repos
 providerId: microsoft-azure-repo
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
   - DevOps
   - Git
@@ -12,158 +13,127 @@ tags:
   - Source Control
   - TFVC
   - Version Control
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+description: Azure Repos is sold as part of Azure DevOps Services and is licensed per user
+  with the Basic access level. Up to 5 users get Basic access free; users 6+ pay $6.00/user/month.
+  Stakeholder access (read-only/limited) is free for unlimited users. Visual Studio subscribers
+  and GitHub Enterprise users get Basic access at no extra charge. Repos has unlimited private
+  Git repos, unlimited file size, branch policies, and pull requests under Basic access.
+sources:
+  - https://azure.microsoft.com/pricing/details/devops/azure-devops-services/
+  - https://learn.microsoft.com/en-us/azure/devops/organizations/billing/buy-basic-access-add-users
 plans:
-  - id: microsoft-azure-repo-free
-    name: Free
+  - id: microsoft-azure-repo-stakeholder
+    name: Stakeholder (Free)
     type: freemium
-    description: Free entry tier for the Azure Repos API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
+    description: Free, unlimited users with limited Repos access. Can view code and submit work
+      items but cannot create branches/PRs.
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
+      - label: Stakeholder users
+        name: stakeholder_users
         type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://dev.azure.com/{organization}/{project}/_apis/git
-          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
-          - https://dev.azure.com/{organization}/{project}/_apis/policy
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://dev.azure.com/{organization}/{project}/_apis/git
-          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
-          - https://dev.azure.com/{organization}/{project}/_apis/policy
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Azure DevOps Services REST API - Git
-      - name: Azure DevOps Services REST API - TFVC
-      - name: Azure DevOps Services REST API - Policy
-  - id: microsoft-azure-repo-pro
-    name: Professional
-    type: paid
-    description: Production tier for Azure Repos. Provides higher quotas, priority support, and access
-      to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://dev.azure.com/{organization}/{project}/_apis/git
-          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
-          - https://dev.azure.com/{organization}/{project}/_apis/policy
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://dev.azure.com/{organization}/{project}/_apis/git
-          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
-          - https://dev.azure.com/{organization}/{project}/_apis/policy
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
+        metric: user
         limit: -1
         timeFrame: month
         geo: global
-        domains:
-          - https://dev.azure.com/{organization}/{project}/_apis/git
-          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
-          - https://dev.azure.com/{organization}/{project}/_apis/policy
-        unit: 1000
-        price: TBD
-        userMultiplied: false
+        unit: 1
+        price: '0.00'
+        userMultiplied: true
     elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Azure DevOps Services REST API - Git
-      - name: Azure DevOps Services REST API - TFVC
-      - name: Azure DevOps Services REST API - Policy
+      - name: View public/private repo content
+      - name: Comment on pull requests
+      - name: Limited write access
+  - id: microsoft-azure-repo-basic
+    name: Basic (Free for 5 users, then $6/user)
+    type: tiered
+    description: Full Repos functionality. First 5 Basic users free; users 6 and beyond billed
+      monthly. VS Subscribers and GitHub Enterprise users do not count.
+    entries:
+      - label: Basic users (first 5)
+        name: basic_users_free_tier
+        type: quota
+        metric: user
+        limit: 5
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: true
+      - label: Basic users (6+)
+        name: basic_users_paid
+        type: subscription
+        metric: user-month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$6.00 per user per month'
+        userMultiplied: true
+    elements:
+      - name: Unlimited private Git repos
+      - name: Branch policies & code review
+      - name: Pull requests
+      - name: Repo size unlimited
+      - name: GitHub Advanced Security available as add-on
+  - id: microsoft-azure-repo-vs-subscriber
+    name: Visual Studio Subscriber (Included)
+    type: subscription
+    description: Users with active Visual Studio Professional / Enterprise / Test Professional
+      / MSDN subscriptions get Basic + Test Plans access at no extra cost.
+    entries:
+      - label: VS subscriber access
+        name: vs_subscriber_seat
+        type: subscription
+        metric: user-month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: included with Visual Studio subscription
+        userMultiplied: true
+    elements:
+      - name: Basic + Test Plans
+      - name: No extra Azure DevOps charge
+  - id: microsoft-azure-repo-advanced-security
+    name: GitHub Advanced Security for Azure DevOps
+    type: subscription
+    description: Optional add-on enabling code scanning, secret scanning, and dependency
+      review on Azure Repos. Billed per active committer per month.
+    entries:
+      - label: Per active committer per month
+        name: ghas_committer
+        type: subscription
+        metric: committer-month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '$49 per active committer per month'
+        userMultiplied: true
+    elements:
+      - name: Secret scanning
+      - name: Code scanning (CodeQL)
+      - name: Dependency review
   - id: microsoft-azure-repo-enterprise
-    name: Enterprise
+    name: Enterprise / Volume Licensing
     type: enterprise
-    description: Custom-negotiated tier for Azure Repos. Includes dedicated capacity, contractual SLAs,
-      security review, data residency options, and named technical account management.
+    description: Enterprise Agreement, Microsoft Customer Agreement, or CSP-negotiated rates;
+      multi-org billing centralizes per-user spend across organizations.
     entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
+      - label: Negotiated rate
+        name: ea_negotiated
+        type: subscription
+        metric: contract
         limit: -1
         timeFrame: month
-        geo: configurable
-        domains:
-          - https://dev.azure.com/{organization}/{project}/_apis/git
-          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
-          - https://dev.azure.com/{organization}/{project}/_apis/policy
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://dev.azure.com/{organization}/{project}/_apis/git
-          - https://dev.azure.com/{organization}/{project}/_apis/tfvc
-          - https://dev.azure.com/{organization}/{project}/_apis/policy
+        geo: global
         unit: 1
         price: custom
         userMultiplied: false
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Azure DevOps Services REST API - Git
-      - name: Azure DevOps Services REST API - TFVC
-      - name: Azure DevOps Services REST API - Policy
+      - name: Volume discounts
+      - name: Multi-organization billing
+      - name: Dedicated technical account management
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+    url: https://azure.microsoft.com/services/devops/repos/

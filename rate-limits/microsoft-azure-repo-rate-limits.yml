@@ -4,7 +4,8 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Azure Repos
 providerId: microsoft-azure-repo
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
   - DevOps
   - Git
@@ -13,88 +14,58 @@ tags:
   - TFVC
   - Version Control
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Azure Repos API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+description: Azure Repos REST APIs are rate-limited via Azure DevOps Services' shared TSTU
+  (Throughput Service Threshold Unit) sliding-window model — 200 TSTUs per 5 minutes per
+  user/identity. Each REST or Git operation costs a variable number of TSTUs. Throttled
+  requests return HTTP 429 with Retry-After. Git push/pull operations also have additional
+  per-repository protections against abuse. Per-user TSTU limits cannot be raised by support.
+sources:
+  - https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
 headers:
+  retryAfter: Retry-After
+  delay: X-RateLimit-Delay
   limit: X-RateLimit-Limit
   remaining: X-RateLimit-Remaining
   reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  resource: X-RateLimit-Resource
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
+  delayedNotBlocked: 200
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
+  - name: Per-user TSTU sliding window
+    scope: user
+    metric: tstu_per_5_minutes
+    limit: 200
     timeFrame: minute
-    applies:
-      - Azure DevOps Services REST API - Git
-      - Azure DevOps Services REST API - TFVC
-      - Azure DevOps Services REST API - Policy
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Azure DevOps Services REST API - Git
-      - Azure DevOps Services REST API - TFVC
-      - Azure DevOps Services REST API - Policy
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Azure DevOps Services REST API - Git
-      - Azure DevOps Services REST API - TFVC
-      - Azure DevOps Services REST API - Policy
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Azure DevOps Services REST API - Git
-      - Azure DevOps Services REST API - TFVC
-      - Azure DevOps Services REST API - Policy
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Azure DevOps Services REST API - Git
-      - Azure DevOps Services REST API - TFVC
-      - Azure DevOps Services REST API - Policy
+    notes: REST API and Git operation throughput; light reads <1 TSTU, heavy listings 5+ TSTUs.
+  - name: Git push payload
+    scope: repository
+    metric: bytes_per_push
+    limit: see vendor docs
+    notes: Pushes >1 GB or with very large blobs may be throttled or rejected. Use Git LFS.
+  - name: Branch policy build queue
+    scope: repository
+    metric: concurrent_builds
+    limit: see vendor docs
+    notes: Concurrent CI builds triggered by PR policies are bounded by purchased Azure
+      Pipelines parallel jobs.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: TSTU cost weighting
+    description: Each REST call costs differing TSTUs by database/CPU expense. Plan large
+      backfills with backoff between batches.
+  - name: Delay before block
+    description: Persistent abuse first triggers X-RateLimit-Delay (slowed responses), then 429.
+  - name: Spread across identities
+    description: To scale automation, fan out work across multiple service principals or PATs;
+      each gets its own 200-TSTU window.
+  - name: Use Git LFS for large binaries
+    description: Files >100 MB should be stored in Git LFS to avoid repository bloat and push
+      throttling.
+  - name: Honor Retry-After
+    description: Implement exponential backoff with jitter on 429 responses.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+    url: https://azure.microsoft.com/services/devops/repos/
