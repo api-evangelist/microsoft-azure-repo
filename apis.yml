@@ -31,7 +31,7 @@ apis:
         url: https://github.com/MicrosoftDocs/vsts-rest-api-specs/blob/master/specification/git/7.1/git.json
       - type: Authentication
         url: https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
-      - type: Rate Limits
+      - type: RateLimits
         url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
       - type: Reference
         url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
@@ -63,7 +63,7 @@ apis:
         url: https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
       - type: Reference
         url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
-      - type: Rate Limits
+      - type: RateLimits
         url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
       - type: Client Libraries
         url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
@@ -91,7 +91,7 @@ apis:
         url: https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
       - type: Authentication
         url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
-      - type: Rate Limits
+      - type: RateLimits
         url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
     contact:
       - FN: Azure DevOps Support
@@ -101,7 +101,7 @@ apis:
 common:
   - type: Portal
     url: https://learn.microsoft.com/en-us/azure/devops/repos/?view=azure-devops
-  - type: Getting Started
+  - type: GettingStarted
     url: https://docs.microsoft.com/en-us/azure/devops/repos/get-started/
   - type: Documentation
     url: https://learn.microsoft.com/en-us/azure/devops/repos/git/?view=azure-devops
@@ -109,15 +109,15 @@ common:
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
   - type: Pricing
     url: https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
-  - type: Rate Limits
+  - type: RateLimits
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
-  - type: Status
+  - type: StatusPage
     url: https://status.dev.azure.com/
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://azure.microsoft.com/en-us/support/legal/
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://privacy.microsoft.com/en-us/privacystatement
-  - type: Change Log
+  - type: ChangeLog
     url: https://learn.microsoft.com/en-us/azure/devops/release-notes/features-timeline-released
   - type: Blog
     url: https://devblogs.microsoft.com/devops/
@@ -125,7 +125,7 @@ common:
     url: https://azure.microsoft.com/en-us/support/devops/
   - type: Console
     url: https://dev.azure.com
-  - type: Sign Up
+  - type: SignUp
     url: https://learn.microsoft.com/en-us/azure/devops/repos/get-started/sign-up-invite-teammates?view=azure-devops
   - type: Website
     url: https://azure.microsoft.com/en-us/services/devops/repos/
@@ -133,9 +133,9 @@ common:
     url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
   - type: Community
     url: https://developercommunity.visualstudio.com/AzureDevOps
-  - type: Stack Overflow
+  - type: StackOverflow
     url: https://stackoverflow.com/questions/tagged/azure-devops
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/MicrosoftDocs/vsts-rest-api-specs
   - type: YouTube
     url: https://www.youtube.com/@AzureDevOps
