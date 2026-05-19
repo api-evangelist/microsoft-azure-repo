@@ -1,0 +1,85 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure Repos Git API — Stats
+  description: 'Azure Repos Git API — Stats. 1 operations. Lead operation: Azure Repos List branch statistics. Self-contained
+    Naftiko capability covering one Microsoft Azure Repo business surface.'
+  tags:
+  - Microsoft Azure Repo
+  - Stats
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MICROSOFT_AZURE_REPO_API_KEY: MICROSOFT_AZURE_REPO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: azure-repo-git-stats
+    baseUri: https://dev.azure.com/{organization}/{project}/_apis
+    description: Azure Repos Git API — Stats business capability. Self-contained, no shared references.
+    resources:
+    - name: git-repositories-repositoryId-stats-branches
+      path: /git/repositories/{repositoryId}/stats/branches
+      operations:
+      - name: statslist
+        method: GET
+        description: Azure Repos List branch statistics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: baseVersionDescriptor.version
+          in: query
+          type: string
+          description: Base branch or commit to compare against
+        - name: baseVersionDescriptor.versionType
+          in: query
+          type: string
+          description: Type of the base version
+    authentication:
+      type: bearer
+      token: '{{env.MICROSOFT_AZURE_REPO_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: azure-repo-git-stats-rest
+    port: 8080
+    description: REST adapter for Azure Repos Git API — Stats. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/git/repositories/{repositoryid}/stats/branches
+      name: git-repositories-repositoryid-stats-branches
+      description: REST surface for git-repositories-repositoryId-stats-branches.
+      operations:
+      - method: GET
+        name: statslist
+        description: Azure Repos List branch statistics
+        call: azure-repo-git-stats.statslist
+        with:
+          baseVersionDescriptor.version: rest.baseVersionDescriptor.version
+          baseVersionDescriptor.versionType: rest.baseVersionDescriptor.versionType
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: azure-repo-git-stats-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Azure Repos Git API — Stats. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: azure-repos-list-branch-statistics
+      description: Azure Repos List branch statistics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: azure-repo-git-stats.statslist
+      with:
+        baseVersionDescriptor.version: tools.baseVersionDescriptor.version
+        baseVersionDescriptor.versionType: tools.baseVersionDescriptor.versionType
+      outputParameters:
+      - type: object
+        mapping: $.
