@@ -1,0 +1,940 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Repos Git API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://app.vssps.visualstudio.com/oauth2/authorize",
+      "accessTokenUrl": "https://app.vssps.visualstudio.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Repositories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List repositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories",
+            "params": [
+              {
+                "name": "includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Include reference links in the response"
+              },
+              {
+                "name": "includeAllUrls",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to include all remote URLs in the response. Defaults to false."
+              },
+              {
+                "name": "includeHidden",
+                "value": "",
+                "type": "query",
+                "description": "Set to true to include hidden repositories. Defaults to false."
+              }
+            ]
+          },
+          "docs": "Retrieve all Git repositories in the specified project. Each repository includes its ID, name, default branch, remote URL, SSH URL, and web URL. Optionally include reference links and hidden repositories."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Create a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Git repository in the specified project. Provide the repository name and optionally a parent repository for forking."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Get a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific Git repository by its ID or name. Returns full repository details including default branch, clone URLs, project reference, and size."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Update a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Git repository with a new name or a new default branch. Only the fields provided in the request body are updated."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Delete a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              }
+            ]
+          },
+          "docs": "Delete a Git repository from the project. This operation is irreversible and removes all branches, commits, and pull requests associated with the repository."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pull Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List pull requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "searchCriteria.status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by pull request status. Defaults to active if unset."
+              },
+              {
+                "name": "searchCriteria.creatorId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the identity ID of the pull request creator"
+              },
+              {
+                "name": "searchCriteria.reviewerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the identity ID of a reviewer"
+              },
+              {
+                "name": "searchCriteria.sourceRefName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source branch name (e.g., refs/heads/feature)"
+              },
+              {
+                "name": "searchCriteria.targetRefName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by target branch name (e.g., refs/heads/main)"
+              },
+              {
+                "name": "searchCriteria.repositoryId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by target repository ID"
+              },
+              {
+                "name": "searchCriteria.sourceRepositoryId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source repository ID"
+              },
+              {
+                "name": "searchCriteria.includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the _links field on shallow references"
+              },
+              {
+                "name": "searchCriteria.minTime",
+                "value": "",
+                "type": "query",
+                "description": "Filter pull requests created or closed after this date based on queryTimeRangeType"
+              },
+              {
+                "name": "searchCriteria.maxTime",
+                "value": "",
+                "type": "query",
+                "description": "Filter pull requests created or closed before this date based on queryTimeRangeType"
+              },
+              {
+                "name": "searchCriteria.queryTimeRangeType",
+                "value": "",
+                "type": "query",
+                "description": "The type of time range for minTime and maxTime. Defaults to created if unset."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Number of pull requests to retrieve"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of pull requests to skip"
+              }
+            ]
+          },
+          "docs": "Retrieve all pull requests matching specified criteria for a repository. Supports filtering by status, creator, reviewer, source branch, target branch, and time range. The description field is truncated to 400 characters in the result."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Create a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new pull request in the specified repository. Requires source and target branch references, a title, and optionally a description, reviewers, and work item references."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Get a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific pull request by its ID. Returns full pull request details including status, reviewers, merge status, source and target branches, and linked work items."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Update a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update properties of an existing pull request such as title, description, status (to abandon or reactivate), auto-complete settings, and completion options including merge strategy."
+        },
+        {
+          "info": {
+            "name": "Azure Repos List pull request commits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/commits",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ]
+          },
+          "docs": "Retrieve the list of commits associated with a pull request. Returns commits from the source branch that are not yet in the target branch."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pull Request Reviewers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List pull request reviewers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ]
+          },
+          "docs": "Retrieve all reviewers for a specific pull request, including their vote status and whether they are required reviewers."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Add or update a reviewer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers/:reviewerId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              },
+              {
+                "name": "reviewerId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the reviewer identity"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a reviewer to a pull request or update an existing reviewer's vote. Vote values are 10 (approved), 5 (approved with suggestions), 0 (no vote), -5 (waiting for author), and -10 (rejected)."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Remove a reviewer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers/:reviewerId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              },
+              {
+                "name": "reviewerId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the reviewer identity to remove"
+              }
+            ]
+          },
+          "docs": "Remove a reviewer from a pull request. Required reviewers added by branch policy cannot be removed."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pull Request Threads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List pull request threads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/threads",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ]
+          },
+          "docs": "Retrieve all comment threads for a pull request. Threads contain comments, code review discussions, and system-generated messages."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Create a comment thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/threads",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment thread on a pull request. Threads can be associated with specific file paths and line ranges for inline code review comments."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Commits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List commits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/commits",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "searchCriteria.itemVersion.version",
+                "value": "",
+                "type": "query",
+                "description": "Branch name or tag to search (e.g., main, develop)"
+              },
+              {
+                "name": "searchCriteria.itemVersion.versionType",
+                "value": "",
+                "type": "query",
+                "description": "Type of version identifier"
+              },
+              {
+                "name": "searchCriteria.itemPath",
+                "value": "",
+                "type": "query",
+                "description": "Path of an item to filter commits that changed this path"
+              },
+              {
+                "name": "searchCriteria.fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for filtering commits"
+              },
+              {
+                "name": "searchCriteria.toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for filtering commits"
+              },
+              {
+                "name": "searchCriteria.author",
+                "value": "",
+                "type": "query",
+                "description": "Filter by author name or email"
+              },
+              {
+                "name": "searchCriteria.$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of commits to return"
+              },
+              {
+                "name": "searchCriteria.$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of commits to skip"
+              }
+            ]
+          },
+          "docs": "Retrieve commit history for a repository. Supports filtering by branch, author, date range, item path, and various search criteria. Results are ordered by commit date descending."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Get a commit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/commits/:commitId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "commitId",
+                "value": "",
+                "type": "path",
+                "description": "The SHA-1 hash of the commit"
+              },
+              {
+                "name": "changeCount",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of changes to include"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific commit by its SHA-1 ID. Returns the full commit details including author, committer, message, parent commits, and optionally the list of changes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Refs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List refs (branches and tags)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/refs",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter refs by name prefix (e.g., heads/main, tags/v1)"
+              },
+              {
+                "name": "includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Include reference links in the response"
+              },
+              {
+                "name": "includeStatuses",
+                "value": "",
+                "type": "query",
+                "description": "Include status information for each ref"
+              },
+              {
+                "name": "includeMyBranches",
+                "value": "",
+                "type": "query",
+                "description": "Include only branches owned by the authenticated user"
+              },
+              {
+                "name": "peelTags",
+                "value": "",
+                "type": "query",
+                "description": "Annotated tags will populate the PeeledObjectId property"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of refs to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paging through results"
+              }
+            ]
+          },
+          "docs": "Retrieve all refs (branches and tags) for a repository. Supports filtering by name prefix, peeling tags to their target objects, and including statuses such as build and policy check results."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Create, update, or delete refs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/refs",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create, update, or delete one or more refs (branches or tags) in a single atomic operation. To create a ref, set oldObjectId to 0000000000000000000000000000000000000000. To delete a ref, set newObjectId to 0000000000000000000000000000000000000000."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pushes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List pushes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pushes",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Number of pushes to return"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of pushes to skip"
+              },
+              {
+                "name": "searchCriteria.fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for filtering pushes"
+              },
+              {
+                "name": "searchCriteria.toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for filtering pushes"
+              },
+              {
+                "name": "searchCriteria.pusherId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by pusher identity ID"
+              },
+              {
+                "name": "searchCriteria.refName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by branch name (e.g., refs/heads/main)"
+              },
+              {
+                "name": "searchCriteria.includeRefUpdates",
+                "value": "",
+                "type": "query",
+                "description": "Include ref update details in results"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of pushes to a repository. Each push includes the pusher identity, date, and references to the commits and ref updates included in the push."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Create a push",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pushes",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Push changes to a repository. A push includes one or more ref updates and associated commits. Used to create branches, push commits, and create initial commits for new repositories."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Get a push",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pushes/:pushId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pushId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the push"
+              },
+              {
+                "name": "includeCommits",
+                "value": "",
+                "type": "query",
+                "description": "Number of commits to include"
+              },
+              {
+                "name": "includeRefUpdates",
+                "value": "",
+                "type": "query",
+                "description": "Include ref update details"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific push by its ID. Returns the push details including commits, ref updates, pusher identity, and date."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List items (files and folders)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/items",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "scopePath",
+                "value": "",
+                "type": "query",
+                "description": "The path scope for items (e.g., /src or /README.md)"
+              },
+              {
+                "name": "recursionLevel",
+                "value": "",
+                "type": "query",
+                "description": "Level of recursion for folder listing"
+              },
+              {
+                "name": "versionDescriptor.version",
+                "value": "",
+                "type": "query",
+                "description": "Branch name, tag, or commit to get items from"
+              },
+              {
+                "name": "versionDescriptor.versionType",
+                "value": "",
+                "type": "query",
+                "description": "Type of version identifier"
+              },
+              {
+                "name": "includeContentMetadata",
+                "value": "",
+                "type": "query",
+                "description": "Include content metadata for items"
+              },
+              {
+                "name": "latestProcessedChange",
+                "value": "",
+                "type": "query",
+                "description": "Include the latest change for each item"
+              },
+              {
+                "name": "includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Include reference links"
+              }
+            ]
+          },
+          "docs": "Get a list of items (files, folders, and submodules) in a repository path. Files are represented as blobs, folders as trees, and submodules as commits."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stats",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List branch statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/stats/branches",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "baseVersionDescriptor.version",
+                "value": "",
+                "type": "query",
+                "description": "Base branch or commit to compare against"
+              },
+              {
+                "name": "baseVersionDescriptor.versionType",
+                "value": "",
+                "type": "query",
+                "description": "Type of the base version"
+              }
+            ]
+          },
+          "docs": "Retrieve statistics for all branches in a repository, including the number of commits ahead and behind relative to the default branch or a specified base version."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
