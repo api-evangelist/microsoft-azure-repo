@@ -37,7 +37,7 @@ apis:
         url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
       - type: Reference
         url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
-      - type: Quickstart
+      - type: GettingStarted
         url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
       - type: Client Libraries
         url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
@@ -129,7 +129,7 @@ common:
     url: https://azure.microsoft.com/en-us/support/devops/
   - type: Console
     url: https://dev.azure.com
-  - type: SignUp
+  - type: Signup
     url: https://learn.microsoft.com/en-us/azure/devops/repos/get-started/sign-up-invite-teammates?view=azure-devops
   - type: Website
     url: https://azure.microsoft.com/en-us/services/devops/repos/
