@@ -102,6 +102,12 @@ apis:
           - email protected
         url: https://azure.microsoft.com/en-us/support/devops/
 common:
+  - type: VulnerabilityDisclosure
+    url: security/microsoft-azure-repo-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/microsoft-azure-repo-domain-security.yml
+  - type: Authentication
+    url: authentication/microsoft-azure-repo-authentication.yml
   - type: OAuthScopes
     url: scopes/microsoft-azure-repo-scopes.yml
   - type: Portal
