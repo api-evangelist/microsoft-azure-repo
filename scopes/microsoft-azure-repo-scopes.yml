@@ -1,0 +1,32 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/azure-repo-git-api-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/azure-repo-git-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+    tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+  description: OAuth 2.0 authorization code flow for Azure DevOps Services. Requires the vso.code
+    scope for read operations and vso.code_write for write operations.
+scopes:
+- scope: vso.code
+  description: Read source code and metadata about commits, changesets, branches, and other
+    version control artifacts
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/azure-repo-git-api-openapi.yml
+- scope: vso.code_manage
+  description: Read, create, manage, and delete repositories and branches
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/azure-repo-git-api-openapi.yml
+- scope: vso.code_write
+  description: Read, create, and manage pull requests and code
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/azure-repo-git-api-openapi.yml
