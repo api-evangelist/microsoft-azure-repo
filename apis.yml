@@ -102,6 +102,8 @@ apis:
           - email protected
         url: https://azure.microsoft.com/en-us/support/devops/
 common:
+  - type: AgenticAccess
+    url: agentic-access/microsoft-azure-repo-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/microsoft-azure-repo-vulnerability-disclosure.yml
   - type: DomainSecurity

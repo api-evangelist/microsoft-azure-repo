@@ -1,0 +1,316 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/azure-repo-git-api-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 24
+  by_action_class:
+    connected: 14
+    acting: 10
+  by_consequence:
+    read: 14
+    write: 10
+  human_in_the_loop_required: 0
+operations:
+- path: /git/repositories
+  method: get
+  operationId: repositories_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories
+  method: post
+  operationId: repositories_create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}
+  method: get
+  operationId: repositories_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}
+  method: patch
+  operationId: repositories_update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}
+  method: delete
+  operationId: repositories_delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}/pullrequests
+  method: get
+  operationId: pullRequests_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/pullrequests
+  method: post
+  operationId: pullRequests_create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}/pullrequests/{pullRequestId}
+  method: get
+  operationId: pullRequests_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/pullrequests/{pullRequestId}
+  method: patch
+  operationId: pullRequests_update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/reviewers
+  method: get
+  operationId: pullRequestReviewers_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/reviewers/{reviewerId}
+  method: put
+  operationId: pullRequestReviewers_createOrUpdate
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/reviewers/{reviewerId}
+  method: delete
+  operationId: pullRequestReviewers_delete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads
+  method: get
+  operationId: pullRequestThreads_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads
+  method: post
+  operationId: pullRequestThreads_create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/commits
+  method: get
+  operationId: pullRequestCommits_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/commits
+  method: get
+  operationId: commits_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/commits/{commitId}
+  method: get
+  operationId: commits_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/refs
+  method: get
+  operationId: refs_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/refs
+  method: post
+  operationId: refs_update
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}/pushes
+  method: get
+  operationId: pushes_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/pushes
+  method: post
+  operationId: pushes_create
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /git/repositories/{repositoryId}/pushes/{pushId}
+  method: get
+  operationId: pushes_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/items
+  method: get
+  operationId: items_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /git/repositories/{repositoryId}/stats/branches
+  method: get
+  operationId: stats_list
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
