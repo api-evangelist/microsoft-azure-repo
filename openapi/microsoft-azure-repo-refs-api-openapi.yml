@@ -1,0 +1,291 @@
+openapi: 3.1.0
+info:
+  title: Azure Repos Git Commits Refs API
+  description: REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: https://azure.microsoft.com/en-us/support/legal/
+servers:
+- url: https://dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Services
+  variables:
+    organization:
+      description: The name of the Azure DevOps organization
+      default: myorganization
+    project:
+      description: Project ID or project name
+      default: myproject
+security:
+- oauth2: []
+- basicAuth: []
+tags:
+- name: Refs
+  description: Operations for managing branches and tags (refs) including listing, creating, updating, and deleting refs.
+paths:
+  /git/repositories/{repositoryId}/refs:
+    get:
+      operationId: refs_list
+      summary: Azure Repos List refs (branches and tags)
+      description: Retrieve all refs (branches and tags) for a repository. Supports filtering by name prefix, peeling tags to their target objects, and including statuses such as build and policy check results.
+      tags:
+      - Refs
+      parameters:
+      - $ref: '#/components/parameters/repositoryId'
+      - name: filter
+        in: query
+        description: Filter refs by name prefix (e.g., heads/main, tags/v1)
+        schema:
+          type: string
+      - name: includeLinks
+        in: query
+        description: Include reference links in the response
+        schema:
+          type: boolean
+      - name: includeStatuses
+        in: query
+        description: Include status information for each ref
+        schema:
+          type: boolean
+      - name: includeMyBranches
+        in: query
+        description: Include only branches owned by the authenticated user
+        schema:
+          type: boolean
+      - name: peelTags
+        in: query
+        description: Annotated tags will populate the PeeledObjectId property
+        schema:
+          type: boolean
+      - name: $top
+        in: query
+        description: Maximum number of refs to return
+        schema:
+          type: integer
+          format: int32
+      - name: continuationToken
+        in: query
+        description: Continuation token for paging through results
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieved refs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitRef'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+    post:
+      operationId: refs_update
+      summary: Azure Repos Create, update, or delete refs
+      description: Create, update, or delete one or more refs (branches or tags) in a single atomic operation. To create a ref, set oldObjectId to 0000000000000000000000000000000000000000. To delete a ref, set newObjectId to 0000000000000000000000000000000000000000.
+      tags:
+      - Refs
+      parameters:
+      - $ref: '#/components/parameters/repositoryId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                - name
+                - oldObjectId
+                - newObjectId
+                properties:
+                  name:
+                    type: string
+                    description: Full ref name (e.g., refs/heads/new-branch)
+                  oldObjectId:
+                    type: string
+                    description: Current object ID of the ref. Use all zeros for creation.
+                  newObjectId:
+                    type: string
+                    description: New object ID for the ref. Use all zeros for deletion.
+      responses:
+        '200':
+          description: Refs updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitRefUpdateResult'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+components:
+  schemas:
+    GitStatus:
+      type: object
+      description: Status metadata posted by a service or extension against a commit or pull request, such as build results or policy checks.
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Status identifier
+        state:
+          type: string
+          enum:
+          - notSet
+          - pending
+          - succeeded
+          - failed
+          - error
+          - notApplicable
+          description: State of the status
+        description:
+          type: string
+          description: Status description
+        context:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the status context
+            genre:
+              type: string
+              description: Genre of the status
+        targetUrl:
+          type: string
+          format: uri
+          description: URL with status details
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        creationDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+    GitRef:
+      type: object
+      description: A Git ref (branch or tag) including its name, object ID, and optional creator and status information.
+      properties:
+        name:
+          type: string
+          description: Full ref name (e.g., refs/heads/main, refs/tags/v1.0)
+        objectId:
+          type: string
+          description: SHA-1 hash the ref points to
+        peeledObjectId:
+          type: string
+          description: For annotated tags, the SHA-1 of the target object
+        creator:
+          $ref: '#/components/schemas/IdentityRef'
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this ref
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitStatus'
+          description: Status checks for this ref
+        isLocked:
+          type: boolean
+          description: Whether the ref is locked
+        isLockedBy:
+          $ref: '#/components/schemas/IdentityRef'
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps identity (user or group)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identity ID
+        displayName:
+          type: string
+          description: Display name of the identity
+        uniqueName:
+          type: string
+          description: Unique name (typically email)
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this identity
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the identity's avatar image
+        descriptor:
+          type: string
+          description: Graph descriptor for the identity
+        isContainer:
+          type: boolean
+          description: Whether this identity is a group
+    GitRefUpdateResult:
+      type: object
+      description: Result of a ref update operation
+      properties:
+        name:
+          type: string
+          description: Full ref name
+        oldObjectId:
+          type: string
+          description: Previous object ID
+        newObjectId:
+          type: string
+          description: New object ID
+        success:
+          type: boolean
+          description: Whether the update succeeded
+        updateStatus:
+          type: string
+          description: Status of the update operation
+        repositoryId:
+          type: string
+          format: uuid
+          description: Repository the ref belongs to
+  parameters:
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authorization code flow for Azure DevOps Services. Requires the vso.code scope for read operations and vso.code_write for write operations.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+          tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+          scopes:
+            vso.code: Read source code and metadata about commits, changesets, branches, and other version control artifacts
+            vso.code_write: Read, create, and manage pull requests and code
+            vso.code_manage: Read, create, manage, and delete repositories and branches
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication using a Personal Access Token (PAT). Use any string for the username and the PAT as the password.
+externalDocs:
+  description: Azure DevOps Git REST API Reference
+  url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1

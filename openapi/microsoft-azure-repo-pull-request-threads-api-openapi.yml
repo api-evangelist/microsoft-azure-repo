@@ -1,0 +1,226 @@
+openapi: 3.1.0
+info:
+  title: Azure Repos Git Commits Pull Request Threads API
+  description: REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: https://azure.microsoft.com/en-us/support/legal/
+servers:
+- url: https://dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Services
+  variables:
+    organization:
+      description: The name of the Azure DevOps organization
+      default: myorganization
+    project:
+      description: Project ID or project name
+      default: myproject
+security:
+- oauth2: []
+- basicAuth: []
+tags:
+- name: Pull Request Threads
+  description: Operations for managing comment threads on pull requests, including creating threads and replying to comments.
+paths:
+  /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads:
+    get:
+      operationId: pullRequestThreads_list
+      summary: Azure Repos List pull request threads
+      description: Retrieve all comment threads for a pull request. Threads contain comments, code review discussions, and system-generated messages.
+      tags:
+      - Pull Request Threads
+      parameters:
+      - $ref: '#/components/parameters/repositoryId'
+      - $ref: '#/components/parameters/pullRequestId'
+      responses:
+        '200':
+          description: Successfully retrieved threads
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitPullRequestCommentThread'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pull request or repository not found
+    post:
+      operationId: pullRequestThreads_create
+      summary: Azure Repos Create a comment thread
+      description: Create a new comment thread on a pull request. Threads can be associated with specific file paths and line ranges for inline code review comments.
+      tags:
+      - Pull Request Threads
+      parameters:
+      - $ref: '#/components/parameters/repositoryId'
+      - $ref: '#/components/parameters/pullRequestId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitPullRequestCommentThread'
+      responses:
+        '200':
+          description: Thread created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitPullRequestCommentThread'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Pull request or repository not found
+components:
+  schemas:
+    GitPullRequestCommentThread:
+      type: object
+      description: A comment thread on a pull request, optionally associated with a specific file and line range for inline code review.
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Unique ID of the thread
+        publishedDate:
+          type: string
+          format: date-time
+          description: Date the thread was published
+        lastUpdatedDate:
+          type: string
+          format: date-time
+          description: Date the thread was last updated
+        status:
+          type: string
+          enum:
+          - unknown
+          - active
+          - fixed
+          - wontFix
+          - closed
+          - byDesign
+          - pending
+          description: Resolution status of the thread
+        comments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int32
+              parentCommentId:
+                type: integer
+                format: int32
+              content:
+                type: string
+              publishedDate:
+                type: string
+                format: date-time
+              lastUpdatedDate:
+                type: string
+                format: date-time
+              author:
+                $ref: '#/components/schemas/IdentityRef'
+              commentType:
+                type: string
+                enum:
+                - unknown
+                - text
+                - codeChange
+                - system
+        threadContext:
+          type: object
+          description: File path and line range for inline comments
+          properties:
+            filePath:
+              type: string
+            rightFileStart:
+              type: object
+              properties:
+                line:
+                  type: integer
+                offset:
+                  type: integer
+            rightFileEnd:
+              type: object
+              properties:
+                line:
+                  type: integer
+                offset:
+                  type: integer
+        properties:
+          type: object
+          additionalProperties: true
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps identity (user or group)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identity ID
+        displayName:
+          type: string
+          description: Display name of the identity
+        uniqueName:
+          type: string
+          description: Unique name (typically email)
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this identity
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the identity's avatar image
+        descriptor:
+          type: string
+          description: Graph descriptor for the identity
+        isContainer:
+          type: boolean
+          description: Whether this identity is a group
+  parameters:
+    pullRequestId:
+      name: pullRequestId
+      in: path
+      required: true
+      description: ID of the pull request
+      schema:
+        type: integer
+        format: int32
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authorization code flow for Azure DevOps Services. Requires the vso.code scope for read operations and vso.code_write for write operations.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+          tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+          scopes:
+            vso.code: Read source code and metadata about commits, changesets, branches, and other version control artifacts
+            vso.code_write: Read, create, and manage pull requests and code
+            vso.code_manage: Read, create, manage, and delete repositories and branches
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication using a Personal Access Token (PAT). Use any string for the username and the PAT as the password.
+externalDocs:
+  description: Azure DevOps Git REST API Reference
+  url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1

@@ -1,0 +1,327 @@
+openapi: 3.1.0
+info:
+  title: Azure Repos Git Commits Stats API
+  description: REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.
+  version: '7.1'
+  contact:
+    name: Microsoft Azure DevOps
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: https://azure.microsoft.com/en-us/support/legal/
+servers:
+- url: https://dev.azure.com/{organization}/{project}/_apis
+  description: Azure DevOps Services
+  variables:
+    organization:
+      description: The name of the Azure DevOps organization
+      default: myorganization
+    project:
+      description: Project ID or project name
+      default: myproject
+security:
+- oauth2: []
+- basicAuth: []
+tags:
+- name: Stats
+  description: Operations for retrieving branch statistics such as commit counts ahead and behind relative to the default branch.
+paths:
+  /git/repositories/{repositoryId}/stats/branches:
+    get:
+      operationId: stats_list
+      summary: Azure Repos List branch statistics
+      description: Retrieve statistics for all branches in a repository, including the number of commits ahead and behind relative to the default branch or a specified base version.
+      tags:
+      - Stats
+      parameters:
+      - $ref: '#/components/parameters/repositoryId'
+      - name: baseVersionDescriptor.version
+        in: query
+        description: Base branch or commit to compare against
+        schema:
+          type: string
+      - name: baseVersionDescriptor.versionType
+        in: query
+        description: Type of the base version
+        schema:
+          type: string
+          enum:
+          - branch
+          - tag
+          - commit
+      responses:
+        '200':
+          description: Successfully retrieved branch statistics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  value:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GitBranchStats'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Repository not found
+components:
+  schemas:
+    GitUserDate:
+      type: object
+      description: User info and date for Git operations
+      properties:
+        name:
+          type: string
+          description: Name of the user
+        email:
+          type: string
+          format: email
+          description: Email address of the user
+        date:
+          type: string
+          format: date-time
+          description: Date of the Git operation
+        imageUrl:
+          type: string
+          format: uri
+          description: Avatar URL for the user
+    GitStatus:
+      type: object
+      description: Status metadata posted by a service or extension against a commit or pull request, such as build results or policy checks.
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Status identifier
+        state:
+          type: string
+          enum:
+          - notSet
+          - pending
+          - succeeded
+          - failed
+          - error
+          - notApplicable
+          description: State of the status
+        description:
+          type: string
+          description: Status description
+        context:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the status context
+            genre:
+              type: string
+              description: Genre of the status
+        targetUrl:
+          type: string
+          format: uri
+          description: URL with status details
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        creationDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+    GitChange:
+      type: object
+      description: Represents a change to an item in a commit
+      properties:
+        changeId:
+          type: integer
+          format: int32
+          description: ID of the change within the group
+        changeType:
+          type: string
+          enum:
+          - add
+          - edit
+          - delete
+          - rename
+          - merge
+          - lock
+          - branch
+          - rollback
+          - none
+          description: Type of change made to the item
+        item:
+          type: object
+          description: The affected item
+          properties:
+            objectId:
+              type: string
+            originalObjectId:
+              type: string
+            gitObjectType:
+              type: string
+            commitId:
+              type: string
+            path:
+              type: string
+            url:
+              type: string
+        originalPath:
+          type: string
+          description: Original path if the item was renamed
+        url:
+          type: string
+          description: URL to retrieve the item
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps identity (user or group)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identity ID
+        displayName:
+          type: string
+          description: Display name of the identity
+        uniqueName:
+          type: string
+          description: Unique name (typically email)
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this identity
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the identity's avatar image
+        descriptor:
+          type: string
+          description: Graph descriptor for the identity
+        isContainer:
+          type: boolean
+          description: Whether this identity is a group
+    ResourceRef:
+      type: object
+      description: Generic reference to a resource
+      properties:
+        id:
+          type: string
+          description: Resource ID
+        url:
+          type: string
+          format: uri
+          description: Resource URL
+    GitBranchStats:
+      type: object
+      description: Branch statistics including commit counts ahead and behind a base version.
+      properties:
+        name:
+          type: string
+          description: Branch name
+        aheadCount:
+          type: integer
+          format: int32
+          description: Number of commits ahead of the base
+        behindCount:
+          type: integer
+          format: int32
+          description: Number of commits behind the base
+        commit:
+          $ref: '#/components/schemas/GitCommitRef'
+        isBaseVersion:
+          type: boolean
+          description: Whether this is the base version
+    GitCommitRef:
+      type: object
+      description: Properties describing a Git commit and associated metadata including author, committer, message, and related resources.
+      properties:
+        commitId:
+          type: string
+          description: SHA-1 hash of the commit
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        comment:
+          type: string
+          description: Commit message
+        commentTruncated:
+          type: boolean
+          description: Whether the comment was truncated
+        changeCounts:
+          type: object
+          description: Counts of change types in the commit
+          additionalProperties:
+            type: integer
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitChange'
+          description: List of changes in the commit
+        parents:
+          type: array
+          items:
+            type: string
+          description: SHA-1 hashes of parent commits
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this commit
+        remoteUrl:
+          type: string
+          format: uri
+          description: Web URL to view the commit
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitStatus'
+          description: Status checks posted against this commit
+        workItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRef'
+          description: Linked work items
+        push:
+          type: object
+          description: Push that included this commit
+          properties:
+            pushId:
+              type: integer
+              format: int32
+            date:
+              type: string
+              format: date-time
+            pushedBy:
+              $ref: '#/components/schemas/IdentityRef'
+            url:
+              type: string
+              format: uri
+  parameters:
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authorization code flow for Azure DevOps Services. Requires the vso.code scope for read operations and vso.code_write for write operations.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://app.vssps.visualstudio.com/oauth2/authorize
+          tokenUrl: https://app.vssps.visualstudio.com/oauth2/token
+          scopes:
+            vso.code: Read source code and metadata about commits, changesets, branches, and other version control artifacts
+            vso.code_write: Read, create, and manage pull requests and code
+            vso.code_manage: Read, create, manage, and delete repositories and branches
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication using a Personal Access Token (PAT). Use any string for the username and the PAT as the password.
+externalDocs:
+  description: Azure DevOps Git REST API Reference
+  url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
