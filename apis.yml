@@ -2,6 +2,19 @@ name: Azure Repos
 description: >-
   Azure Repos is a set of version control tools that you can use to manage your code. Whether your software project is
   large or small, using version control as soon as possible is a good idea.
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://docs.microsoft.com/en-us/azure/devops/repos/media/index/repos.svg
 tags:
   - DevOps
@@ -15,92 +28,366 @@ modified: '2026-05-19'
 url: https://azure.microsoft.com/en-us/services/devops/repos/
 specificationVersion: '0.18'
 apis:
-  - name: Azure DevOps Services REST API - Git
-    description: REST API for Git repositories in Azure Repos, including repositories, commits, pull requests, branches, and more.
-    image: https://docs.microsoft.com/en-us/azure/devops/repos/media/index/repos.svg
-    humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
-    tags:
-      - Branches
-      - Commits
-      - Git
-      - Pull Requests
-      - Repositories
-    properties:
-      - type: Documentation
-        url: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
-      - type: OpenAPI
-        url: https://github.com/MicrosoftDocs/vsts-rest-api-specs/blob/master/specification/git/7.1/git.json
-      - type: Authentication
-        url: https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
-      - type: RateLimits
-        url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
-      - type: Reference
-        url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
-      - type: GettingStarted
-        url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
-      - type: Client Libraries
-        url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
-    contact:
-      - FN: Azure DevOps Support
-        email:
-          - email protected
-        url: https://azure.microsoft.com/en-us/support/devops/
-  - name: Azure DevOps Services REST API - TFVC
-    description: REST API for Team Foundation Version Control (TFVC) repositories in Azure Repos.
-    image: https://docs.microsoft.com/en-us/azure/devops/repos/media/index/repos.svg
-    humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/tfvc
-    tags:
-      - Changesets
-      - Shelvesets
-      - TFVC
-      - Version Control
-    properties:
-      - type: Documentation
-        url: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
-      - type: OpenAPI
-        url: https://github.com/MicrosoftDocs/vsts-rest-api-specs/blob/master/specification/tfvc/7.1/tfvc.json
-      - type: Authentication
-        url: https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
-      - type: Reference
-        url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
-      - type: RateLimits
-        url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
-      - type: Client Libraries
-        url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
-    contact:
-      - FN: Azure DevOps Support
-        email:
-          - email protected
-        url: https://azure.microsoft.com/en-us/support/devops/
-  - name: Azure DevOps Services REST API - Policy
-    description: REST API for managing repository policies including branch policies, required reviewers, and build validation.
-    image: https://docs.microsoft.com/en-us/azure/devops/repos/media/index/repos.svg
-    humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
-    baseURL: https://dev.azure.com/{organization}/{project}/_apis/policy
-    tags:
-      - Branch Policy
-      - Build Validation
-      - Code Review
-      - Policy
-    properties:
-      - type: Documentation
-        url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
-      - type: OpenAPI
-        url: https://github.com/MicrosoftDocs/vsts-rest-api-specs/blob/master/specification/policy/7.1/policy.json
-      - type: Reference
-        url: https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
-      - type: Authentication
-        url: >-
-          https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
-      - type: RateLimits
-        url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
-    contact:
-      - FN: Azure DevOps Support
-        email:
-          - email protected
-        url: https://azure.microsoft.com/en-us/support/devops/
+- aid: microsoft-azure-repo:microsoft-azure-repo-commits-api
+  name: Azure Repos Commits API
+  description: >-
+    Operations for accessing commit details and commit history within a repository, including diffs and
+    changes.
+  humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
+  tags:
+  - Commits
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-repo-commits-api-openapi.yml
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  - type: Authentication
+    url: >-
+      https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: RateLimits
+    url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+  - type: GettingStarted
+    url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
+  - type: Client Libraries
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
+  - type: Reference
+    url: >-
+      https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
+  - type: Authentication
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
+- aid: microsoft-azure-repo:microsoft-azure-repo-items-api
+  name: Azure Repos Items API
+  description: >-
+    Operations for retrieving files, folders, and submodules from a repository. Files are blobs, folders
+    are trees.
+  humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
+  tags:
+  - Items
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-repo-items-api-openapi.yml
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  - type: Authentication
+    url: >-
+      https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: RateLimits
+    url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+  - type: GettingStarted
+    url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
+  - type: Client Libraries
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
+  - type: Reference
+    url: >-
+      https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
+  - type: Authentication
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
+- aid: microsoft-azure-repo:microsoft-azure-repo-pull-request-reviewers-api
+  name: Azure Repos Pull Request Reviewers API
+  description: >-
+    Operations for managing reviewers on pull requests, including adding, removing, and updating reviewer
+    votes.
+  humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
+  tags:
+  - Pull Request Reviewers
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-repo-pull-request-reviewers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  - type: Authentication
+    url: >-
+      https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: RateLimits
+    url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+  - type: GettingStarted
+    url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
+  - type: Client Libraries
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
+  - type: Reference
+    url: >-
+      https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
+  - type: Authentication
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
+- aid: microsoft-azure-repo:microsoft-azure-repo-pull-request-threads-api
+  name: Azure Repos Pull Request Threads API
+  description: >-
+    Operations for managing comment threads on pull requests, including creating threads and replying
+    to comments.
+  humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
+  tags:
+  - Pull Request Threads
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-repo-pull-request-threads-api-openapi.yml
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  - type: Authentication
+    url: >-
+      https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: RateLimits
+    url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+  - type: GettingStarted
+    url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
+  - type: Client Libraries
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
+  - type: Reference
+    url: >-
+      https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
+  - type: Authentication
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
+- aid: microsoft-azure-repo:microsoft-azure-repo-pull-requests-api
+  name: Azure Repos Pull Requests API
+  description: >-
+    Operations for creating, retrieving, updating, and completing pull requests. Includes managing reviewers,
+    labels, and merge options.
+  humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
+  tags:
+  - Pull Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-repo-pull-requests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  - type: Authentication
+    url: >-
+      https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: RateLimits
+    url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+  - type: GettingStarted
+    url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
+  - type: Client Libraries
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
+  - type: Reference
+    url: >-
+      https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
+  - type: Authentication
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
+- aid: microsoft-azure-repo:microsoft-azure-repo-pushes-api
+  name: Azure Repos Pushes API
+  description: >-
+    Operations for listing and creating pushes, which represent one or more commits pushed to a repository
+    branch.
+  humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
+  tags:
+  - Pushes
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-repo-pushes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  - type: Authentication
+    url: >-
+      https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: RateLimits
+    url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+  - type: GettingStarted
+    url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
+  - type: Client Libraries
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
+  - type: Reference
+    url: >-
+      https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
+  - type: Authentication
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
+- aid: microsoft-azure-repo:microsoft-azure-repo-refs-api
+  name: Azure Repos Refs API
+  description: >-
+    Operations for managing branches and tags (refs) including listing, creating, updating, and deleting
+    refs.
+  humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
+  tags:
+  - Refs
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-repo-refs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  - type: Authentication
+    url: >-
+      https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: RateLimits
+    url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+  - type: GettingStarted
+    url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
+  - type: Client Libraries
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
+  - type: Reference
+    url: >-
+      https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
+  - type: Authentication
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
+- aid: microsoft-azure-repo:microsoft-azure-repo-repositories-api
+  name: Azure Repos Repositories API
+  description: >-
+    Operations for managing Git repositories including creating, listing, updating, and deleting repositories
+    within a project.
+  humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
+  tags:
+  - Repositories
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-repo-repositories-api-openapi.yml
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  - type: Authentication
+    url: >-
+      https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: RateLimits
+    url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+  - type: GettingStarted
+    url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
+  - type: Client Libraries
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
+  - type: Reference
+    url: >-
+      https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
+  - type: Authentication
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
+- aid: microsoft-azure-repo:microsoft-azure-repo-stats-api
+  name: Azure Repos Stats API
+  description: >-
+    Operations for retrieving branch statistics such as commit counts ahead and behind relative to the
+    default branch.
+  humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
+  tags:
+  - Stats
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-azure-repo-stats-api-openapi.yml
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
+  - type: Authentication
+    url: >-
+      https://docs.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance
+  - type: RateLimits
+    url: https://docs.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/?view=azure-devops-rest-7.1
+  - type: GettingStarted
+    url: https://learn.microsoft.com/en-us/azure/devops/repos/git/gitquickstart?view=azure-devops
+  - type: Client Libraries
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/dotnet-client-libraries?view=azure-devops
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/tfvc/
+  - type: Reference
+    url: https://learn.microsoft.com/en-us/rest/api/azure/devops/tfvc/?view=azure-devops-rest-7.1
+  - type: RateLimits
+    url: https://learn.microsoft.com/en-us/azure/devops/integrate/concepts/rate-limits
+  - type: Documentation
+    url: https://docs.microsoft.com/en-us/rest/api/azure/devops/policy/
+  - type: Reference
+    url: >-
+      https://learn.microsoft.com/en-us/rest/api/azure/devops/policy/?view=azure-devops-rest-7.1
+  - type: Authentication
+    url: >-
+      https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
 common:
   - type: AgenticAccess
     url: agentic-access/microsoft-azure-repo-agentic-access.yml
