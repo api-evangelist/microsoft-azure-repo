@@ -1,0 +1,30 @@
+{
+  "provider": "microsoft-azure-repo",
+  "sources": [
+    "microsoft-azure-repo-commits-api-openapi.yml",
+    "microsoft-azure-repo-items-api-openapi.yml",
+    "microsoft-azure-repo-pull-request-reviewers-api-openapi.yml",
+    "microsoft-azure-repo-pull-request-threads-api-openapi.yml",
+    "microsoft-azure-repo-pull-requests-api-openapi.yml",
+    "microsoft-azure-repo-pushes-api-openapi.yml",
+    "microsoft-azure-repo-refs-api-openapi.yml",
+    "microsoft-azure-repo-repositories-api-openapi.yml",
+    "microsoft-azure-repo-stats-api-openapi.yml"
+  ],
+  "outputs": [
+    "microsoft-azure-repo-commits-api-openapi.yml",
+    "microsoft-azure-repo-items-api-openapi.yml",
+    "microsoft-azure-repo-pull-request-reviewers-api-openapi.yml",
+    "microsoft-azure-repo-pull-request-threads-api-openapi.yml",
+    "microsoft-azure-repo-pull-requests-api-openapi.yml",
+    "microsoft-azure-repo-pushes-api-openapi.yml",
+    "microsoft-azure-repo-refs-api-openapi.yml",
+    "microsoft-azure-repo-repositories-api-openapi.yml",
+    "microsoft-azure-repo-stats-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
