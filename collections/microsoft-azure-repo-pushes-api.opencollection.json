@@ -1,0 +1,151 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Repos Git Commits Pushes API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://app.vssps.visualstudio.com/oauth2/authorize",
+      "accessTokenUrl": "https://app.vssps.visualstudio.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pushes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List pushes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pushes",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Number of pushes to return"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of pushes to skip"
+              },
+              {
+                "name": "searchCriteria.fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for filtering pushes"
+              },
+              {
+                "name": "searchCriteria.toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for filtering pushes"
+              },
+              {
+                "name": "searchCriteria.pusherId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by pusher identity ID"
+              },
+              {
+                "name": "searchCriteria.refName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by branch name (e.g., refs/heads/main)"
+              },
+              {
+                "name": "searchCriteria.includeRefUpdates",
+                "value": "",
+                "type": "query",
+                "description": "Include ref update details in results"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of pushes to a repository. Each push includes the pusher identity, date, and references to the commits and ref updates included in the push."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Create a push",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pushes",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Push changes to a repository. A push includes one or more ref updates and associated commits. Used to create branches, push commits, and create initial commits for new repositories."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Get a push",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pushes/:pushId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pushId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the push"
+              },
+              {
+                "name": "includeCommits",
+                "value": "",
+                "type": "query",
+                "description": "Number of commits to include"
+              },
+              {
+                "name": "includeRefUpdates",
+                "value": "",
+                "type": "query",
+                "description": "Include ref update details"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific push by its ID. Returns the push details including commits, ref updates, pusher identity, and date."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Repos Git Commits Items API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://app.vssps.visualstudio.com/oauth2/authorize",
+      "accessTokenUrl": "https://app.vssps.visualstudio.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List items (files and folders)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/items",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "scopePath",
+                "value": "",
+                "type": "query",
+                "description": "The path scope for items (e.g., /src or /README.md)"
+              },
+              {
+                "name": "recursionLevel",
+                "value": "",
+                "type": "query",
+                "description": "Level of recursion for folder listing"
+              },
+              {
+                "name": "versionDescriptor.version",
+                "value": "",
+                "type": "query",
+                "description": "Branch name, tag, or commit to get items from"
+              },
+              {
+                "name": "versionDescriptor.versionType",
+                "value": "",
+                "type": "query",
+                "description": "Type of version identifier"
+              },
+              {
+                "name": "includeContentMetadata",
+                "value": "",
+                "type": "query",
+                "description": "Include content metadata for items"
+              },
+              {
+                "name": "latestProcessedChange",
+                "value": "",
+                "type": "query",
+                "description": "Include the latest change for each item"
+              },
+              {
+                "name": "includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Include reference links"
+              }
+            ]
+          },
+          "docs": "Get a list of items (files, folders, and submodules) in a repository path. Files are represented as blobs, folders as trees, and submodules as commits."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

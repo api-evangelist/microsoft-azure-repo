@@ -1,0 +1,676 @@
+{
+  "item": [
+    {
+      "id": "81672bef-940c-4d87-a576-0d94ddf5a68f",
+      "name": "Pull Request Threads",
+      "description": {
+        "content": "Operations for managing comment threads on pull requests, including creating threads and replying to comments.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d1e1022d-3d85-4f46-bca3-8c620e90ebcd",
+          "name": "Azure Repos List pull request threads",
+          "request": {
+            "name": "Azure Repos List pull request threads",
+            "description": {
+              "content": "Retrieve all comment threads for a pull request. Threads contain comments, code review discussions, and system-generated messages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId",
+                "pullrequests",
+                ":pullRequestId",
+                "threads"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) The ID or name of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pullRequestId",
+                  "description": "(Required) ID of the pull request"
+                },
+                {
+                  "description": "The name of the Azure DevOps organization",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Project ID or project name",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2613f3b6-98dc-4d6e-aee0-00be09ba8541",
+              "name": "Successfully retrieved threads",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pullrequests",
+                    ":pullRequestId",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pullRequestId",
+                      "description": "(Required) ID of the pull request"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 2303,\n  \"value\": [\n    {\n      \"id\": 2370,\n      \"publishedDate\": \"1975-12-27T12:10:43.060Z\",\n      \"lastUpdatedDate\": \"1995-10-27T02:58:53.301Z\",\n      \"status\": \"byDesign\",\n      \"comments\": [\n        {\n          \"id\": 9197,\n          \"parentCommentId\": 3490,\n          \"content\": \"string\",\n          \"publishedDate\": \"1998-10-25T20:19:03.637Z\",\n          \"lastUpdatedDate\": \"2025-09-26T15:10:19.881Z\",\n          \"author\": {\n            \"id\": \"4e4e2155-b413-4edf-2040-d373c9c55c3c\",\n            \"displayName\": \"string\",\n            \"uniqueName\": \"string\",\n            \"url\": \"https://lmqgbiOggQNIR.xesiS0DZBW2j7F2HV.pcCKIAr5XiDLLI9.wBslENSBsDJtB9rPjDQbOuUcoSZAWI\",\n            \"imageUrl\": \"https://QBvurOYlMqutMSMnmMpCaOIBuU.efxRFcHAsmq6txij.R-bkRmwTuWxlL56fVpc7zSoPkSPjSKtfWxSzSRG6W\",\n            \"descriptor\": \"string\",\n            \"isContainer\": false\n          },\n          \"commentType\": \"system\"\n        },\n        {\n          \"id\": 4044,\n          \"parentCommentId\": 3346,\n          \"content\": \"string\",\n          \"publishedDate\": \"2012-03-15T16:51:20.710Z\",\n          \"lastUpdatedDate\": \"2010-07-16T01:01:58.595Z\",\n          \"author\": {\n            \"id\": \"8e7b3098-08d8-93ad-f3da-d1abba3963af\",\n            \"displayName\": \"string\",\n            \"uniqueName\": \"string\",\n            \"url\": \"http://jbr.jrmzLYZvqJULpo6UVRdO\",\n            \"imageUrl\": \"http://nWxyUiLlFjVxWbPw.rbrJ4p8BLMKPhOp2mNefUgtl\",\n            \"descriptor\": \"string\",\n            \"isContainer\": true\n          },\n          \"commentType\": \"system\"\n        }\n      ],\n      \"threadContext\": {\n        \"filePath\": \"string\",\n        \"rightFileStart\": {\n          \"line\": 8727,\n          \"offset\": 2865\n        },\n        \"rightFileEnd\": {\n          \"line\": 2962,\n          \"offset\": 2276\n        }\n      },\n      \"properties\": {\n        \"key_0\": false\n      }\n    },\n    {\n      \"id\": 5269,\n      \"publishedDate\": \"1974-06-13T19:46:42.516Z\",\n      \"lastUpdatedDate\": \"1988-10-29T21:47:27.956Z\",\n      \"status\": \"byDesign\",\n      \"comments\": [\n        {\n          \"id\": 6123,\n          \"parentCommentId\": 6905,\n          \"content\": \"string\",\n          \"publishedDate\": \"2000-09-16T09:03:35.224Z\",\n          \"lastUpdatedDate\": \"1976-04-29T11:13:18.011Z\",\n          \"author\": {\n            \"id\": \"16c89e33-7ffd-cf7b-8fe8-c2f7c7a7f91f\",\n            \"displayName\": \"string\",\n            \"uniqueName\": \"string\",\n            \"url\": \"https://AIrZbPPKScPIwLRHqdhJdskktrNO.pmdeIH0Rnhv\",\n            \"imageUrl\": \"https://XsTrsJjFFnidLjDqYTCWt.yfcnocfF8-gKxtXkVoULsf.wrYeV-WcokTxhtpSfG4lPcIW3dpOGsEK3pScSQ+H\",\n            \"descriptor\": \"string\",\n            \"isContainer\": true\n          },\n          \"commentType\": \"text\"\n        },\n        {\n          \"id\": 8896,\n          \"parentCommentId\": 2149,\n          \"content\": \"string\",\n          \"publishedDate\": \"1966-06-25T03:59:24.722Z\",\n          \"lastUpdatedDate\": \"1962-05-22T11:02:54.807Z\",\n          \"author\": {\n            \"id\": \"2070f39b-865c-d14f-50ed-cec4320b16fb\",\n            \"displayName\": \"string\",\n            \"uniqueName\": \"string\",\n            \"url\": \"https://y.ijpD.uQ8sDU1ozhSIxkeGe1n19smnD,ijL\",\n            \"imageUrl\": \"http://CqXjrKybs.cktxNEVB,3,TJox\",\n            \"descriptor\": \"string\",\n            \"isContainer\": false\n          },\n          \"commentType\": \"codeChange\"\n        }\n      ],\n      \"threadContext\": {\n        \"filePath\": \"string\",\n        \"rightFileStart\": {\n          \"line\": 1555,\n          \"offset\": 6470\n        },\n        \"rightFileEnd\": {\n          \"line\": 1314,\n          \"offset\": 8666\n        }\n      },\n      \"properties\": {\n        \"key_0\": true,\n        \"key_1\": 7333,\n        \"key_2\": 4658,\n        \"key_3\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cf03db7-e911-4e2b-aa08-8356dc6e6ba6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pullrequests",
+                    ":pullRequestId",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pullRequestId",
+                      "description": "(Required) ID of the pull request"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bae26c4c-4978-4930-8cf7-d0ad8404dfd8",
+              "name": "Pull request or repository not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pullrequests",
+                    ":pullRequestId",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pullRequestId",
+                      "description": "(Required) ID of the pull request"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1694698-b1c7-47f1-8609-2b0c1a5a5132",
+          "name": "Azure Repos Create a comment thread",
+          "request": {
+            "name": "Azure Repos Create a comment thread",
+            "description": {
+              "content": "Create a new comment thread on a pull request. Threads can be associated with specific file paths and line ranges for inline code review comments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId",
+                "pullrequests",
+                ":pullRequestId",
+                "threads"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) The ID or name of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pullRequestId",
+                  "description": "(Required) ID of the pull request"
+                },
+                {
+                  "description": "The name of the Azure DevOps organization",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Project ID or project name",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<integer>\",\n  \"publishedDate\": \"<dateTime>\",\n  \"lastUpdatedDate\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"comments\": [\n    {\n      \"id\": \"<integer>\",\n      \"parentCommentId\": \"<integer>\",\n      \"content\": \"<string>\",\n      \"publishedDate\": \"<dateTime>\",\n      \"lastUpdatedDate\": \"<dateTime>\",\n      \"author\": {\n        \"id\": \"<uuid>\",\n        \"displayName\": \"<string>\",\n        \"uniqueName\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"imageUrl\": \"<uri>\",\n        \"descriptor\": \"<string>\",\n        \"isContainer\": \"<boolean>\"\n      },\n      \"commentType\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"parentCommentId\": \"<integer>\",\n      \"content\": \"<string>\",\n      \"publishedDate\": \"<dateTime>\",\n      \"lastUpdatedDate\": \"<dateTime>\",\n      \"author\": {\n        \"id\": \"<uuid>\",\n        \"displayName\": \"<string>\",\n        \"uniqueName\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"imageUrl\": \"<uri>\",\n        \"descriptor\": \"<string>\",\n        \"isContainer\": \"<boolean>\"\n      },\n      \"commentType\": \"<string>\"\n    }\n  ],\n  \"threadContext\": {\n    \"filePath\": \"<string>\",\n    \"rightFileStart\": {\n      \"line\": \"<integer>\",\n      \"offset\": \"<integer>\"\n    },\n    \"rightFileEnd\": {\n      \"line\": \"<integer>\",\n      \"offset\": \"<integer>\"\n    }\n  },\n  \"properties\": {\n    \"key_0\": \"string\",\n    \"key_1\": 5458,\n    \"key_2\": true,\n    \"key_3\": 744.4092676642211\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "02f7f75e-91f3-48c2-8d84-38570583072a",
+              "name": "Thread created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pullrequests",
+                    ":pullRequestId",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pullRequestId",
+                      "description": "(Required) ID of the pull request"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<integer>\",\n  \"publishedDate\": \"<dateTime>\",\n  \"lastUpdatedDate\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"comments\": [\n    {\n      \"id\": \"<integer>\",\n      \"parentCommentId\": \"<integer>\",\n      \"content\": \"<string>\",\n      \"publishedDate\": \"<dateTime>\",\n      \"lastUpdatedDate\": \"<dateTime>\",\n      \"author\": {\n        \"id\": \"94ba3a48-6636-8890-2baa-abe2ff51dc5b\",\n        \"displayName\": \"string\",\n        \"uniqueName\": \"string\",\n        \"url\": \"http://GcJFcSjJwnDanuyrjeidAoULhGCU.hroxr0O8RIR-yNJqeAdfx4uWnMyuhO8JlI9gLt5rHxJuxc7vwQQ6aJRF6yyovXyJpntVc+F6SaB3o\",\n        \"imageUrl\": \"https://kxvrhsqsLZTpbVOasUbnlie.hxDBhkfu,ARD-7n,+JGAprNynFNqQ-3unqsO9RK1ZAHzdRd4RmvBIsyze\",\n        \"descriptor\": \"string\",\n        \"isContainer\": true\n      },\n      \"commentType\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"parentCommentId\": \"<integer>\",\n      \"content\": \"<string>\",\n      \"publishedDate\": \"<dateTime>\",\n      \"lastUpdatedDate\": \"<dateTime>\",\n      \"author\": {\n        \"id\": \"65e1439c-f102-407c-5cca-f8b74e2a5d7c\",\n        \"displayName\": \"string\",\n        \"uniqueName\": \"string\",\n        \"url\": \"http://SGFqampyBuSn.bbdjaBIMosq2Zh5HyifeOKqK0WumaUVaaCztvEugGbus0XbQ5TlOa2\",\n        \"imageUrl\": \"http://nkoataQbfDeJLwMUSiAWNpSQfra.gragDCt,vTUADTpBCAjybTCAC-JkXH8Yufe0d13bYlzDncpt2XYrwv,xuaLJN2t.wk1-uisSQNx\",\n        \"descriptor\": \"string\",\n        \"isContainer\": false\n      },\n      \"commentType\": \"<string>\"\n    }\n  ],\n  \"threadContext\": {\n    \"filePath\": \"<string>\",\n    \"rightFileStart\": {\n      \"line\": \"<integer>\",\n      \"offset\": \"<integer>\"\n    },\n    \"rightFileEnd\": {\n      \"line\": \"<integer>\",\n      \"offset\": \"<integer>\"\n    }\n  },\n  \"properties\": {\n    \"key_0\": 6411,\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8751,\n  \"publishedDate\": \"1971-10-11T06:57:52.835Z\",\n  \"lastUpdatedDate\": \"2013-03-10T08:08:39.402Z\",\n  \"status\": \"active\",\n  \"comments\": [\n    {\n      \"id\": 6122,\n      \"parentCommentId\": 7823,\n      \"content\": \"string\",\n      \"publishedDate\": \"1988-06-27T18:25:49.773Z\",\n      \"lastUpdatedDate\": \"1992-06-13T21:26:32.323Z\",\n      \"author\": {\n        \"id\": \"5a50dfb8-5240-f244-c360-390b3aa09357\",\n        \"displayName\": \"string\",\n        \"uniqueName\": \"string\",\n        \"url\": \"http://VMK.zykiMJnVx\",\n        \"imageUrl\": \"https://d.ykobntkAbwvz5t3wUGPPKmXLzVqCJ3,0ZzKRhheXxY91MAwFt3p,gpgUM4yresYVMJukf\",\n        \"descriptor\": \"string\",\n        \"isContainer\": false\n      },\n      \"commentType\": \"codeChange\"\n    },\n    {\n      \"id\": 8922,\n      \"parentCommentId\": 3409,\n      \"content\": \"string\",\n      \"publishedDate\": \"1954-10-30T12:35:46.137Z\",\n      \"lastUpdatedDate\": \"2002-07-01T23:40:58.632Z\",\n      \"author\": {\n        \"id\": \"536be9fc-270a-1cf5-379f-1692dd06c265\",\n        \"displayName\": \"string\",\n        \"uniqueName\": \"string\",\n        \"url\": \"https://hNTCXZ.oykllffdd,feokI1fr-3Z2G.+\",\n        \"imageUrl\": \"https://LJRfVqSwDRYZgfQabViBOKpQxhWVXms.akoew9ahdK4KjdrqXv0kr-vfc7A.9OwFYYAyqqT8LWPNPheJNER5hGtOVVmcW2XDgtw\",\n        \"descriptor\": \"string\",\n        \"isContainer\": false\n      },\n      \"commentType\": \"unknown\"\n    }\n  ],\n  \"threadContext\": {\n    \"filePath\": \"string\",\n    \"rightFileStart\": {\n      \"line\": 5972,\n      \"offset\": 7362\n    },\n    \"rightFileEnd\": {\n      \"line\": 6004,\n      \"offset\": 8412\n    }\n  },\n  \"properties\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6f66b38-21b5-456a-86d7-1f441eac5846",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pullrequests",
+                    ":pullRequestId",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pullRequestId",
+                      "description": "(Required) ID of the pull request"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<integer>\",\n  \"publishedDate\": \"<dateTime>\",\n  \"lastUpdatedDate\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"comments\": [\n    {\n      \"id\": \"<integer>\",\n      \"parentCommentId\": \"<integer>\",\n      \"content\": \"<string>\",\n      \"publishedDate\": \"<dateTime>\",\n      \"lastUpdatedDate\": \"<dateTime>\",\n      \"author\": {\n        \"id\": \"94ba3a48-6636-8890-2baa-abe2ff51dc5b\",\n        \"displayName\": \"string\",\n        \"uniqueName\": \"string\",\n        \"url\": \"http://GcJFcSjJwnDanuyrjeidAoULhGCU.hroxr0O8RIR-yNJqeAdfx4uWnMyuhO8JlI9gLt5rHxJuxc7vwQQ6aJRF6yyovXyJpntVc+F6SaB3o\",\n        \"imageUrl\": \"https://kxvrhsqsLZTpbVOasUbnlie.hxDBhkfu,ARD-7n,+JGAprNynFNqQ-3unqsO9RK1ZAHzdRd4RmvBIsyze\",\n        \"descriptor\": \"string\",\n        \"isContainer\": true\n      },\n      \"commentType\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"parentCommentId\": \"<integer>\",\n      \"content\": \"<string>\",\n      \"publishedDate\": \"<dateTime>\",\n      \"lastUpdatedDate\": \"<dateTime>\",\n      \"author\": {\n        \"id\": \"65e1439c-f102-407c-5cca-f8b74e2a5d7c\",\n        \"displayName\": \"string\",\n        \"uniqueName\": \"string\",\n        \"url\": \"http://SGFqampyBuSn.bbdjaBIMosq2Zh5HyifeOKqK0WumaUVaaCztvEugGbus0XbQ5TlOa2\",\n        \"imageUrl\": \"http://nkoataQbfDeJLwMUSiAWNpSQfra.gragDCt,vTUADTpBCAjybTCAC-JkXH8Yufe0d13bYlzDncpt2XYrwv,xuaLJN2t.wk1-uisSQNx\",\n        \"descriptor\": \"string\",\n        \"isContainer\": false\n      },\n      \"commentType\": \"<string>\"\n    }\n  ],\n  \"threadContext\": {\n    \"filePath\": \"<string>\",\n    \"rightFileStart\": {\n      \"line\": \"<integer>\",\n      \"offset\": \"<integer>\"\n    },\n    \"rightFileEnd\": {\n      \"line\": \"<integer>\",\n      \"offset\": \"<integer>\"\n    }\n  },\n  \"properties\": {\n    \"key_0\": 6411,\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5908673a-c733-41f2-be99-f1c03b4fab1f",
+              "name": "Pull request or repository not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "pullrequests",
+                    ":pullRequestId",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pullRequestId",
+                      "description": "(Required) ID of the pull request"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<integer>\",\n  \"publishedDate\": \"<dateTime>\",\n  \"lastUpdatedDate\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"comments\": [\n    {\n      \"id\": \"<integer>\",\n      \"parentCommentId\": \"<integer>\",\n      \"content\": \"<string>\",\n      \"publishedDate\": \"<dateTime>\",\n      \"lastUpdatedDate\": \"<dateTime>\",\n      \"author\": {\n        \"id\": \"94ba3a48-6636-8890-2baa-abe2ff51dc5b\",\n        \"displayName\": \"string\",\n        \"uniqueName\": \"string\",\n        \"url\": \"http://GcJFcSjJwnDanuyrjeidAoULhGCU.hroxr0O8RIR-yNJqeAdfx4uWnMyuhO8JlI9gLt5rHxJuxc7vwQQ6aJRF6yyovXyJpntVc+F6SaB3o\",\n        \"imageUrl\": \"https://kxvrhsqsLZTpbVOasUbnlie.hxDBhkfu,ARD-7n,+JGAprNynFNqQ-3unqsO9RK1ZAHzdRd4RmvBIsyze\",\n        \"descriptor\": \"string\",\n        \"isContainer\": true\n      },\n      \"commentType\": \"<string>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"parentCommentId\": \"<integer>\",\n      \"content\": \"<string>\",\n      \"publishedDate\": \"<dateTime>\",\n      \"lastUpdatedDate\": \"<dateTime>\",\n      \"author\": {\n        \"id\": \"65e1439c-f102-407c-5cca-f8b74e2a5d7c\",\n        \"displayName\": \"string\",\n        \"uniqueName\": \"string\",\n        \"url\": \"http://SGFqampyBuSn.bbdjaBIMosq2Zh5HyifeOKqK0WumaUVaaCztvEugGbus0XbQ5TlOa2\",\n        \"imageUrl\": \"http://nkoataQbfDeJLwMUSiAWNpSQfra.gragDCt,vTUADTpBCAjybTCAC-JkXH8Yufe0d13bYlzDncpt2XYrwv,xuaLJN2t.wk1-uisSQNx\",\n        \"descriptor\": \"string\",\n        \"isContainer\": false\n      },\n      \"commentType\": \"<string>\"\n    }\n  ],\n  \"threadContext\": {\n    \"filePath\": \"<string>\",\n    \"rightFileStart\": {\n      \"line\": \"<integer>\",\n      \"offset\": \"<integer>\"\n    },\n    \"rightFileEnd\": {\n      \"line\": \"<integer>\",\n      \"offset\": \"<integer>\"\n    }\n  },\n  \"properties\": {\n    \"key_0\": 6411,\n    \"key_1\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The name of the Azure DevOps organization",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Project ID or project name",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "vso.code vso.code_write vso.code_manage"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://app.vssps.visualstudio.com/oauth2/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://app.vssps.visualstudio.com/oauth2/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ec8371b0-6ddd-46d8-8e9a-35c7e937a933",
+    "name": "Azure Repos Git Commits Pull Request Threads API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

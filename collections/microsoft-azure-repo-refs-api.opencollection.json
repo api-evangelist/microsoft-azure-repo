@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Repos Git Commits Refs API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://app.vssps.visualstudio.com/oauth2/authorize",
+      "accessTokenUrl": "https://app.vssps.visualstudio.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Refs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List refs (branches and tags)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/refs",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter refs by name prefix (e.g., heads/main, tags/v1)"
+              },
+              {
+                "name": "includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Include reference links in the response"
+              },
+              {
+                "name": "includeStatuses",
+                "value": "",
+                "type": "query",
+                "description": "Include status information for each ref"
+              },
+              {
+                "name": "includeMyBranches",
+                "value": "",
+                "type": "query",
+                "description": "Include only branches owned by the authenticated user"
+              },
+              {
+                "name": "peelTags",
+                "value": "",
+                "type": "query",
+                "description": "Annotated tags will populate the PeeledObjectId property"
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of refs to return"
+              },
+              {
+                "name": "continuationToken",
+                "value": "",
+                "type": "query",
+                "description": "Continuation token for paging through results"
+              }
+            ]
+          },
+          "docs": "Retrieve all refs (branches and tags) for a repository. Supports filtering by name prefix, peeling tags to their target objects, and including statuses such as build and policy check results."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Create, update, or delete refs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/refs",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create, update, or delete one or more refs (branches or tags) in a single atomic operation. To create a ref, set oldObjectId to 0000000000000000000000000000000000000000. To delete a ref, set newObjectId to 0000000000000000000000000000000000000000."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

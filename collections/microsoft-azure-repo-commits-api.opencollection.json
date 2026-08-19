@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Repos Git Commits API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://app.vssps.visualstudio.com/oauth2/authorize",
+      "accessTokenUrl": "https://app.vssps.visualstudio.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Commits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List commits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/commits",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "searchCriteria.itemVersion.version",
+                "value": "",
+                "type": "query",
+                "description": "Branch name or tag to search (e.g., main, develop)"
+              },
+              {
+                "name": "searchCriteria.itemVersion.versionType",
+                "value": "",
+                "type": "query",
+                "description": "Type of version identifier"
+              },
+              {
+                "name": "searchCriteria.itemPath",
+                "value": "",
+                "type": "query",
+                "description": "Path of an item to filter commits that changed this path"
+              },
+              {
+                "name": "searchCriteria.fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for filtering commits"
+              },
+              {
+                "name": "searchCriteria.toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for filtering commits"
+              },
+              {
+                "name": "searchCriteria.author",
+                "value": "",
+                "type": "query",
+                "description": "Filter by author name or email"
+              },
+              {
+                "name": "searchCriteria.$top",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of commits to return"
+              },
+              {
+                "name": "searchCriteria.$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of commits to skip"
+              }
+            ]
+          },
+          "docs": "Retrieve commit history for a repository. Supports filtering by branch, author, date range, item path, and various search criteria. Results are ordered by commit date descending."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Get a commit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/commits/:commitId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "commitId",
+                "value": "",
+                "type": "path",
+                "description": "The SHA-1 hash of the commit"
+              },
+              {
+                "name": "changeCount",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of changes to include"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific commit by its SHA-1 ID. Returns the full commit details including author, committer, message, parent commits, and optionally the list of changes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

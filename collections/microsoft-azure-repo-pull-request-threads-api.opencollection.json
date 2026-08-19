@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Repos Git Commits Pull Request Threads API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://app.vssps.visualstudio.com/oauth2/authorize",
+      "accessTokenUrl": "https://app.vssps.visualstudio.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pull Request Threads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List pull request threads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/threads",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ]
+          },
+          "docs": "Retrieve all comment threads for a pull request. Threads contain comments, code review discussions, and system-generated messages."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Create a comment thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/threads",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment thread on a pull request. Threads can be associated with specific file paths and line ranges for inline code review comments."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

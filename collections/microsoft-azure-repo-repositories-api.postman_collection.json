@@ -1,0 +1,1479 @@
+{
+  "item": [
+    {
+      "id": "e00ba35d-be2f-4c29-aa2e-7d3ff0fe9b78",
+      "name": "Repositories",
+      "description": {
+        "content": "Operations for managing Git repositories including creating, listing, updating, and deleting repositories within a project.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ba99529f-f462-4101-92ba-071f76d55e06",
+          "name": "Azure Repos List repositories",
+          "request": {
+            "name": "Azure Repos List repositories",
+            "description": {
+              "content": "Retrieve all Git repositories in the specified project. Each repository includes its ID, name, default branch, remote URL, SSH URL, and web URL. Optionally include reference links and hidden repositories.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeLinks",
+                  "value": "<boolean>",
+                  "description": "Include reference links in the response"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeAllUrls",
+                  "value": "<boolean>",
+                  "description": "Set to true to include all remote URLs in the response. Defaults to false."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeHidden",
+                  "value": "<boolean>",
+                  "description": "Set to true to include hidden repositories. Defaults to false."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The name of the Azure DevOps organization",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Project ID or project name",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "71cd4cba-3b9a-4b1e-b7b4-e79d4d04012e",
+              "name": "Successfully retrieved list of repositories",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeLinks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAllUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeHidden",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 795,\n  \"value\": [\n    {\n      \"id\": \"8f018b2c-3222-3d54-7096-8f27677b3bef\",\n      \"name\": \"string\",\n      \"url\": \"http://QwEDH.jarBq3KvtdSg4c3014KaRkl8+oc\",\n      \"project\": {\n        \"id\": \"4ed28c57-8d3b-ad42-3b0c-f2224bc87291\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"url\": \"https://eibBkdwW.upnYQP1Kj-Wg6s-igygAsc3BIl0fValwh\",\n        \"state\": \"deleting\",\n        \"visibility\": \"private\",\n        \"revision\": 62,\n        \"lastUpdateTime\": \"2012-12-03T02:29:18.762Z\"\n      },\n      \"defaultBranch\": \"string\",\n      \"remoteUrl\": \"http://NvmgjuNspsGeHvwgj.bbglhh.g0-fLmEW-cRc-,HwnhgSYETigaLq1Am--8zcF72t1\",\n      \"sshUrl\": \"string\",\n      \"webUrl\": \"http://iQGVkbqzkxCdx.giihfCkJkSh\",\n      \"size\": 5654,\n      \"isFork\": true,\n      \"isDisabled\": true,\n      \"isInMaintenance\": true,\n      \"parentRepository\": {\n        \"id\": \"d0e7b65e-0c5e-16ef-ed3a-2d754a973999\",\n        \"name\": \"string\",\n        \"url\": \"http://HaGsqlzWUCk.rnxursPkT-Qk2pvbTfpfYT0K3vVlE-dqCA-pB7LyCZJTTHo73cG,nfht\",\n        \"project\": {\n          \"id\": \"eafb2048-c335-fb68-be47-16b720815882\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"url\": \"https://VaUAQFxrDbJYtZp.fzCHROZNa-RC7nygYPYt9uBa-lbvv7V1QvGfyNeVMrOExAcdTSKDD9hAsFIQLnMnSGs4,QZG-m\",\n          \"state\": \"deleted\",\n          \"visibility\": \"private\",\n          \"revision\": 1732,\n          \"lastUpdateTime\": \"2003-01-23T00:50:12.620Z\"\n        },\n        \"isFork\": false,\n        \"remoteUrl\": \"string\",\n        \"sshUrl\": \"string\",\n        \"collection\": {\n          \"id\": \"ccfaa464-9118-7a79-b50a-8f2aa702f825\",\n          \"name\": \"string\",\n          \"url\": \"https://QMhaLVJAYkvUT.upvaoqugDWLWKhSbae\"\n        }\n      },\n      \"_links\": {\n        \"key_0\": 1043,\n        \"key_1\": true\n      }\n    },\n    {\n      \"id\": \"b40c73d6-771c-d59e-af1a-300db4424b5c\",\n      \"name\": \"string\",\n      \"url\": \"http://KPkFuAVnJNzumgyHJVfbkSZABQxlxUOE.npgylzkJZrO03DfkZWy698OnDZI\",\n      \"project\": {\n        \"id\": \"4a59d365-9d7f-12f2-78a5-a330cd8d8ad4\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"url\": \"http://FyeMYPROQHPBFrzfifIdSpIATfILl.mtqvU8DjltEonly9dWJdtwy9MzimGcL7ULDFXwPe2wkM8P3W63ZFk6Yrmu2+UJxdu6VM5C\",\n        \"state\": \"wellFormed\",\n        \"visibility\": \"private\",\n        \"revision\": 7909,\n        \"lastUpdateTime\": \"1973-06-17T01:26:02.225Z\"\n      },\n      \"defaultBranch\": \"string\",\n      \"remoteUrl\": \"https://TxR.gbGhB3qCFCERlkzLMCZjelWOkvoj5KHBmFXFOO0o-oVZoNsr9Ku4ReRDAnQ7t1gUMjN1\",\n      \"sshUrl\": \"string\",\n      \"webUrl\": \"https://Jrps.gsH5B7jNuqTDi8P\",\n      \"size\": 3278,\n      \"isFork\": false,\n      \"isDisabled\": true,\n      \"isInMaintenance\": true,\n      \"parentRepository\": {\n        \"id\": \"a76e7da7-375a-a10c-0bfe-2de8a7733b16\",\n        \"name\": \"string\",\n        \"url\": \"http://ukCdSyEP.tvH.cFwM49wLPDaKsI,N3f5FygQvrXxBBLsXv+4a5ZnvKLETCW8hsvptFw-Q,20UQ\",\n        \"project\": {\n          \"id\": \"5679d653-3cb4-7cb6-02d1-07b652fac2ee\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"url\": \"https://YWh.vbydbLdy+8nZU6079gIZ,o.CTB\",\n          \"state\": \"unchanged\",\n          \"visibility\": \"private\",\n          \"revision\": 4800,\n          \"lastUpdateTime\": \"1970-04-28T09:47:24.253Z\"\n        },\n        \"isFork\": true,\n        \"remoteUrl\": \"string\",\n        \"sshUrl\": \"string\",\n        \"collection\": {\n          \"id\": \"84ae748f-a3cf-9209-f3ee-dd0452c22845\",\n          \"name\": \"string\",\n          \"url\": \"https://nfE.rsodsio+oeczsvX,PO-sdfRDl,z7XQyr4R2\"\n        }\n      },\n      \"_links\": {\n        \"key_0\": 2388,\n        \"key_1\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62bb2b2c-314f-4e34-a523-8a9201cab4c0",
+              "name": "Unauthorized - authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeLinks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAllUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeHidden",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1e4fc75e-cd8b-48a7-a063-c32423d158b8",
+              "name": "Project not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeLinks",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeAllUrls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeHidden",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0ec7633-e4c2-4477-be21-25849e159e8b",
+          "name": "Azure Repos Create a repository",
+          "request": {
+            "name": "Azure Repos Create a repository",
+            "description": {
+              "content": "Create a new Git repository in the specified project. Provide the repository name and optionally a parent repository for forking.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The name of the Azure DevOps organization",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Project ID or project name",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"project\": {\n    \"id\": \"<uuid>\"\n  },\n  \"parentRepository\": {\n    \"id\": \"<uuid>\",\n    \"project\": {\n      \"id\": \"<uuid>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9f07f9bf-ea1b-479d-816f-d9f3990a5e85",
+              "name": "Repository created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"project\": {\n    \"id\": \"<uuid>\"\n  },\n  \"parentRepository\": {\n    \"id\": \"<uuid>\",\n    \"project\": {\n      \"id\": \"<uuid>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"7acf444d-fb6b-1561-1c87-5e9d075f5974\",\n  \"name\": \"string\",\n  \"url\": \"http://mxifmHCPhXCYOpAHFOeAubEiuTgVmop.euciYAfoV.ruTB1S.,DlRUkglkuLBTurPZAM1d5uiPJmG\",\n  \"project\": {\n    \"id\": \"0f1e8ed3-6f18-1745-c1fa-214eab7216ff\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"https://kFZsFpULlngOBcN.mtpxY-l+7WPiE,rakXC,r8w+0mShHOFU0qlEJ3HZu+uYGCkc6JCYEfwd\",\n    \"state\": \"new\",\n    \"visibility\": \"public\",\n    \"revision\": 2464,\n    \"lastUpdateTime\": \"1953-09-16T14:15:36.981Z\"\n  },\n  \"defaultBranch\": \"string\",\n  \"remoteUrl\": \"https://tEoboZCusQuAIcVuCb.baBEVykgq,W8YwtW3UKPtgS0519QgcKKadgODlZvZlH,-qkpE\",\n  \"sshUrl\": \"string\",\n  \"webUrl\": \"https://PFKIeTkPuwXrlJN.keT9--SxTBDz+FKwqH5QM6hysC3ZVpjapZ41UkLFkEJ\",\n  \"size\": 8175,\n  \"isFork\": false,\n  \"isDisabled\": true,\n  \"isInMaintenance\": true,\n  \"parentRepository\": {\n    \"id\": \"469cd9e5-7dfc-c16e-8d68-ecca7c354642\",\n    \"name\": \"string\",\n    \"url\": \"http://KTCSMcIlKcaizHpNueELWw.erophpcw2ItoYPDxUEc3A0lObeQJjXU9K,hqxsrJrhQjZLINpygcXzilEeCPyx\",\n    \"project\": {\n      \"id\": \"ae6bfb81-3f94-b537-dfde-7c26bd881093\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"url\": \"https://nLKJsaaGXtCuzGyRyAmvb.yrXSW63HIuHf0ngqL.ULUaxrI\",\n      \"state\": \"unchanged\",\n      \"visibility\": \"private\",\n      \"revision\": 1955,\n      \"lastUpdateTime\": \"1993-01-20T23:18:02.780Z\"\n    },\n    \"isFork\": true,\n    \"remoteUrl\": \"string\",\n    \"sshUrl\": \"string\",\n    \"collection\": {\n      \"id\": \"f9157672-a839-2d95-d193-51c71e55bbe9\",\n      \"name\": \"string\",\n      \"url\": \"http://pvavvMiCxzgHHKkeQcZyuI.odctN.q3ninc0RonEISEsIXpgsuQSZhX0\"\n    }\n  },\n  \"_links\": {\n    \"key_0\": 4756.34640641915,\n    \"key_1\": 4282.033967578532,\n    \"key_2\": 6204.739048990273,\n    \"key_3\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83c55dd7-ffa3-41da-b986-ffab9cd06495",
+              "name": "Bad request - invalid repository name or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"project\": {\n    \"id\": \"<uuid>\"\n  },\n  \"parentRepository\": {\n    \"id\": \"<uuid>\",\n    \"project\": {\n      \"id\": \"<uuid>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1e13a233-8722-47d2-94dc-aa871b000401",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"project\": {\n    \"id\": \"<uuid>\"\n  },\n  \"parentRepository\": {\n    \"id\": \"<uuid>\",\n    \"project\": {\n      \"id\": \"<uuid>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3dbf4c7e-ff60-4325-8f31-75af9ea7cafb",
+              "name": "Conflict - repository with the same name already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"project\": {\n    \"id\": \"<uuid>\"\n  },\n  \"parentRepository\": {\n    \"id\": \"<uuid>\",\n    \"project\": {\n      \"id\": \"<uuid>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d8b4d580-aea3-49e3-b3fb-6e34ecff35cb",
+          "name": "Azure Repos Get a repository",
+          "request": {
+            "name": "Azure Repos Get a repository",
+            "description": {
+              "content": "Retrieve a specific Git repository by its ID or name. Returns full repository details including default branch, clone URLs, project reference, and size.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) The ID or name of the repository"
+                },
+                {
+                  "description": "The name of the Azure DevOps organization",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Project ID or project name",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "538b13fa-e7d3-4609-8419-ee9e00842d32",
+              "name": "Successfully retrieved repository",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"7acf444d-fb6b-1561-1c87-5e9d075f5974\",\n  \"name\": \"string\",\n  \"url\": \"http://mxifmHCPhXCYOpAHFOeAubEiuTgVmop.euciYAfoV.ruTB1S.,DlRUkglkuLBTurPZAM1d5uiPJmG\",\n  \"project\": {\n    \"id\": \"0f1e8ed3-6f18-1745-c1fa-214eab7216ff\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"https://kFZsFpULlngOBcN.mtpxY-l+7WPiE,rakXC,r8w+0mShHOFU0qlEJ3HZu+uYGCkc6JCYEfwd\",\n    \"state\": \"new\",\n    \"visibility\": \"public\",\n    \"revision\": 2464,\n    \"lastUpdateTime\": \"1953-09-16T14:15:36.981Z\"\n  },\n  \"defaultBranch\": \"string\",\n  \"remoteUrl\": \"https://tEoboZCusQuAIcVuCb.baBEVykgq,W8YwtW3UKPtgS0519QgcKKadgODlZvZlH,-qkpE\",\n  \"sshUrl\": \"string\",\n  \"webUrl\": \"https://PFKIeTkPuwXrlJN.keT9--SxTBDz+FKwqH5QM6hysC3ZVpjapZ41UkLFkEJ\",\n  \"size\": 8175,\n  \"isFork\": false,\n  \"isDisabled\": true,\n  \"isInMaintenance\": true,\n  \"parentRepository\": {\n    \"id\": \"469cd9e5-7dfc-c16e-8d68-ecca7c354642\",\n    \"name\": \"string\",\n    \"url\": \"http://KTCSMcIlKcaizHpNueELWw.erophpcw2ItoYPDxUEc3A0lObeQJjXU9K,hqxsrJrhQjZLINpygcXzilEeCPyx\",\n    \"project\": {\n      \"id\": \"ae6bfb81-3f94-b537-dfde-7c26bd881093\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"url\": \"https://nLKJsaaGXtCuzGyRyAmvb.yrXSW63HIuHf0ngqL.ULUaxrI\",\n      \"state\": \"unchanged\",\n      \"visibility\": \"private\",\n      \"revision\": 1955,\n      \"lastUpdateTime\": \"1993-01-20T23:18:02.780Z\"\n    },\n    \"isFork\": true,\n    \"remoteUrl\": \"string\",\n    \"sshUrl\": \"string\",\n    \"collection\": {\n      \"id\": \"f9157672-a839-2d95-d193-51c71e55bbe9\",\n      \"name\": \"string\",\n      \"url\": \"http://pvavvMiCxzgHHKkeQcZyuI.odctN.q3ninc0RonEISEsIXpgsuQSZhX0\"\n    }\n  },\n  \"_links\": {\n    \"key_0\": 4756.34640641915,\n    \"key_1\": 4282.033967578532,\n    \"key_2\": 6204.739048990273,\n    \"key_3\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e972656-8da9-409d-9698-75e0428555d1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5e511ff1-fb60-4b8c-add3-174b331ef3b3",
+              "name": "Repository not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "26f57a9f-c5c4-4795-b749-9fa30e6a7bea",
+          "name": "Azure Repos Update a repository",
+          "request": {
+            "name": "Azure Repos Update a repository",
+            "description": {
+              "content": "Update a Git repository with a new name or a new default branch. Only the fields provided in the request body are updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) The ID or name of the repository"
+                },
+                {
+                  "description": "The name of the Azure DevOps organization",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Project ID or project name",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"defaultBranch\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "010cdb33-420d-4b94-b446-085fe163c3f9",
+              "name": "Repository updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"defaultBranch\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"7acf444d-fb6b-1561-1c87-5e9d075f5974\",\n  \"name\": \"string\",\n  \"url\": \"http://mxifmHCPhXCYOpAHFOeAubEiuTgVmop.euciYAfoV.ruTB1S.,DlRUkglkuLBTurPZAM1d5uiPJmG\",\n  \"project\": {\n    \"id\": \"0f1e8ed3-6f18-1745-c1fa-214eab7216ff\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"url\": \"https://kFZsFpULlngOBcN.mtpxY-l+7WPiE,rakXC,r8w+0mShHOFU0qlEJ3HZu+uYGCkc6JCYEfwd\",\n    \"state\": \"new\",\n    \"visibility\": \"public\",\n    \"revision\": 2464,\n    \"lastUpdateTime\": \"1953-09-16T14:15:36.981Z\"\n  },\n  \"defaultBranch\": \"string\",\n  \"remoteUrl\": \"https://tEoboZCusQuAIcVuCb.baBEVykgq,W8YwtW3UKPtgS0519QgcKKadgODlZvZlH,-qkpE\",\n  \"sshUrl\": \"string\",\n  \"webUrl\": \"https://PFKIeTkPuwXrlJN.keT9--SxTBDz+FKwqH5QM6hysC3ZVpjapZ41UkLFkEJ\",\n  \"size\": 8175,\n  \"isFork\": false,\n  \"isDisabled\": true,\n  \"isInMaintenance\": true,\n  \"parentRepository\": {\n    \"id\": \"469cd9e5-7dfc-c16e-8d68-ecca7c354642\",\n    \"name\": \"string\",\n    \"url\": \"http://KTCSMcIlKcaizHpNueELWw.erophpcw2ItoYPDxUEc3A0lObeQJjXU9K,hqxsrJrhQjZLINpygcXzilEeCPyx\",\n    \"project\": {\n      \"id\": \"ae6bfb81-3f94-b537-dfde-7c26bd881093\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"url\": \"https://nLKJsaaGXtCuzGyRyAmvb.yrXSW63HIuHf0ngqL.ULUaxrI\",\n      \"state\": \"unchanged\",\n      \"visibility\": \"private\",\n      \"revision\": 1955,\n      \"lastUpdateTime\": \"1993-01-20T23:18:02.780Z\"\n    },\n    \"isFork\": true,\n    \"remoteUrl\": \"string\",\n    \"sshUrl\": \"string\",\n    \"collection\": {\n      \"id\": \"f9157672-a839-2d95-d193-51c71e55bbe9\",\n      \"name\": \"string\",\n      \"url\": \"http://pvavvMiCxzgHHKkeQcZyuI.odctN.q3ninc0RonEISEsIXpgsuQSZhX0\"\n    }\n  },\n  \"_links\": {\n    \"key_0\": 4756.34640641915,\n    \"key_1\": 4282.033967578532,\n    \"key_2\": 6204.739048990273,\n    \"key_3\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04cbd48b-d7f9-458b-bf73-14100d867683",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"defaultBranch\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c460902a-2c8c-4f67-9702-6d358bda7f50",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"defaultBranch\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8e7ad87c-aa42-4afa-9b84-e2171e5700e5",
+              "name": "Repository not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"defaultBranch\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f85b88be-5464-4ed4-9d0c-fa75c57098a8",
+          "name": "Azure Repos Delete a repository",
+          "request": {
+            "name": "Azure Repos Delete a repository",
+            "description": {
+              "content": "Delete a Git repository from the project. This operation is irreversible and removes all branches, commits, and pull requests associated with the repository.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) The ID or name of the repository"
+                },
+                {
+                  "description": "The name of the Azure DevOps organization",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Project ID or project name",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6c122caa-a703-4f7b-8e0a-515663260b71",
+              "name": "Repository deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "219856e7-78e9-462d-b844-d26f8c399bbb",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3f27e061-5e3b-47ce-bf04-cb7ac520a985",
+              "name": "Repository not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The name of the Azure DevOps organization",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Project ID or project name",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "vso.code vso.code_write vso.code_manage"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://app.vssps.visualstudio.com/oauth2/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://app.vssps.visualstudio.com/oauth2/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "50f88cd0-5fe6-4f65-8c55-5fc4abbf5436",
+    "name": "Azure Repos Git Commits Repositories API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

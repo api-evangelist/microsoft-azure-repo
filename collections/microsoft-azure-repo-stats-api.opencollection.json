@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Repos Git Commits Stats API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://app.vssps.visualstudio.com/oauth2/authorize",
+      "accessTokenUrl": "https://app.vssps.visualstudio.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stats",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List branch statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/stats/branches",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "baseVersionDescriptor.version",
+                "value": "",
+                "type": "query",
+                "description": "Base branch or commit to compare against"
+              },
+              {
+                "name": "baseVersionDescriptor.versionType",
+                "value": "",
+                "type": "query",
+                "description": "Type of the base version"
+              }
+            ]
+          },
+          "docs": "Retrieve statistics for all branches in a repository, including the number of commits ahead and behind relative to the default branch or a specified base version."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

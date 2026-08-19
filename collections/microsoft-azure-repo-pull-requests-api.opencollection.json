@@ -1,0 +1,229 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Repos Git Commits Pull Requests API",
+    "version": "7.1"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://app.vssps.visualstudio.com/oauth2/authorize",
+      "accessTokenUrl": "https://app.vssps.visualstudio.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pull Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Azure Repos List pull requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "searchCriteria.status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by pull request status. Defaults to active if unset."
+              },
+              {
+                "name": "searchCriteria.creatorId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the identity ID of the pull request creator"
+              },
+              {
+                "name": "searchCriteria.reviewerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the identity ID of a reviewer"
+              },
+              {
+                "name": "searchCriteria.sourceRefName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source branch name (e.g., refs/heads/feature)"
+              },
+              {
+                "name": "searchCriteria.targetRefName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by target branch name (e.g., refs/heads/main)"
+              },
+              {
+                "name": "searchCriteria.repositoryId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by target repository ID"
+              },
+              {
+                "name": "searchCriteria.sourceRepositoryId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source repository ID"
+              },
+              {
+                "name": "searchCriteria.includeLinks",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include the _links field on shallow references"
+              },
+              {
+                "name": "searchCriteria.minTime",
+                "value": "",
+                "type": "query",
+                "description": "Filter pull requests created or closed after this date based on queryTimeRangeType"
+              },
+              {
+                "name": "searchCriteria.maxTime",
+                "value": "",
+                "type": "query",
+                "description": "Filter pull requests created or closed before this date based on queryTimeRangeType"
+              },
+              {
+                "name": "searchCriteria.queryTimeRangeType",
+                "value": "",
+                "type": "query",
+                "description": "The type of time range for minTime and maxTime. Defaults to created if unset."
+              },
+              {
+                "name": "$top",
+                "value": "",
+                "type": "query",
+                "description": "Number of pull requests to retrieve"
+              },
+              {
+                "name": "$skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of pull requests to skip"
+              }
+            ]
+          },
+          "docs": "Retrieve all pull requests matching specified criteria for a repository. Supports filtering by status, creator, reviewer, source branch, target branch, and time range. The description field is truncated to 400 characters in the result."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Create a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new pull request in the specified repository. Requires source and target branch references, a title, and optionally a description, reviewers, and work item references."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Get a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific pull request by its ID. Returns full pull request details including status, reviewers, merge status, source and target branches, and linked work items."
+        },
+        {
+          "info": {
+            "name": "Azure Repos Update a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update properties of an existing pull request such as title, description, status (to abandon or reactivate), auto-complete settings, and completion options including merge strategy."
+        },
+        {
+          "info": {
+            "name": "Azure Repos List pull request commits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories/:repositoryId/pullrequests/:pullRequestId/commits",
+            "params": [
+              {
+                "name": "repositoryId",
+                "value": "",
+                "type": "path",
+                "description": "The ID or name of the repository"
+              },
+              {
+                "name": "pullRequestId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the pull request"
+              }
+            ]
+          },
+          "docs": "Retrieve the list of commits associated with a pull request. Returns commits from the source branch that are not yet in the target branch."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

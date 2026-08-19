@@ -1,0 +1,769 @@
+{
+  "item": [
+    {
+      "id": "8ac2c2b5-735f-445e-9957-6a97c15a0cbf",
+      "name": "Commits",
+      "description": {
+        "content": "Operations for accessing commit details and commit history within a repository, including diffs and changes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "756c7d3b-b547-4639-96ef-7d58a9d91a7c",
+          "name": "Azure Repos List commits",
+          "request": {
+            "name": "Azure Repos List commits",
+            "description": {
+              "content": "Retrieve commit history for a repository. Supports filtering by branch, author, date range, item path, and various search criteria. Results are ordered by commit date descending.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId",
+                "commits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.itemVersion.version",
+                  "value": "<string>",
+                  "description": "Branch name or tag to search (e.g., main, develop)"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.itemVersion.versionType",
+                  "value": "<string>",
+                  "description": "Type of version identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.itemPath",
+                  "value": "<string>",
+                  "description": "Path of an item to filter commits that changed this path"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.fromDate",
+                  "value": "<dateTime>",
+                  "description": "Start date for filtering commits"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.toDate",
+                  "value": "<dateTime>",
+                  "description": "End date for filtering commits"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.author",
+                  "value": "<string>",
+                  "description": "Filter by author name or email"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.$top",
+                  "value": "<integer>",
+                  "description": "Maximum number of commits to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchCriteria.$skip",
+                  "value": "<integer>",
+                  "description": "Number of commits to skip"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) The ID or name of the repository"
+                },
+                {
+                  "description": "The name of the Azure DevOps organization",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Project ID or project name",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9f8025c2-4591-47e8-a2c6-3d976a57f862",
+              "name": "Successfully retrieved commits",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "commits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchCriteria.itemVersion.version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.itemVersion.versionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.itemPath",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.fromDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.toDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.author",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria.$skip",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 8840,\n  \"value\": [\n    {\n      \"commitId\": \"string\",\n      \"author\": {\n        \"name\": \"string\",\n        \"email\": \"sao8Gwj@wNCyCNpMiHMyK.atxb\",\n        \"date\": \"2025-08-18T04:31:01.664Z\",\n        \"imageUrl\": \"http://KURwoNqXbknGNxnop.ewpuJqrA4fMttk8lTr8ezm4ldESem9NuZIiRar7CrWJEkQj7tBEpUw0nTHOWRb,-eGZbQ-0J0yQpTPnjc\"\n      },\n      \"committer\": {\n        \"name\": \"string\",\n        \"email\": \"dI3B4vYo@uZfJUIQ.jfzi\",\n        \"date\": \"1955-03-21T00:15:13.148Z\",\n        \"imageUrl\": \"http://B.ltpG2JkfnAldX7TuVsvkFm5NcS88-ED.i9uC\"\n      },\n      \"comment\": \"string\",\n      \"commentTruncated\": true,\n      \"changeCounts\": {\n        \"key_0\": 8401,\n        \"key_1\": 7109\n      },\n      \"changes\": [\n        {\n          \"changeId\": 5837,\n          \"changeType\": \"add\",\n          \"item\": {\n            \"objectId\": \"string\",\n            \"originalObjectId\": \"string\",\n            \"gitObjectType\": \"string\",\n            \"commitId\": \"string\",\n            \"path\": \"string\",\n            \"url\": \"string\"\n          },\n          \"originalPath\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"changeId\": 5828,\n          \"changeType\": \"merge\",\n          \"item\": {\n            \"objectId\": \"string\",\n            \"originalObjectId\": \"string\",\n            \"gitObjectType\": \"string\",\n            \"commitId\": \"string\",\n            \"path\": \"string\",\n            \"url\": \"string\"\n          },\n          \"originalPath\": \"string\",\n          \"url\": \"string\"\n        }\n      ],\n      \"parents\": [\n        \"string\",\n        \"string\"\n      ],\n      \"url\": \"https://KTwTTAPpYaIcGhSt.iifLNl5BfhH\",\n      \"remoteUrl\": \"http://FRVXrKlGfonBvNHJiOx.pdbtmTpaIxBR-JBV6xVzhCrdOcHP33Evv5\",\n      \"statuses\": [\n        {\n          \"id\": 8592,\n          \"state\": \"error\",\n          \"description\": \"string\",\n          \"context\": {\n            \"name\": \"string\",\n            \"genre\": \"string\"\n          },\n          \"targetUrl\": \"http://EfQO.ouwNBeZfIc.LU6hGoGvXy0b1YLoVgVl8Bs8+afdyZI2bVwl0Tny7J.d0+J9\",\n          \"createdBy\": {\n            \"id\": \"b4041127-e720-e467-2e7e-fbc54e8a697b\",\n            \"displayName\": \"string\",\n            \"uniqueName\": \"string\",\n            \"url\": \"https://MOyJZpZsGcObMucMLwTkSbyCI.bdRsXE+VhFV0ZH8\",\n            \"imageUrl\": \"http://NIvKBdayyNlVILXWVTxEglpiqYoAzK.zsyUzdzthSK0.3u.SoxdaxYXiKOVc+vvaafyj\",\n            \"descriptor\": \"string\",\n            \"isContainer\": false\n          },\n          \"creationDate\": \"1963-11-12T18:13:18.187Z\",\n          \"updatedDate\": \"2022-03-28T22:27:20.197Z\"\n        },\n        {\n          \"id\": 7674,\n          \"state\": \"notApplicable\",\n          \"description\": \"string\",\n          \"context\": {\n            \"name\": \"string\",\n            \"genre\": \"string\"\n          },\n          \"targetUrl\": \"http://O.psYPKpeR+g69xNklq3aRXomVj+IgheVAGV8vrtgpW97H-5JGdv58LEjwR\",\n          \"createdBy\": {\n            \"id\": \"99c8c3ff-0221-cc94-a3f3-cdc00f0eb424\",\n            \"displayName\": \"string\",\n            \"uniqueName\": \"string\",\n            \"url\": \"http://oKMaTPLQntIfHXA.vgr97SaAkqI0T+WfS-9lGYe6KhX-uiftAcDFkdMLkjMGGH3sLnXHj,+167tLRAKCmZUjUJjruKZWZ1gCJ7JpCYibiTj\",\n            \"imageUrl\": \"http://uMZbnBrzmKNnsjKYqhCxsmJmafxZu.zzyfrGCDltcU\",\n            \"descriptor\": \"string\",\n            \"isContainer\": false\n          },\n          \"creationDate\": \"1947-06-18T14:41:09.044Z\",\n          \"updatedDate\": \"1973-09-09T00:42:04.357Z\"\n        }\n      ],\n      \"workItems\": [\n        {\n          \"id\": \"string\",\n          \"url\": \"http://PNuBXLorHFiKQVavtGfveoCNSKLZVS.yfvqh8cAFRvl9w1.xDniZ.rukYerdtMvN8MODnph9bBsMYC2QRBcIJ+c5yyRlseCnSzyBUtVt\"\n        },\n        {\n          \"id\": \"string\",\n          \"url\": \"http://cqxvf.qfuNy3PJx+7kqshDlPshVIQoGQQP6bGd3V3xtDGsWfmM.JcRqSirB60AtzW\"\n        }\n      ],\n      \"push\": {\n        \"pushId\": 2938,\n        \"date\": \"2017-09-29T02:53:06.533Z\",\n        \"pushedBy\": {\n          \"id\": \"b8f2a2cb-d0bf-9133-eb66-1fdb80fa6db8\",\n          \"displayName\": \"string\",\n          \"uniqueName\": \"string\",\n          \"url\": \"http://gdoWIoqSMvrvsxuIun.xkqsRmKa7OsOEp3QaMPJXOhc99NlKCscM,\",\n          \"imageUrl\": \"https://mUQkkzPAvyhpXXYxnJUGoYm.auso2f-R8,VLoXjAdXgJjuIw0gh+fH26g.-xEeO0ggpLktkB7Z-Jk.aVkCIVtp\",\n          \"descriptor\": \"string\",\n          \"isContainer\": true\n        },\n        \"url\": \"https://oDele.cgaJ9wXCa9YBC8aztmuMiceYzYcLLLRcCOe,nhA7rW2d2cB+u0\"\n      }\n    },\n    {\n      \"commitId\": \"string\",\n      \"author\": {\n        \"name\": \"string\",\n        \"email\": \"0XDqioHlJ@pKxqebJPndkUQS.vebh\",\n        \"date\": \"1957-05-12T22:50:21.777Z\",\n        \"imageUrl\": \"https://sYRhwpwGjzRtznbtNj.huRtgY,8xswKeb+jy64oTiienVnhSDMxMumVoSXitXpxD++3QeB,t4ZzNoV2\"\n      },\n      \"committer\": {\n        \"name\": \"string\",\n        \"email\": \"S8-pD2mK@zSxoHmHryMhKjE.bbc\",\n        \"date\": \"2002-03-15T07:52:03.682Z\",\n        \"imageUrl\": \"http://qBOzSiQl.bmrwsMmadSUGS\"\n      },\n      \"comment\": \"string\",\n      \"commentTruncated\": true,\n      \"changeCounts\": {\n        \"key_0\": 8316\n      },\n      \"changes\": [\n        {\n          \"changeId\": 2372,\n          \"changeType\": \"none\",\n          \"item\": {\n            \"objectId\": \"string\",\n            \"originalObjectId\": \"string\",\n            \"gitObjectType\": \"string\",\n            \"commitId\": \"string\",\n            \"path\": \"string\",\n            \"url\": \"string\"\n          },\n          \"originalPath\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"changeId\": 5272,\n          \"changeType\": \"edit\",\n          \"item\": {\n            \"objectId\": \"string\",\n            \"originalObjectId\": \"string\",\n            \"gitObjectType\": \"string\",\n            \"commitId\": \"string\",\n            \"path\": \"string\",\n            \"url\": \"string\"\n          },\n          \"originalPath\": \"string\",\n          \"url\": \"string\"\n        }\n      ],\n      \"parents\": [\n        \"string\",\n        \"string\"\n      ],\n      \"url\": \"https://DfohZlvUrJoWaBwWlKtQ.gtawee.lLjKACpB\",\n      \"remoteUrl\": \"https://nJCCIB.mvsirPHU5yQoN\",\n      \"statuses\": [\n        {\n          \"id\": 5837,\n          \"state\": \"error\",\n          \"description\": \"string\",\n          \"context\": {\n            \"name\": \"string\",\n            \"genre\": \"string\"\n          },\n          \"targetUrl\": \"https://cHY.egkpK5c41GDcQty\",\n          \"createdBy\": {\n            \"id\": \"cb3e7447-9e95-6bed-ab91-66b6702e6392\",\n            \"displayName\": \"string\",\n            \"uniqueName\": \"string\",\n            \"url\": \"https://JJYqTGoWtVpAnCWjNOAXnYEStV.ihyZyxg.ioYU7A5dvQH.jfmO-Pt.Bh2SyULNIZ,ObzXbGKgzFoLo\",\n            \"imageUrl\": \"https://zOYLCHOr.xdFYCNVJA38HDcnEecabAhUK.9tJ\",\n            \"descriptor\": \"string\",\n            \"isContainer\": true\n          },\n          \"creationDate\": \"1972-09-06T03:27:33.501Z\",\n          \"updatedDate\": \"2008-11-04T03:27:25.359Z\"\n        },\n        {\n          \"id\": 7803,\n          \"state\": \"error\",\n          \"description\": \"string\",\n          \"context\": {\n            \"name\": \"string\",\n            \"genre\": \"string\"\n          },\n          \"targetUrl\": \"https://tCxStXrIVNOfowoRag.dyzcWnPSlPFG68hTCfVslPcF,bON,v,ThNiNTFvRjz2XvqCoI0X4wI.+A24N4+FX4M\",\n          \"createdBy\": {\n            \"id\": \"b50c9757-73da-1914-0b7c-65b26a530c23\",\n            \"displayName\": \"string\",\n            \"uniqueName\": \"string\",\n            \"url\": \"https://fhbYiVysgkcdaMihXAoy.muMrJtoSIa7TlIQvh75rhLej\",\n            \"imageUrl\": \"http://BZwxd.fulfOCeUB0bnEGQkj-9pFsv+ZXWtwjh\",\n            \"descriptor\": \"string\",\n            \"isContainer\": false\n          },\n          \"creationDate\": \"1964-12-19T08:26:59.144Z\",\n          \"updatedDate\": \"1973-03-13T09:05:04.217Z\"\n        }\n      ],\n      \"workItems\": [\n        {\n          \"id\": \"string\",\n          \"url\": \"http://pqGDJJMjWeWALblNDueKYA.mpogUliSGmlNgD-17GkxllizFLInooku-hs5+VE\"\n        },\n        {\n          \"id\": \"string\",\n          \"url\": \"https://OpVIdpNEHlFbgdOB.qdEL9hXpc\"\n        }\n      ],\n      \"push\": {\n        \"pushId\": 4505,\n        \"date\": \"1979-03-26T12:35:04.530Z\",\n        \"pushedBy\": {\n          \"id\": \"72398b72-5909-c9bc-0bbf-80f950112a6a\",\n          \"displayName\": \"string\",\n          \"uniqueName\": \"string\",\n          \"url\": \"http://uybCzdPlQvUkBqfk.kallb4Ueq8qV8.ihhSn1JNULjzP0g\",\n          \"imageUrl\": \"http://QVmVPtZDb.lpuyu\",\n          \"descriptor\": \"string\",\n          \"isContainer\": false\n        },\n        \"url\": \"http://FmEnkYhGPNchboKGVJXmbAStoS.ukL+Gh9pFY+Tk2xPXfX6vdG\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd683148-abf5-48a6-808b-bfeee6b25112",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "commits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchCriteria.itemVersion.version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.itemVersion.versionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.itemPath",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.fromDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.toDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.author",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria.$skip",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "07b0da8c-22ed-43c7-b301-9571b4e45aea",
+              "name": "Repository not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "commits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "searchCriteria.itemVersion.version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.itemVersion.versionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.itemPath",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.fromDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.toDate",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "searchCriteria.author",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "searchCriteria.$top",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "searchCriteria.$skip",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2faa444b-6c4f-4c45-8b08-311da9a063f4",
+          "name": "Azure Repos Get a commit",
+          "request": {
+            "name": "Azure Repos Get a commit",
+            "description": {
+              "content": "Retrieve a specific commit by its SHA-1 ID. Returns the full commit details including author, committer, message, parent commits, and optionally the list of changes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId",
+                "commits",
+                ":commitId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "changeCount",
+                  "value": "<integer>",
+                  "description": "Maximum number of changes to include"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) The ID or name of the repository"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "commitId",
+                  "description": "(Required) The SHA-1 hash of the commit"
+                },
+                {
+                  "description": "The name of the Azure DevOps organization",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Project ID or project name",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ed149d5-fe65-4cab-a6eb-ef77fbdf58be",
+              "name": "Successfully retrieved commit",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "commits",
+                    ":commitId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "changeCount",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commitId",
+                      "description": "(Required) The SHA-1 hash of the commit"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commitId\": \"string\",\n  \"author\": {\n    \"name\": \"string\",\n    \"email\": \"qp8K6YxX@WliVBBDiTAujsWaicRcJn.kq\",\n    \"date\": \"2001-02-02T08:47:14.448Z\",\n    \"imageUrl\": \"http://ChxDVxsXkeVrvYKEmWfgnCwUy.vzERSTnnt52RMG.wNTK\"\n  },\n  \"committer\": {\n    \"name\": \"string\",\n    \"email\": \"dimsh7Xz1tnek@nsjVROoukQiQ.cio\",\n    \"date\": \"1965-06-19T13:35:06.610Z\",\n    \"imageUrl\": \"https://JVCFWZrOUphIbCkongOWe.jtwa3Sz1bOOY9-5RuzY9Ev9ePmHxvN0+0BxwHoKy+QS\"\n  },\n  \"comment\": \"string\",\n  \"commentTruncated\": true,\n  \"changeCounts\": {\n    \"key_0\": 2905,\n    \"key_1\": 2878\n  },\n  \"changes\": [\n    {\n      \"changeId\": 281,\n      \"changeType\": \"edit\",\n      \"item\": {\n        \"objectId\": \"string\",\n        \"originalObjectId\": \"string\",\n        \"gitObjectType\": \"string\",\n        \"commitId\": \"string\",\n        \"path\": \"string\",\n        \"url\": \"string\"\n      },\n      \"originalPath\": \"string\",\n      \"url\": \"string\"\n    },\n    {\n      \"changeId\": 6078,\n      \"changeType\": \"delete\",\n      \"item\": {\n        \"objectId\": \"string\",\n        \"originalObjectId\": \"string\",\n        \"gitObjectType\": \"string\",\n        \"commitId\": \"string\",\n        \"path\": \"string\",\n        \"url\": \"string\"\n      },\n      \"originalPath\": \"string\",\n      \"url\": \"string\"\n    }\n  ],\n  \"parents\": [\n    \"string\",\n    \"string\"\n  ],\n  \"url\": \"https://ZhPgLWExp.xxztfWWBYPCoxDtoEpsUC0O,mC4tmoTz0\",\n  \"remoteUrl\": \"http://qHeCuBXSvOPN.ucjvO4qLDr3PXqpQcpHICkewr2rl4e5QJfV9LIa2WoxnCoaExw\",\n  \"statuses\": [\n    {\n      \"id\": 9687,\n      \"state\": \"notSet\",\n      \"description\": \"string\",\n      \"context\": {\n        \"name\": \"string\",\n        \"genre\": \"string\"\n      },\n      \"targetUrl\": \"http://WbEqyq.vrYM1z,KOX-LdBR2RxBh4QWGQ.on1C7fJemCkudQ2DulvY\",\n      \"createdBy\": {\n        \"id\": \"f7decdd4-24fe-2808-4164-4f8ad224b488\",\n        \"displayName\": \"string\",\n        \"uniqueName\": \"string\",\n        \"url\": \"https://AbOVusAlYrO.tibtpWgFlbtOI+JL,heHX80iYap1S.f0\",\n        \"imageUrl\": \"https://VfjJakqkoFVkFXpaSUkSOHqQsTVf.jzkgUOBcmU18SvJjn8AoJLthA1ap0ufizfrNdKIEdZ89LKFp0QLLA6kK8wX-e\",\n        \"descriptor\": \"string\",\n        \"isContainer\": false\n      },\n      \"creationDate\": \"1961-02-26T00:49:48.526Z\",\n      \"updatedDate\": \"1988-09-18T15:20:56.542Z\"\n    },\n    {\n      \"id\": 50,\n      \"state\": \"error\",\n      \"description\": \"string\",\n      \"context\": {\n        \"name\": \"string\",\n        \"genre\": \"string\"\n      },\n      \"targetUrl\": \"http://syjOnhbyTTETAKQFZuJpNwGqXMctllskc.bxzhroCURA3,klz8mn1CmErmmOKXMHpqVZ+iBA4fXhuBORPrq\",\n      \"createdBy\": {\n        \"id\": \"c0b9e985-e58f-b976-f271-ba952ffbc00e\",\n        \"displayName\": \"string\",\n        \"uniqueName\": \"string\",\n        \"url\": \"http://FCFuUbnqXUEYSdZQmzZGMCnhGjTWVpef.woh6jz8qE4yrGs9JiYIMV8wACs4xumE96\",\n        \"imageUrl\": \"http://FhIbbRkrcDjAfaWRXsVhhE.okaCHq.lT9hFdXTt.pjb,DQIVydP2RsJmsKC.\",\n        \"descriptor\": \"string\",\n        \"isContainer\": true\n      },\n      \"creationDate\": \"1953-07-17T15:54:54.308Z\",\n      \"updatedDate\": \"1995-03-28T06:07:58.849Z\"\n    }\n  ],\n  \"workItems\": [\n    {\n      \"id\": \"string\",\n      \"url\": \"http://TYIUwzJZVvJDcbyEwCYPByBJJUayTH.jqoGsu,ZiNsHpwGJHNkX5KqKhIMXTjRsjvb\"\n    },\n    {\n      \"id\": \"string\",\n      \"url\": \"https://KrgMMQRkRygoMDdPAJBkJVJHq.ixigWEyYO+PzWfVlf4tbLI62zt-JxJO6oxFyumrd9dX\"\n    }\n  ],\n  \"push\": {\n    \"pushId\": 6634,\n    \"date\": \"1997-09-07T12:17:19.867Z\",\n    \"pushedBy\": {\n      \"id\": \"d2ea7173-0374-d327-d7c7-1ff941acd412\",\n      \"displayName\": \"string\",\n      \"uniqueName\": \"string\",\n      \"url\": \"https://RFrV.hvN6uy8f,EHZRvgXUcLKnnhp.j\",\n      \"imageUrl\": \"http://kmwCiinEk.lstxATGAKGbRJNuab\",\n      \"descriptor\": \"string\",\n      \"isContainer\": false\n    },\n    \"url\": \"https://SBRSAExMZORxeEtICZzHxuwODsPt.ddoAru8ktG4FVzRrkyl9RajLGb\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ab0a636-66df-4ef0-8b01-ea536070a835",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "commits",
+                    ":commitId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "changeCount",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commitId",
+                      "description": "(Required) The SHA-1 hash of the commit"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "19a5f6ca-5ba8-489b-a3f7-15608f9991c2",
+              "name": "Commit or repository not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "commits",
+                    ":commitId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "changeCount",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commitId",
+                      "description": "(Required) The SHA-1 hash of the commit"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The name of the Azure DevOps organization",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Project ID or project name",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "vso.code vso.code_write vso.code_manage"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://app.vssps.visualstudio.com/oauth2/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://app.vssps.visualstudio.com/oauth2/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "509e647b-7970-4655-b0f9-a7dac4550038",
+    "name": "Azure Repos Git Commits API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}

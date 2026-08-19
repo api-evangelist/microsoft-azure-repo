@@ -1,0 +1,449 @@
+{
+  "item": [
+    {
+      "id": "f52d97b2-c3f1-414f-8624-00da07af1d49",
+      "name": "Items",
+      "description": {
+        "content": "Operations for retrieving files, folders, and submodules from a repository. Files are blobs, folders are trees.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e174bd35-8877-4e5b-9ea6-4aa0bd7fb639",
+          "name": "Azure Repos List items (files and folders)",
+          "request": {
+            "name": "Azure Repos List items (files and folders)",
+            "description": {
+              "content": "Get a list of items (files, folders, and submodules) in a repository path. Files are represented as blobs, folders as trees, and submodules as commits.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "git",
+                "repositories",
+                ":repositoryId",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "scopePath",
+                  "value": "<string>",
+                  "description": "The path scope for items (e.g., /src or /README.md)"
+                },
+                {
+                  "disabled": false,
+                  "key": "recursionLevel",
+                  "value": "<string>",
+                  "description": "Level of recursion for folder listing"
+                },
+                {
+                  "disabled": false,
+                  "key": "versionDescriptor.version",
+                  "value": "<string>",
+                  "description": "Branch name, tag, or commit to get items from"
+                },
+                {
+                  "disabled": false,
+                  "key": "versionDescriptor.versionType",
+                  "value": "<string>",
+                  "description": "Type of version identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeContentMetadata",
+                  "value": "<boolean>",
+                  "description": "Include content metadata for items"
+                },
+                {
+                  "disabled": false,
+                  "key": "latestProcessedChange",
+                  "value": "<boolean>",
+                  "description": "Include the latest change for each item"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeLinks",
+                  "value": "<boolean>",
+                  "description": "Include reference links"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "repositoryId",
+                  "description": "(Required) The ID or name of the repository"
+                },
+                {
+                  "description": "The name of the Azure DevOps organization",
+                  "type": "any",
+                  "value": "{{organization}}",
+                  "key": "organization"
+                },
+                {
+                  "description": "Project ID or project name",
+                  "type": "any",
+                  "value": "{{project}}",
+                  "key": "project"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e15f583a-9a0d-488e-b9b8-dd3752a47a4a",
+              "name": "Successfully retrieved items",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scopePath",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recursionLevel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "versionDescriptor.version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "versionDescriptor.versionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeContentMetadata",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "latestProcessedChange",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeLinks",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 428,\n  \"value\": [\n    {\n      \"objectId\": \"string\",\n      \"gitObjectType\": \"tree\",\n      \"commitId\": \"string\",\n      \"path\": \"string\",\n      \"isFolder\": true,\n      \"url\": \"http://xg.aynNBxu2.TMgtiFQ3yKg1,ME95QxlCaeFXtoZgR\",\n      \"content\": \"string\",\n      \"contentMetadata\": {\n        \"encoding\": 1188,\n        \"contentType\": \"string\",\n        \"fileName\": \"string\",\n        \"extension\": \"string\"\n      },\n      \"latestProcessedChange\": {\n        \"commitId\": \"string\",\n        \"author\": {\n          \"name\": \"string\",\n          \"email\": \"IjMdv@TQ.xqr\",\n          \"date\": \"1986-09-26T09:44:37.657Z\",\n          \"imageUrl\": \"https://IpybAWRCuoucGiGfzzIaCZ.wpRl5SlI9E3Ij0Sx9G\"\n        },\n        \"committer\": {\n          \"name\": \"string\",\n          \"email\": \"idQAv@dfCoynRPGvFmDwbBws.jnyd\",\n          \"date\": \"1946-08-26T20:45:18.141Z\",\n          \"imageUrl\": \"https://MZIWzsvMsJfDzkBcXbqKzOIMSEx.shyUPyyREzV1j4EsyYVsaehI9tpU8Z-row9qJK5ZzM088KbLf8+h\"\n        },\n        \"comment\": \"string\",\n        \"commentTruncated\": true,\n        \"changeCounts\": {\n          \"key_0\": 5547,\n          \"key_1\": 5183,\n          \"key_2\": 3113\n        },\n        \"changes\": [\n          {\n            \"changeId\": 3025,\n            \"changeType\": \"rollback\",\n            \"item\": {\n              \"objectId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"originalObjectId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"gitObjectType\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"commitId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"path\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"originalPath\": \"string\",\n            \"url\": \"string\"\n          },\n          {\n            \"changeId\": 9420,\n            \"changeType\": \"none\",\n            \"item\": {\n              \"objectId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"originalObjectId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"gitObjectType\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"commitId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"path\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"originalPath\": \"string\",\n            \"url\": \"string\"\n          }\n        ],\n        \"parents\": [\n          \"string\",\n          \"string\"\n        ],\n        \"url\": \"https://JbmFMcoZRiiRUgVR.fxYcACux8MbvwE3qHMXmHniHxPnGavSS55jHq\",\n        \"remoteUrl\": \"https://rJYcfQCOOMILCxQO.vtZue+S+nLd.pu.hbWG4mIT1YZC6Bgs+UbrF6r-o\",\n        \"statuses\": [\n          {\n            \"id\": 4872,\n            \"state\": \"failed\",\n            \"description\": \"string\",\n            \"context\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"genre\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"targetUrl\": \"https://jawGoKuBiZtVqFfOYgfPjPBNvsklXZ.vwylzTRhR8Nn2UBoAqmyAuOUnGqAB\",\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"creationDate\": \"2015-05-08T14:39:13.882Z\",\n            \"updatedDate\": \"1972-05-25T16:56:00.822Z\"\n          },\n          {\n            \"id\": 3108,\n            \"state\": \"succeeded\",\n            \"description\": \"string\",\n            \"context\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"genre\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"targetUrl\": \"https://jfrrbrpMyxDHQnWErUTLJqcUiLyD.ezwqajMPVflVbaTf5gYl4RNgMCFG5qz9ucgu3mHjKl-xlwRJgULiypv4JluqrBG,W8l8AOOB9hr-el7\",\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"creationDate\": \"1968-06-13T09:24:06.078Z\",\n            \"updatedDate\": \"2009-07-02T05:13:31.376Z\"\n          }\n        ],\n        \"workItems\": [\n          {\n            \"id\": \"string\",\n            \"url\": \"http://MKqbnadZaJcdQcMLchdf.uaKO3wE74d5Dd9XnP9Q5aGkfisbo2YQtVA.zjWLqTm\"\n          },\n          {\n            \"id\": \"string\",\n            \"url\": \"http://AqNyjVrgKoo.huoEdLP\"\n          }\n        ],\n        \"push\": {\n          \"pushId\": 5181,\n          \"date\": \"1965-09-17T06:02:55.475Z\",\n          \"pushedBy\": {\n            \"id\": \"0bb311e5-172e-cf0c-411e-107e55fe617c\",\n            \"displayName\": \"string\",\n            \"uniqueName\": \"string\",\n            \"url\": \"https://pFnwXkeUfaZFnENzv.wzlzcVF2YAbidcZtjruDWKFaPOtDc\",\n            \"imageUrl\": \"https://Nfph.fhzwrKGUITUz\",\n            \"descriptor\": \"string\",\n            \"isContainer\": false\n          },\n          \"url\": \"http://aEEJhbhXexfsSnyTFw.bihkty+skZBH\"\n        }\n      }\n    },\n    {\n      \"objectId\": \"string\",\n      \"gitObjectType\": \"tag\",\n      \"commitId\": \"string\",\n      \"path\": \"string\",\n      \"isFolder\": false,\n      \"url\": \"https://LnoenUApsRDwuGnLDykHhGd.cofW2GC4AnaARsKFbCPkBJDJ7HWXHQvanCl-kxDg1\",\n      \"content\": \"string\",\n      \"contentMetadata\": {\n        \"encoding\": 5828,\n        \"contentType\": \"string\",\n        \"fileName\": \"string\",\n        \"extension\": \"string\"\n      },\n      \"latestProcessedChange\": {\n        \"commitId\": \"string\",\n        \"author\": {\n          \"name\": \"string\",\n          \"email\": \"11YLZ6I5@YeXwWISxKaPRQHBzZXVbxGpuMVT.fyvy\",\n          \"date\": \"1989-09-08T20:09:23.978Z\",\n          \"imageUrl\": \"https://GNDViKyhokjUh.hntGb5JzsMS\"\n        },\n        \"committer\": {\n          \"name\": \"string\",\n          \"email\": \"8efinBF2pW9@oXKRCmXDftUSOzivWLjtkeSKKqKolVej.fpat\",\n          \"date\": \"1988-10-11T05:13:53.830Z\",\n          \"imageUrl\": \"http://HOYjRJMDlAYqHWozLzQ.crzpPMBBIt4vIi14wPEU0Xjh2N6vL.FSwsZF.gSGz+exvOh5d.F8sIrrC0CtMGqI-hBIRt\"\n        },\n        \"comment\": \"string\",\n        \"commentTruncated\": false,\n        \"changeCounts\": {\n          \"key_0\": 7710,\n          \"key_1\": 6479\n        },\n        \"changes\": [\n          {\n            \"changeId\": 4321,\n            \"changeType\": \"add\",\n            \"item\": {\n              \"objectId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"originalObjectId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"gitObjectType\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"commitId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"path\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"originalPath\": \"string\",\n            \"url\": \"string\"\n          },\n          {\n            \"changeId\": 8524,\n            \"changeType\": \"delete\",\n            \"item\": {\n              \"objectId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"originalObjectId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"gitObjectType\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"commitId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"path\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"originalPath\": \"string\",\n            \"url\": \"string\"\n          }\n        ],\n        \"parents\": [\n          \"string\",\n          \"string\"\n        ],\n        \"url\": \"http://EPRQHSEXXBBZxNHLSmenijBPE.wnC,rQoYt832\",\n        \"remoteUrl\": \"https://gdXpmmjmNWmyrJQYPSWvFcJSaYEKQSK.nwoDfikpJ3TemZ2IDtRqr7Z4F1GP9k6eQIEuvUifFprzp6kYwG\",\n        \"statuses\": [\n          {\n            \"id\": 7739,\n            \"state\": \"succeeded\",\n            \"description\": \"string\",\n            \"context\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"genre\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"targetUrl\": \"https://GMbXZttXPJXEEZNwoxNVAiEMnLhuhiTH.dpTyF3RLp0-oG\",\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"creationDate\": \"1965-12-23T19:13:30.550Z\",\n            \"updatedDate\": \"1987-08-13T01:45:30.091Z\"\n          },\n          {\n            \"id\": 7079,\n            \"state\": \"error\",\n            \"description\": \"string\",\n            \"context\": {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"genre\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"targetUrl\": \"https://YCkYfYHTqgNHmBuL.xwljmZCdQlEjQlIJP\",\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"creationDate\": \"1968-11-05T15:02:43.045Z\",\n            \"updatedDate\": \"2012-07-08T04:01:40.841Z\"\n          }\n        ],\n        \"workItems\": [\n          {\n            \"id\": \"string\",\n            \"url\": \"https://fgVI.fjiFan7B53CvTTfGytBEHH8oxhpjYGBzUx6WqQYnFPP\"\n          },\n          {\n            \"id\": \"string\",\n            \"url\": \"https://bGlNfrg.juVc.XiZK5g0ItklE,dIkzRXj-MwsPCd-Uadu6l-n\"\n          }\n        ],\n        \"push\": {\n          \"pushId\": 7251,\n          \"date\": \"2014-10-31T05:39:52.144Z\",\n          \"pushedBy\": {\n            \"id\": \"10138fb6-fed9-f00c-036e-9d0da884b7ef\",\n            \"displayName\": \"string\",\n            \"uniqueName\": \"string\",\n            \"url\": \"https://RTtqGcEhTleWSiAhxLekThInmBJ.rfpdyqzIW\",\n            \"imageUrl\": \"http://HLxJTvE.ggtwFEDbpn07ehG5IOXVrZz\",\n            \"descriptor\": \"string\",\n            \"isContainer\": false\n          },\n          \"url\": \"https://QIHDNe.xcyypm97cWnB,Qi.STxS\"\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32e67659-4dbe-466a-9969-a405e158bd8d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scopePath",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recursionLevel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "versionDescriptor.version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "versionDescriptor.versionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeContentMetadata",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "latestProcessedChange",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeLinks",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d6084b1a-169e-44a0-b162-3c78e6a002ee",
+              "name": "Repository or path not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "git",
+                    "repositories",
+                    ":repositoryId",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scopePath",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recursionLevel",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "versionDescriptor.version",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "versionDescriptor.versionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeContentMetadata",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "latestProcessedChange",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "includeLinks",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "repositoryId",
+                      "description": "(Required) The ID or name of the repository"
+                    },
+                    {
+                      "description": "The name of the Azure DevOps organization",
+                      "type": "any",
+                      "value": "{{organization}}",
+                      "key": "organization"
+                    },
+                    {
+                      "description": "Project ID or project name",
+                      "type": "any",
+                      "value": "{{project}}",
+                      "key": "project"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The name of the Azure DevOps organization",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myorganization",
+      "key": "organization"
+    },
+    {
+      "description": {
+        "content": "Project ID or project name",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "myproject",
+      "key": "project"
+    },
+    {
+      "type": "string",
+      "value": "https://dev.azure.com/{{organization}}/{{project}}/_apis",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "vso.code vso.code_write vso.code_manage"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://app.vssps.visualstudio.com/oauth2/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://app.vssps.visualstudio.com/oauth2/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "81382226-f5b5-4ecf-93b8-988cef744a2a",
+    "name": "Azure Repos Git Commits Items API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.\n\nContact Support:\n Name: Microsoft Azure DevOps",
+      "type": "text/plain"
+    }
+  }
+}
