@@ -76,6 +76,8 @@ apis:
   humanURL: https://docs.microsoft.com/en-us/rest/api/azure/devops/git/
   baseURL: https://dev.azure.com/{organization}/{project}/_apis/git
   tags:
+  - Item
+  tags_raw:
   - Items
   properties:
   - type: OpenAPI
