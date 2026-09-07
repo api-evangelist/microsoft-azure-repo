@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Azure Repos Git Commits API
   description: REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.
@@ -136,25 +136,82 @@ paths:
           description: Commit or repository not found
 components:
   schemas:
-    GitUserDate:
+    GitCommitRef:
       type: object
-      description: User info and date for Git operations
+      description: Properties describing a Git commit and associated metadata including author, committer, message, and related resources.
       properties:
-        name:
+        commitId:
           type: string
-          description: Name of the user
-        email:
+          description: SHA-1 hash of the commit
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        comment:
           type: string
-          format: email
-          description: Email address of the user
-        date:
-          type: string
-          format: date-time
-          description: Date of the Git operation
-        imageUrl:
+          description: Commit message
+        commentTruncated:
+          type: boolean
+          description: Whether the comment was truncated
+        changeCounts:
+          type: object
+          description: Counts of change types in the commit
+          additionalProperties:
+            type: integer
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitChange'
+          description: List of changes in the commit
+        parents:
+          type: array
+          items:
+            type: string
+          description: SHA-1 hashes of parent commits
+        url:
           type: string
           format: uri
-          description: Avatar URL for the user
+          description: REST API URL for this commit
+        remoteUrl:
+          type: string
+          format: uri
+          description: Web URL to view the commit
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitStatus'
+          description: Status checks posted against this commit
+        workItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRef'
+          description: Linked work items
+        push:
+          type: object
+          description: Push that included this commit
+          properties:
+            pushId:
+              type: integer
+              format: int32
+            date:
+              type: string
+              format: date-time
+            pushedBy:
+              $ref: '#/components/schemas/IdentityRef'
+            url:
+              type: string
+              format: uri
+    ResourceRef:
+      type: object
+      description: Generic reference to a resource
+      properties:
+        id:
+          type: string
+          description: Resource ID
+        url:
+          type: string
+          format: uri
+          description: Resource URL
     GitStatus:
       type: object
       description: Status metadata posted by a service or extension against a commit or pull request, such as build results or policy checks.
@@ -197,6 +254,25 @@ components:
         updatedDate:
           type: string
           format: date-time
+    GitUserDate:
+      type: object
+      description: User info and date for Git operations
+      properties:
+        name:
+          type: string
+          description: Name of the user
+        email:
+          type: string
+          format: email
+          description: Email address of the user
+        date:
+          type: string
+          format: date-time
+          description: Date of the Git operation
+        imageUrl:
+          type: string
+          format: uri
+          description: Avatar URL for the user
     GitChange:
       type: object
       description: Represents a change to an item in a commit
@@ -268,82 +344,6 @@ components:
         isContainer:
           type: boolean
           description: Whether this identity is a group
-    ResourceRef:
-      type: object
-      description: Generic reference to a resource
-      properties:
-        id:
-          type: string
-          description: Resource ID
-        url:
-          type: string
-          format: uri
-          description: Resource URL
-    GitCommitRef:
-      type: object
-      description: Properties describing a Git commit and associated metadata including author, committer, message, and related resources.
-      properties:
-        commitId:
-          type: string
-          description: SHA-1 hash of the commit
-        author:
-          $ref: '#/components/schemas/GitUserDate'
-        committer:
-          $ref: '#/components/schemas/GitUserDate'
-        comment:
-          type: string
-          description: Commit message
-        commentTruncated:
-          type: boolean
-          description: Whether the comment was truncated
-        changeCounts:
-          type: object
-          description: Counts of change types in the commit
-          additionalProperties:
-            type: integer
-        changes:
-          type: array
-          items:
-            $ref: '#/components/schemas/GitChange'
-          description: List of changes in the commit
-        parents:
-          type: array
-          items:
-            type: string
-          description: SHA-1 hashes of parent commits
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this commit
-        remoteUrl:
-          type: string
-          format: uri
-          description: Web URL to view the commit
-        statuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/GitStatus'
-          description: Status checks posted against this commit
-        workItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceRef'
-          description: Linked work items
-        push:
-          type: object
-          description: Push that included this commit
-          properties:
-            pushId:
-              type: integer
-              format: int32
-            date:
-              type: string
-              format: date-time
-            pushedBy:
-              $ref: '#/components/schemas/IdentityRef'
-            url:
-              type: string
-              format: uri
   parameters:
     repositoryId:
       name: repositoryId
