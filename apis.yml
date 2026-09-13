@@ -29,6 +29,7 @@ accessModel:
   method: derived
 image: https://docs.microsoft.com/en-us/azure/devops/repos/media/index/repos.svg
 tags:
+  - Developer Tools
   - DevOps
   - Git
   - Repositories
