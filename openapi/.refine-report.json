@@ -1,15 +1,7 @@
 {
   "provider": "microsoft-azure-repo",
   "sources": [
-    "microsoft-azure-repo-commits-api-openapi.yml",
-    "microsoft-azure-repo-items-api-openapi.yml",
-    "microsoft-azure-repo-pull-request-reviewers-api-openapi.yml",
-    "microsoft-azure-repo-pull-request-threads-api-openapi.yml",
-    "microsoft-azure-repo-pull-requests-api-openapi.yml",
-    "microsoft-azure-repo-pushes-api-openapi.yml",
-    "microsoft-azure-repo-refs-api-openapi.yml",
-    "microsoft-azure-repo-repositories-api-openapi.yml",
-    "microsoft-azure-repo-stats-api-openapi.yml"
+    "_original/azure-repo-git-api-openapi.yml"
   ],
   "outputs": [
     "microsoft-azure-repo-commits-api-openapi.yml",
@@ -26,16 +18,19 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "microsoft-azure-repo-commits-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-azure-repo-items-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-azure-repo-pull-request-reviewers-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-azure-repo-pull-request-threads-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-azure-repo-pull-requests-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-azure-repo-pushes-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-azure-repo-refs-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-azure-repo-repositories-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "microsoft-azure-repo-stats-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "azure-repo-git-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "microsoft-azure-repo-commits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-repo-items-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-repo-pull-request-reviewers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-repo-pull-request-threads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-repo-pull-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-repo-pushes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-repo-refs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-repo-repositories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-azure-repo-stats-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

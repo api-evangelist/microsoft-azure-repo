@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Azure Repos Git Commits Pull Request Threads API
+  title: Azure Repos Git Pull Request Threads API
   description: REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.
   version: '7.1'
   contact:
@@ -82,51 +82,7 @@ paths:
         '404':
           description: Pull request or repository not found
 components:
-  parameters:
-    repositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: The ID or name of the repository
-      schema:
-        type: string
-    pullRequestId:
-      name: pullRequestId
-      in: path
-      required: true
-      description: ID of the pull request
-      schema:
-        type: integer
-        format: int32
   schemas:
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps identity (user or group)
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identity ID
-        displayName:
-          type: string
-          description: Display name of the identity
-        uniqueName:
-          type: string
-          description: Unique name (typically email)
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this identity
-        imageUrl:
-          type: string
-          format: uri
-          description: URL to the identity's avatar image
-        descriptor:
-          type: string
-          description: Graph descriptor for the identity
-        isContainer:
-          type: boolean
-          description: Whether this identity is a group
     GitPullRequestCommentThread:
       type: object
       description: A comment thread on a pull request, optionally associated with a specific file and line range for inline code review.
@@ -205,6 +161,50 @@ components:
         properties:
           type: object
           additionalProperties: true
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps identity (user or group)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identity ID
+        displayName:
+          type: string
+          description: Display name of the identity
+        uniqueName:
+          type: string
+          description: Unique name (typically email)
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this identity
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the identity's avatar image
+        descriptor:
+          type: string
+          description: Graph descriptor for the identity
+        isContainer:
+          type: boolean
+          description: Whether this identity is a group
+  parameters:
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
+    pullRequestId:
+      name: pullRequestId
+      in: path
+      required: true
+      description: ID of the pull request
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     oauth2:
       type: oauth2

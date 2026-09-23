@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Azure Repos Git Commits Stats API
+  title: Azure Repos Git Stats API
   description: REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.
   version: '7.1'
   contact:
@@ -70,6 +70,158 @@ paths:
           description: Repository not found
 components:
   schemas:
+    GitUserDate:
+      type: object
+      description: User info and date for Git operations
+      properties:
+        name:
+          type: string
+          description: Name of the user
+        email:
+          type: string
+          format: email
+          description: Email address of the user
+        date:
+          type: string
+          format: date-time
+          description: Date of the Git operation
+        imageUrl:
+          type: string
+          format: uri
+          description: Avatar URL for the user
+    GitBranchStats:
+      type: object
+      description: Branch statistics including commit counts ahead and behind a base version.
+      properties:
+        name:
+          type: string
+          description: Branch name
+        aheadCount:
+          type: integer
+          format: int32
+          description: Number of commits ahead of the base
+        behindCount:
+          type: integer
+          format: int32
+          description: Number of commits behind the base
+        commit:
+          $ref: '#/components/schemas/GitCommitRef'
+        isBaseVersion:
+          type: boolean
+          description: Whether this is the base version
+    GitChange:
+      type: object
+      description: Represents a change to an item in a commit
+      properties:
+        changeId:
+          type: integer
+          format: int32
+          description: ID of the change within the group
+        changeType:
+          type: string
+          enum:
+          - add
+          - edit
+          - delete
+          - rename
+          - merge
+          - lock
+          - branch
+          - rollback
+          - none
+          description: Type of change made to the item
+        item:
+          type: object
+          description: The affected item
+          properties:
+            objectId:
+              type: string
+            originalObjectId:
+              type: string
+            gitObjectType:
+              type: string
+            commitId:
+              type: string
+            path:
+              type: string
+            url:
+              type: string
+        originalPath:
+          type: string
+          description: Original path if the item was renamed
+        url:
+          type: string
+          description: URL to retrieve the item
+    GitStatus:
+      type: object
+      description: Status metadata posted by a service or extension against a commit or pull request, such as build results or policy checks.
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Status identifier
+        state:
+          type: string
+          enum:
+          - notSet
+          - pending
+          - succeeded
+          - failed
+          - error
+          - notApplicable
+          description: State of the status
+        description:
+          type: string
+          description: Status description
+        context:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the status context
+            genre:
+              type: string
+              description: Genre of the status
+        targetUrl:
+          type: string
+          format: uri
+          description: URL with status details
+        createdBy:
+          $ref: '#/components/schemas/IdentityRef'
+        creationDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps identity (user or group)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identity ID
+        displayName:
+          type: string
+          description: Display name of the identity
+        uniqueName:
+          type: string
+          description: Unique name (typically email)
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this identity
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the identity's avatar image
+        descriptor:
+          type: string
+          description: Graph descriptor for the identity
+        isContainer:
+          type: boolean
+          description: Whether this identity is a group
     GitCommitRef:
       type: object
       description: Properties describing a Git commit and associated metadata including author, committer, message, and related resources.
@@ -135,26 +287,6 @@ components:
             url:
               type: string
               format: uri
-    GitBranchStats:
-      type: object
-      description: Branch statistics including commit counts ahead and behind a base version.
-      properties:
-        name:
-          type: string
-          description: Branch name
-        aheadCount:
-          type: integer
-          format: int32
-          description: Number of commits ahead of the base
-        behindCount:
-          type: integer
-          format: int32
-          description: Number of commits behind the base
-        commit:
-          $ref: '#/components/schemas/GitCommitRef'
-        isBaseVersion:
-          type: boolean
-          description: Whether this is the base version
     ResourceRef:
       type: object
       description: Generic reference to a resource
@@ -166,138 +298,6 @@ components:
           type: string
           format: uri
           description: Resource URL
-    GitStatus:
-      type: object
-      description: Status metadata posted by a service or extension against a commit or pull request, such as build results or policy checks.
-      properties:
-        id:
-          type: integer
-          format: int32
-          description: Status identifier
-        state:
-          type: string
-          enum:
-          - notSet
-          - pending
-          - succeeded
-          - failed
-          - error
-          - notApplicable
-          description: State of the status
-        description:
-          type: string
-          description: Status description
-        context:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Name of the status context
-            genre:
-              type: string
-              description: Genre of the status
-        targetUrl:
-          type: string
-          format: uri
-          description: URL with status details
-        createdBy:
-          $ref: '#/components/schemas/IdentityRef'
-        creationDate:
-          type: string
-          format: date-time
-        updatedDate:
-          type: string
-          format: date-time
-    GitUserDate:
-      type: object
-      description: User info and date for Git operations
-      properties:
-        name:
-          type: string
-          description: Name of the user
-        email:
-          type: string
-          format: email
-          description: Email address of the user
-        date:
-          type: string
-          format: date-time
-          description: Date of the Git operation
-        imageUrl:
-          type: string
-          format: uri
-          description: Avatar URL for the user
-    GitChange:
-      type: object
-      description: Represents a change to an item in a commit
-      properties:
-        changeId:
-          type: integer
-          format: int32
-          description: ID of the change within the group
-        changeType:
-          type: string
-          enum:
-          - add
-          - edit
-          - delete
-          - rename
-          - merge
-          - lock
-          - branch
-          - rollback
-          - none
-          description: Type of change made to the item
-        item:
-          type: object
-          description: The affected item
-          properties:
-            objectId:
-              type: string
-            originalObjectId:
-              type: string
-            gitObjectType:
-              type: string
-            commitId:
-              type: string
-            path:
-              type: string
-            url:
-              type: string
-        originalPath:
-          type: string
-          description: Original path if the item was renamed
-        url:
-          type: string
-          description: URL to retrieve the item
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps identity (user or group)
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identity ID
-        displayName:
-          type: string
-          description: Display name of the identity
-        uniqueName:
-          type: string
-          description: Unique name (typically email)
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this identity
-        imageUrl:
-          type: string
-          format: uri
-          description: URL to the identity's avatar image
-        descriptor:
-          type: string
-          description: Graph descriptor for the identity
-        isContainer:
-          type: boolean
-          description: Whether this identity is a group
   parameters:
     repositoryId:
       name: repositoryId
