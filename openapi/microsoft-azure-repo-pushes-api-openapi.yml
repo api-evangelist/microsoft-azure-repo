@@ -215,68 +215,71 @@ paths:
           description: Push or repository not found
 components:
   schemas:
-    GitUserDate:
+    GitCommitRef:
       type: object
-      description: User info and date for Git operations
+      description: Properties describing a Git commit and associated metadata including author, committer, message, and related resources.
       properties:
-        name:
+        commitId:
           type: string
-          description: Name of the user
-        email:
+          description: SHA-1 hash of the commit
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        comment:
           type: string
-          format: email
-          description: Email address of the user
-        date:
-          type: string
-          format: date-time
-          description: Date of the Git operation
-        imageUrl:
-          type: string
-          format: uri
-          description: Avatar URL for the user
-    GitChange:
-      type: object
-      description: Represents a change to an item in a commit
-      properties:
-        changeId:
-          type: integer
-          format: int32
-          description: ID of the change within the group
-        changeType:
-          type: string
-          enum:
-          - add
-          - edit
-          - delete
-          - rename
-          - merge
-          - lock
-          - branch
-          - rollback
-          - none
-          description: Type of change made to the item
-        item:
+          description: Commit message
+        commentTruncated:
+          type: boolean
+          description: Whether the comment was truncated
+        changeCounts:
           type: object
-          description: The affected item
-          properties:
-            objectId:
-              type: string
-            originalObjectId:
-              type: string
-            gitObjectType:
-              type: string
-            commitId:
-              type: string
-            path:
-              type: string
-            url:
-              type: string
-        originalPath:
-          type: string
-          description: Original path if the item was renamed
+          description: Counts of change types in the commit
+          additionalProperties:
+            type: integer
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitChange'
+          description: List of changes in the commit
+        parents:
+          type: array
+          items:
+            type: string
+          description: SHA-1 hashes of parent commits
         url:
           type: string
-          description: URL to retrieve the item
+          format: uri
+          description: REST API URL for this commit
+        remoteUrl:
+          type: string
+          format: uri
+          description: Web URL to view the commit
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitStatus'
+          description: Status checks posted against this commit
+        workItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRef'
+          description: Linked work items
+        push:
+          type: object
+          description: Push that included this commit
+          properties:
+            pushId:
+              type: integer
+              format: int32
+            date:
+              type: string
+              format: date-time
+            pushedBy:
+              $ref: '#/components/schemas/IdentityRef'
+            url:
+              type: string
+              format: uri
     GitRepository:
       type: object
       description: Represents a Git repository in Azure DevOps, including its metadata, URLs, project reference, and configuration such as default branch.
@@ -369,72 +372,49 @@ components:
         updatedDate:
           type: string
           format: date-time
-    GitPush:
+    IdentityRef:
       type: object
-      description: Represents a push to a repository containing one or more commits and ref updates.
-      properties:
-        pushId:
-          type: integer
-          format: int32
-          description: Unique push ID
-        date:
-          type: string
-          format: date-time
-          description: Date the push was made
-        pushedBy:
-          $ref: '#/components/schemas/IdentityRef'
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this push
-        commits:
-          type: array
-          items:
-            $ref: '#/components/schemas/GitCommitRef'
-          description: Commits included in the push
-        refUpdates:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: Full ref name
-              oldObjectId:
-                type: string
-              newObjectId:
-                type: string
-          description: Ref updates included in the push
-        repository:
-          $ref: '#/components/schemas/GitRepository'
-    GitRepositoryRef:
-      type: object
-      description: Shallow reference to a Git repository
+      description: Reference to an Azure DevOps identity (user or group)
       properties:
         id:
           type: string
           format: uuid
-          description: Repository ID
-        name:
+          description: Unique identity ID
+        displayName:
           type: string
-          description: Repository name
+          description: Display name of the identity
+        uniqueName:
+          type: string
+          description: Unique name (typically email)
         url:
           type: string
           format: uri
-          description: REST API URL
-        project:
-          $ref: '#/components/schemas/TeamProjectReference'
-        isFork:
+          description: REST API URL for this identity
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the identity's avatar image
+        descriptor:
+          type: string
+          description: Graph descriptor for the identity
+        isContainer:
           type: boolean
-          description: True if the repository was created as a fork
-        remoteUrl:
+          description: Whether this identity is a group
+    TeamProjectCollectionReference:
+      type: object
+      description: Reference to a Team Project Collection
+      properties:
+        id:
           type: string
-          description: HTTPS clone URL
-        sshUrl:
+          format: uuid
+          description: Collection ID
+        name:
           type: string
-          description: SSH clone URL
-        collection:
-          $ref: '#/components/schemas/TeamProjectCollectionReference'
+          description: Collection name
+        url:
+          type: string
+          format: uri
+          description: REST API URL for the collection
     TeamProjectReference:
       type: object
       description: Shallow reference to an Azure DevOps team project
@@ -478,114 +458,106 @@ components:
           type: string
           format: date-time
           description: Last update time
-    IdentityRef:
+    GitUserDate:
       type: object
-      description: Reference to an Azure DevOps identity (user or group)
+      description: User info and date for Git operations
       properties:
-        id:
+        name:
           type: string
-          format: uuid
-          description: Unique identity ID
-        displayName:
+          description: Name of the user
+        email:
           type: string
-          description: Display name of the identity
-        uniqueName:
+          format: email
+          description: Email address of the user
+        date:
           type: string
-          description: Unique name (typically email)
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this identity
+          format: date-time
+          description: Date of the Git operation
         imageUrl:
           type: string
           format: uri
-          description: URL to the identity's avatar image
-        descriptor:
-          type: string
-          description: Graph descriptor for the identity
-        isContainer:
-          type: boolean
-          description: Whether this identity is a group
-    GitCommitRef:
+          description: Avatar URL for the user
+    GitChange:
       type: object
-      description: Properties describing a Git commit and associated metadata including author, committer, message, and related resources.
+      description: Represents a change to an item in a commit
       properties:
-        commitId:
+        changeId:
+          type: integer
+          format: int32
+          description: ID of the change within the group
+        changeType:
           type: string
-          description: SHA-1 hash of the commit
-        author:
-          $ref: '#/components/schemas/GitUserDate'
-        committer:
-          $ref: '#/components/schemas/GitUserDate'
-        comment:
-          type: string
-          description: Commit message
-        commentTruncated:
-          type: boolean
-          description: Whether the comment was truncated
-        changeCounts:
+          enum:
+          - add
+          - edit
+          - delete
+          - rename
+          - merge
+          - lock
+          - branch
+          - rollback
+          - none
+          description: Type of change made to the item
+        item:
           type: object
-          description: Counts of change types in the commit
-          additionalProperties:
-            type: integer
-        changes:
-          type: array
-          items:
-            $ref: '#/components/schemas/GitChange'
-          description: List of changes in the commit
-        parents:
-          type: array
-          items:
-            type: string
-          description: SHA-1 hashes of parent commits
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this commit
-        remoteUrl:
-          type: string
-          format: uri
-          description: Web URL to view the commit
-        statuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/GitStatus'
-          description: Status checks posted against this commit
-        workItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceRef'
-          description: Linked work items
-        push:
-          type: object
-          description: Push that included this commit
+          description: The affected item
           properties:
-            pushId:
-              type: integer
-              format: int32
-            date:
+            objectId:
               type: string
-              format: date-time
-            pushedBy:
-              $ref: '#/components/schemas/IdentityRef'
+            originalObjectId:
+              type: string
+            gitObjectType:
+              type: string
+            commitId:
+              type: string
+            path:
+              type: string
             url:
               type: string
-              format: uri
-    TeamProjectCollectionReference:
+        originalPath:
+          type: string
+          description: Original path if the item was renamed
+        url:
+          type: string
+          description: URL to retrieve the item
+    GitPush:
       type: object
-      description: Reference to a Team Project Collection
+      description: Represents a push to a repository containing one or more commits and ref updates.
       properties:
-        id:
+        pushId:
+          type: integer
+          format: int32
+          description: Unique push ID
+        date:
           type: string
-          format: uuid
-          description: Collection ID
-        name:
-          type: string
-          description: Collection name
+          format: date-time
+          description: Date the push was made
+        pushedBy:
+          $ref: '#/components/schemas/IdentityRef'
         url:
           type: string
           format: uri
-          description: REST API URL for the collection
+          description: REST API URL for this push
+        commits:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitCommitRef'
+          description: Commits included in the push
+        refUpdates:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Full ref name
+              oldObjectId:
+                type: string
+              newObjectId:
+                type: string
+          description: Ref updates included in the push
+        repository:
+          $ref: '#/components/schemas/GitRepository'
     ResourceRef:
       type: object
       description: Generic reference to a resource
@@ -597,6 +569,34 @@ components:
           type: string
           format: uri
           description: Resource URL
+    GitRepositoryRef:
+      type: object
+      description: Shallow reference to a Git repository
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Repository ID
+        name:
+          type: string
+          description: Repository name
+        url:
+          type: string
+          format: uri
+          description: REST API URL
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        isFork:
+          type: boolean
+          description: True if the repository was created as a fork
+        remoteUrl:
+          type: string
+          description: HTTPS clone URL
+        sshUrl:
+          type: string
+          description: SSH clone URL
+        collection:
+          $ref: '#/components/schemas/TeamProjectCollectionReference'
   parameters:
     repositoryId:
       name: repositoryId

@@ -70,6 +70,99 @@ paths:
           description: Repository not found
 components:
   schemas:
+    GitCommitRef:
+      type: object
+      description: Properties describing a Git commit and associated metadata including author, committer, message, and related resources.
+      properties:
+        commitId:
+          type: string
+          description: SHA-1 hash of the commit
+        author:
+          $ref: '#/components/schemas/GitUserDate'
+        committer:
+          $ref: '#/components/schemas/GitUserDate'
+        comment:
+          type: string
+          description: Commit message
+        commentTruncated:
+          type: boolean
+          description: Whether the comment was truncated
+        changeCounts:
+          type: object
+          description: Counts of change types in the commit
+          additionalProperties:
+            type: integer
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitChange'
+          description: List of changes in the commit
+        parents:
+          type: array
+          items:
+            type: string
+          description: SHA-1 hashes of parent commits
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this commit
+        remoteUrl:
+          type: string
+          format: uri
+          description: Web URL to view the commit
+        statuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/GitStatus'
+          description: Status checks posted against this commit
+        workItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceRef'
+          description: Linked work items
+        push:
+          type: object
+          description: Push that included this commit
+          properties:
+            pushId:
+              type: integer
+              format: int32
+            date:
+              type: string
+              format: date-time
+            pushedBy:
+              $ref: '#/components/schemas/IdentityRef'
+            url:
+              type: string
+              format: uri
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps identity (user or group)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identity ID
+        displayName:
+          type: string
+          description: Display name of the identity
+        uniqueName:
+          type: string
+          description: Unique name (typically email)
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this identity
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the identity's avatar image
+        descriptor:
+          type: string
+          description: Graph descriptor for the identity
+        isContainer:
+          type: boolean
+          description: Whether this identity is a group
     GitUserDate:
       type: object
       description: User info and date for Git operations
@@ -89,26 +182,6 @@ components:
           type: string
           format: uri
           description: Avatar URL for the user
-    GitBranchStats:
-      type: object
-      description: Branch statistics including commit counts ahead and behind a base version.
-      properties:
-        name:
-          type: string
-          description: Branch name
-        aheadCount:
-          type: integer
-          format: int32
-          description: Number of commits ahead of the base
-        behindCount:
-          type: integer
-          format: int32
-          description: Number of commits behind the base
-        commit:
-          $ref: '#/components/schemas/GitCommitRef'
-        isBaseVersion:
-          type: boolean
-          description: Whether this is the base version
     GitChange:
       type: object
       description: Represents a change to an item in a commit
@@ -194,99 +267,6 @@ components:
         updatedDate:
           type: string
           format: date-time
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps identity (user or group)
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identity ID
-        displayName:
-          type: string
-          description: Display name of the identity
-        uniqueName:
-          type: string
-          description: Unique name (typically email)
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this identity
-        imageUrl:
-          type: string
-          format: uri
-          description: URL to the identity's avatar image
-        descriptor:
-          type: string
-          description: Graph descriptor for the identity
-        isContainer:
-          type: boolean
-          description: Whether this identity is a group
-    GitCommitRef:
-      type: object
-      description: Properties describing a Git commit and associated metadata including author, committer, message, and related resources.
-      properties:
-        commitId:
-          type: string
-          description: SHA-1 hash of the commit
-        author:
-          $ref: '#/components/schemas/GitUserDate'
-        committer:
-          $ref: '#/components/schemas/GitUserDate'
-        comment:
-          type: string
-          description: Commit message
-        commentTruncated:
-          type: boolean
-          description: Whether the comment was truncated
-        changeCounts:
-          type: object
-          description: Counts of change types in the commit
-          additionalProperties:
-            type: integer
-        changes:
-          type: array
-          items:
-            $ref: '#/components/schemas/GitChange'
-          description: List of changes in the commit
-        parents:
-          type: array
-          items:
-            type: string
-          description: SHA-1 hashes of parent commits
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this commit
-        remoteUrl:
-          type: string
-          format: uri
-          description: Web URL to view the commit
-        statuses:
-          type: array
-          items:
-            $ref: '#/components/schemas/GitStatus'
-          description: Status checks posted against this commit
-        workItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceRef'
-          description: Linked work items
-        push:
-          type: object
-          description: Push that included this commit
-          properties:
-            pushId:
-              type: integer
-              format: int32
-            date:
-              type: string
-              format: date-time
-            pushedBy:
-              $ref: '#/components/schemas/IdentityRef'
-            url:
-              type: string
-              format: uri
     ResourceRef:
       type: object
       description: Generic reference to a resource
@@ -298,6 +278,26 @@ components:
           type: string
           format: uri
           description: Resource URL
+    GitBranchStats:
+      type: object
+      description: Branch statistics including commit counts ahead and behind a base version.
+      properties:
+        name:
+          type: string
+          description: Branch name
+        aheadCount:
+          type: integer
+          format: int32
+          description: Number of commits ahead of the base
+        behindCount:
+          type: integer
+          format: int32
+          description: Number of commits behind the base
+        commit:
+          $ref: '#/components/schemas/GitCommitRef'
+        isBaseVersion:
+          type: boolean
+          description: Whether this is the base version
   parameters:
     repositoryId:
       name: repositoryId

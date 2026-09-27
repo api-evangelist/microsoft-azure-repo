@@ -139,30 +139,15 @@ paths:
         '404':
           description: Repository not found
 components:
+  parameters:
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
   schemas:
-    GitRefUpdateResult:
-      type: object
-      description: Result of a ref update operation
-      properties:
-        name:
-          type: string
-          description: Full ref name
-        oldObjectId:
-          type: string
-          description: Previous object ID
-        newObjectId:
-          type: string
-          description: New object ID
-        success:
-          type: boolean
-          description: Whether the update succeeded
-        updateStatus:
-          type: string
-          description: Status of the update operation
-        repositoryId:
-          type: string
-          format: uuid
-          description: Repository the ref belongs to
     GitRef:
       type: object
       description: A Git ref (branch or tag) including its name, object ID, and optional creator and status information.
@@ -262,14 +247,29 @@ components:
         updatedDate:
           type: string
           format: date-time
-  parameters:
-    repositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: The ID or name of the repository
-      schema:
-        type: string
+    GitRefUpdateResult:
+      type: object
+      description: Result of a ref update operation
+      properties:
+        name:
+          type: string
+          description: Full ref name
+        oldObjectId:
+          type: string
+          description: Previous object ID
+        newObjectId:
+          type: string
+          description: New object ID
+        success:
+          type: boolean
+          description: Whether the update succeeded
+        updateStatus:
+          type: string
+          description: Status of the update operation
+        repositoryId:
+          type: string
+          format: uuid
+          description: Repository the ref belongs to
   securitySchemes:
     oauth2:
       type: oauth2

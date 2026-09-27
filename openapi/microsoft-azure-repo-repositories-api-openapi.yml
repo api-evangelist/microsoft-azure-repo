@@ -188,20 +188,6 @@ paths:
         '404':
           description: Repository not found
 components:
-  parameters:
-    includeLinks:
-      name: includeLinks
-      in: query
-      description: Include reference links in the response
-      schema:
-        type: boolean
-    repositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: The ID or name of the repository
-      schema:
-        type: string
   schemas:
     GitRepository:
       type: object
@@ -253,6 +239,21 @@ components:
           type: object
           description: HAL reference links
           additionalProperties: true
+    TeamProjectCollectionReference:
+      type: object
+      description: Reference to a Team Project Collection
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Collection ID
+        name:
+          type: string
+          description: Collection name
+        url:
+          type: string
+          format: uri
+          description: REST API URL for the collection
     TeamProjectReference:
       type: object
       description: Shallow reference to an Azure DevOps team project
@@ -324,21 +325,20 @@ components:
           description: SSH clone URL
         collection:
           $ref: '#/components/schemas/TeamProjectCollectionReference'
-    TeamProjectCollectionReference:
-      type: object
-      description: Reference to a Team Project Collection
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Collection ID
-        name:
-          type: string
-          description: Collection name
-        url:
-          type: string
-          format: uri
-          description: REST API URL for the collection
+  parameters:
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
+    includeLinks:
+      name: includeLinks
+      in: query
+      description: Include reference links in the response
+      schema:
+        type: boolean
   securitySchemes:
     oauth2:
       type: oauth2

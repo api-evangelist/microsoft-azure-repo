@@ -190,13 +190,6 @@ components:
           type: boolean
           description: Whether this identity is a group
   parameters:
-    repositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: The ID or name of the repository
-      schema:
-        type: string
     pullRequestId:
       name: pullRequestId
       in: path
@@ -205,6 +198,13 @@ components:
       schema:
         type: integer
         format: int32
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2
