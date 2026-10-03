@@ -188,7 +188,36 @@ paths:
         '404':
           description: Repository not found
 components:
+  parameters:
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
+    includeLinks:
+      name: includeLinks
+      in: query
+      description: Include reference links in the response
+      schema:
+        type: boolean
   schemas:
+    TeamProjectCollectionReference:
+      type: object
+      description: Reference to a Team Project Collection
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Collection ID
+        name:
+          type: string
+          description: Collection name
+        url:
+          type: string
+          format: uri
+          description: REST API URL for the collection
     GitRepository:
       type: object
       description: Represents a Git repository in Azure DevOps, including its metadata, URLs, project reference, and configuration such as default branch.
@@ -239,21 +268,34 @@ components:
           type: object
           description: HAL reference links
           additionalProperties: true
-    TeamProjectCollectionReference:
+    GitRepositoryRef:
       type: object
-      description: Reference to a Team Project Collection
+      description: Shallow reference to a Git repository
       properties:
         id:
           type: string
           format: uuid
-          description: Collection ID
+          description: Repository ID
         name:
           type: string
-          description: Collection name
+          description: Repository name
         url:
           type: string
           format: uri
-          description: REST API URL for the collection
+          description: REST API URL
+        project:
+          $ref: '#/components/schemas/TeamProjectReference'
+        isFork:
+          type: boolean
+          description: True if the repository was created as a fork
+        remoteUrl:
+          type: string
+          description: HTTPS clone URL
+        sshUrl:
+          type: string
+          description: SSH clone URL
+        collection:
+          $ref: '#/components/schemas/TeamProjectCollectionReference'
     TeamProjectReference:
       type: object
       description: Shallow reference to an Azure DevOps team project
@@ -297,48 +339,6 @@ components:
           type: string
           format: date-time
           description: Last update time
-    GitRepositoryRef:
-      type: object
-      description: Shallow reference to a Git repository
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Repository ID
-        name:
-          type: string
-          description: Repository name
-        url:
-          type: string
-          format: uri
-          description: REST API URL
-        project:
-          $ref: '#/components/schemas/TeamProjectReference'
-        isFork:
-          type: boolean
-          description: True if the repository was created as a fork
-        remoteUrl:
-          type: string
-          description: HTTPS clone URL
-        sshUrl:
-          type: string
-          description: SSH clone URL
-        collection:
-          $ref: '#/components/schemas/TeamProjectCollectionReference'
-  parameters:
-    repositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: The ID or name of the repository
-      schema:
-        type: string
-    includeLinks:
-      name: includeLinks
-      in: query
-      description: Include reference links in the response
-      schema:
-        type: boolean
   securitySchemes:
     oauth2:
       type: oauth2

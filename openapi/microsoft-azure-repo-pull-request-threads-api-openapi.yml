@@ -82,7 +82,51 @@ paths:
         '404':
           description: Pull request or repository not found
 components:
+  parameters:
+    pullRequestId:
+      name: pullRequestId
+      in: path
+      required: true
+      description: ID of the pull request
+      schema:
+        type: integer
+        format: int32
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
   schemas:
+    IdentityRef:
+      type: object
+      description: Reference to an Azure DevOps identity (user or group)
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identity ID
+        displayName:
+          type: string
+          description: Display name of the identity
+        uniqueName:
+          type: string
+          description: Unique name (typically email)
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this identity
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the identity's avatar image
+        descriptor:
+          type: string
+          description: Graph descriptor for the identity
+        isContainer:
+          type: boolean
+          description: Whether this identity is a group
     GitPullRequestCommentThread:
       type: object
       description: A comment thread on a pull request, optionally associated with a specific file and line range for inline code review.
@@ -161,50 +205,6 @@ components:
         properties:
           type: object
           additionalProperties: true
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps identity (user or group)
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identity ID
-        displayName:
-          type: string
-          description: Display name of the identity
-        uniqueName:
-          type: string
-          description: Unique name (typically email)
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this identity
-        imageUrl:
-          type: string
-          format: uri
-          description: URL to the identity's avatar image
-        descriptor:
-          type: string
-          description: Graph descriptor for the identity
-        isContainer:
-          type: boolean
-          description: Whether this identity is a group
-  parameters:
-    pullRequestId:
-      name: pullRequestId
-      in: path
-      required: true
-      description: ID of the pull request
-      schema:
-        type: integer
-        format: int32
-    repositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: The ID or name of the repository
-      schema:
-        type: string
   securitySchemes:
     oauth2:
       type: oauth2
