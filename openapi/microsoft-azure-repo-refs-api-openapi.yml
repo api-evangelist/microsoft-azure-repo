@@ -140,29 +140,34 @@ paths:
           description: Repository not found
 components:
   schemas:
-    GitRefUpdateResult:
+    IdentityRef:
       type: object
-      description: Result of a ref update operation
+      description: Reference to an Azure DevOps identity (user or group)
       properties:
-        name:
-          type: string
-          description: Full ref name
-        oldObjectId:
-          type: string
-          description: Previous object ID
-        newObjectId:
-          type: string
-          description: New object ID
-        success:
-          type: boolean
-          description: Whether the update succeeded
-        updateStatus:
-          type: string
-          description: Status of the update operation
-        repositoryId:
+        id:
           type: string
           format: uuid
-          description: Repository the ref belongs to
+          description: Unique identity ID
+        displayName:
+          type: string
+          description: Display name of the identity
+        uniqueName:
+          type: string
+          description: Unique name (typically email)
+        url:
+          type: string
+          format: uri
+          description: REST API URL for this identity
+        imageUrl:
+          type: string
+          format: uri
+          description: URL to the identity's avatar image
+        descriptor:
+          type: string
+          description: Graph descriptor for the identity
+        isContainer:
+          type: boolean
+          description: Whether this identity is a group
     GitRef:
       type: object
       description: A Git ref (branch or tag) including its name, object ID, and optional creator and status information.
@@ -192,6 +197,29 @@ components:
           description: Whether the ref is locked
         isLockedBy:
           $ref: '#/components/schemas/IdentityRef'
+    GitRefUpdateResult:
+      type: object
+      description: Result of a ref update operation
+      properties:
+        name:
+          type: string
+          description: Full ref name
+        oldObjectId:
+          type: string
+          description: Previous object ID
+        newObjectId:
+          type: string
+          description: New object ID
+        success:
+          type: boolean
+          description: Whether the update succeeded
+        updateStatus:
+          type: string
+          description: Status of the update operation
+        repositoryId:
+          type: string
+          format: uuid
+          description: Repository the ref belongs to
     GitStatus:
       type: object
       description: Status metadata posted by a service or extension against a commit or pull request, such as build results or policy checks.
@@ -234,34 +262,6 @@ components:
         updatedDate:
           type: string
           format: date-time
-    IdentityRef:
-      type: object
-      description: Reference to an Azure DevOps identity (user or group)
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Unique identity ID
-        displayName:
-          type: string
-          description: Display name of the identity
-        uniqueName:
-          type: string
-          description: Unique name (typically email)
-        url:
-          type: string
-          format: uri
-          description: REST API URL for this identity
-        imageUrl:
-          type: string
-          format: uri
-          description: URL to the identity's avatar image
-        descriptor:
-          type: string
-          description: Graph descriptor for the identity
-        isContainer:
-          type: boolean
-          description: Whether this identity is a group
   parameters:
     repositoryId:
       name: repositoryId
