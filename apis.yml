@@ -404,6 +404,9 @@ apis:
     url: >-
       https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
 common:
+  - type: CapabilityMap
+    url: capabilities/microsoft-azure-repo-capability-edges.yml
+    name: Azure Repos Business Capability Map
   - type: AgenticAccess
     url: agentic-access/microsoft-azure-repo-agentic-access.yml
   - type: VulnerabilityDisclosure

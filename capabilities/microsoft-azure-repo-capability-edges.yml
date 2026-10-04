@@ -1,0 +1,92 @@
+slug: microsoft-azure-repo
+provider: Azure Repos
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 8
+edges:
+- tag: Commits
+  spec_file: microsoft-azure-repo-commits-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.85
+  evidence: '''Azure Repos List commits'' / ''GitCommitRef'' and ''REST API for managing Git repositories,
+    branches, commits, pull requests'''
+  reason: Git commit retrieval in a source-control product — implementation practice including source
+    control, i.e. Software Construction Management.
+- tag: Pull Requests
+  spec_file: microsoft-azure-repo-pull-requests-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.85
+  evidence: POST /git/repositories/{repositoryId}/pullrequests 'Create a pull request'; schema GitPullRequest
+  reason: Pull request lifecycle operations on a Git hosting service are source control and code review
+    practice, i.e. Software Construction Management.
+- tag: Pull Request Reviewers
+  spec_file: microsoft-azure-repo-pull-request-reviewers-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.82
+  evidence: GET /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/reviewers — 'List pull request
+    reviewers'; 'Add or update a reviewer'
+  reason: Managing reviewers on a Git pull request is code-review practice within source control, which
+    BC-4200.40 Software Construction Management explicitly covers ('source control, code review, and collaborative
+    coding disciplines').
+- tag: Pushes
+  spec_file: microsoft-azure-repo-pushes-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.82
+  evidence: POST /git/repositories/{repositoryId}/pushes 'Create a push'; schema GitPush
+  reason: Pushing commits to a Git repository is core source-control implementation practice covered by
+    Software Construction Management.
+- tag: Pull Request Threads
+  spec_file: microsoft-azure-repo-pull-request-threads-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.8
+  evidence: POST /git/repositories/{repositoryId}/pullrequests/{pullRequestId}/threads 'Create a comment
+    thread'; schema GitPullRequestCommentThread
+  reason: Comment threads on pull requests are the code-review conversation surface, mapping to Software
+    Construction Management (code review / collaborative coding).
+- tag: Repositories
+  spec_file: microsoft-azure-repo-repositories-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.8
+  evidence: POST /git/repositories 'Create a repository'; schema GitRepository
+  reason: CRUD over Git repositories is stewardship of the source control system, which BC-4200.40 covers
+    explicitly.
+- tag: Items
+  spec_file: microsoft-azure-repo-items-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.75
+  evidence: '''Azure Repos List items (files and folders)'' with schema ''GitItem'''
+  reason: Browsing repository file content in Git version control — part of source-control/software construction
+    practice.
+- tag: Refs
+  spec_file: microsoft-azure-repo-refs-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.72
+  evidence: GET /git/repositories/{repositoryId}/refs 'List refs (branches and tags)'; 'Create, update,
+    or delete refs'
+  reason: Branch and tag management in a Git repository is source-control practice; branching could also
+    touch release engineering, so confidence is moderate.
