@@ -404,6 +404,10 @@ apis:
     url: >-
       https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
 common:
+  - type: Plans
+    url: plans/microsoft-azure-repo-plans-pricing.yml
+  - type: FinOps
+    url: finops/microsoft-azure-repo-finops.yml
   - type: CapabilityMap
     url: capabilities/microsoft-azure-repo-capability-edges.yml
     name: Azure Repos Business Capability Map
