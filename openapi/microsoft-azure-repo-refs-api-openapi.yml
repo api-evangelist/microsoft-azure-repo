@@ -168,6 +168,29 @@ components:
         isContainer:
           type: boolean
           description: Whether this identity is a group
+    GitRefUpdateResult:
+      type: object
+      description: Result of a ref update operation
+      properties:
+        name:
+          type: string
+          description: Full ref name
+        oldObjectId:
+          type: string
+          description: Previous object ID
+        newObjectId:
+          type: string
+          description: New object ID
+        success:
+          type: boolean
+          description: Whether the update succeeded
+        updateStatus:
+          type: string
+          description: Status of the update operation
+        repositoryId:
+          type: string
+          format: uuid
+          description: Repository the ref belongs to
     GitRef:
       type: object
       description: A Git ref (branch or tag) including its name, object ID, and optional creator and status information.
@@ -197,29 +220,6 @@ components:
           description: Whether the ref is locked
         isLockedBy:
           $ref: '#/components/schemas/IdentityRef'
-    GitRefUpdateResult:
-      type: object
-      description: Result of a ref update operation
-      properties:
-        name:
-          type: string
-          description: Full ref name
-        oldObjectId:
-          type: string
-          description: Previous object ID
-        newObjectId:
-          type: string
-          description: New object ID
-        success:
-          type: boolean
-          description: Whether the update succeeded
-        updateStatus:
-          type: string
-          description: Status of the update operation
-        repositoryId:
-          type: string
-          format: uuid
-          description: Repository the ref belongs to
     GitStatus:
       type: object
       description: Status metadata posted by a service or extension against a commit or pull request, such as build results or policy checks.

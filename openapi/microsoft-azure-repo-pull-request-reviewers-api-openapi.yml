@@ -108,6 +108,22 @@ paths:
         '404':
           description: Pull request or repository not found
 components:
+  parameters:
+    pullRequestId:
+      name: pullRequestId
+      in: path
+      required: true
+      description: ID of the pull request
+      schema:
+        type: integer
+        format: int32
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
   schemas:
     IdentityRef:
       type: object
@@ -166,22 +182,6 @@ components:
             items:
               $ref: '#/components/schemas/IdentityRefWithVote'
             description: Groups or teams this reviewer contributed to
-  parameters:
-    repositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: The ID or name of the repository
-      schema:
-        type: string
-    pullRequestId:
-      name: pullRequestId
-      in: path
-      required: true
-      description: ID of the pull request
-      schema:
-        type: integer
-        format: int32
   securitySchemes:
     oauth2:
       type: oauth2

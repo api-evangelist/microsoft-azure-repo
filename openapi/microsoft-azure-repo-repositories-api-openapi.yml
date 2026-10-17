@@ -188,36 +188,50 @@ paths:
         '404':
           description: Repository not found
 components:
-  parameters:
-    includeLinks:
-      name: includeLinks
-      in: query
-      description: Include reference links in the response
-      schema:
-        type: boolean
-    repositoryId:
-      name: repositoryId
-      in: path
-      required: true
-      description: The ID or name of the repository
-      schema:
-        type: string
   schemas:
-    TeamProjectCollectionReference:
+    TeamProjectReference:
       type: object
-      description: Reference to a Team Project Collection
+      description: Shallow reference to an Azure DevOps team project
       properties:
         id:
           type: string
           format: uuid
-          description: Collection ID
+          description: Project ID
         name:
           type: string
-          description: Collection name
+          description: Project name
+        description:
+          type: string
+          description: Project description
         url:
           type: string
           format: uri
-          description: REST API URL for the collection
+          description: REST API URL for the project
+        state:
+          type: string
+          enum:
+          - deleting
+          - new
+          - wellFormed
+          - createPending
+          - all
+          - unchanged
+          - deleted
+          description: Current state of the project
+        visibility:
+          type: string
+          enum:
+          - private
+          - public
+          description: Visibility of the project
+        revision:
+          type: integer
+          format: int64
+          description: Project revision number
+        lastUpdateTime:
+          type: string
+          format: date-time
+          description: Last update time
     GitRepository:
       type: object
       description: Represents a Git repository in Azure DevOps, including its metadata, URLs, project reference, and configuration such as default branch.
@@ -268,49 +282,21 @@ components:
           type: object
           description: HAL reference links
           additionalProperties: true
-    TeamProjectReference:
+    TeamProjectCollectionReference:
       type: object
-      description: Shallow reference to an Azure DevOps team project
+      description: Reference to a Team Project Collection
       properties:
         id:
           type: string
           format: uuid
-          description: Project ID
+          description: Collection ID
         name:
           type: string
-          description: Project name
-        description:
-          type: string
-          description: Project description
+          description: Collection name
         url:
           type: string
           format: uri
-          description: REST API URL for the project
-        state:
-          type: string
-          enum:
-          - deleting
-          - new
-          - wellFormed
-          - createPending
-          - all
-          - unchanged
-          - deleted
-          description: Current state of the project
-        visibility:
-          type: string
-          enum:
-          - private
-          - public
-          description: Visibility of the project
-        revision:
-          type: integer
-          format: int64
-          description: Project revision number
-        lastUpdateTime:
-          type: string
-          format: date-time
-          description: Last update time
+          description: REST API URL for the collection
     GitRepositoryRef:
       type: object
       description: Shallow reference to a Git repository
@@ -339,6 +325,20 @@ components:
           description: SSH clone URL
         collection:
           $ref: '#/components/schemas/TeamProjectCollectionReference'
+  parameters:
+    includeLinks:
+      name: includeLinks
+      in: query
+      description: Include reference links in the response
+      schema:
+        type: boolean
+    repositoryId:
+      name: repositoryId
+      in: path
+      required: true
+      description: The ID or name of the repository
+      schema:
+        type: string
   securitySchemes:
     oauth2:
       type: oauth2
