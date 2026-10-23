@@ -411,6 +411,8 @@ apis:
     url: >-
       https://learn.microsoft.com/en-us/azure/devops/integrate/get-started/authentication/authentication-guidance?view=azure-devops
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/azure-repos/overview
   - type: Plans
     url: plans/microsoft-azure-repo-plans-pricing.yml
   - type: FinOps
