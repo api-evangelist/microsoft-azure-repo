@@ -1,0 +1,787 @@
+{
+  "info": {
+    "_postman_id": "5593f910-c4b8-4cf9-a98d-fecb43e2b133",
+    "name": "Azure Repos Git Pull Request Reviewers API",
+    "description": "REST API for managing Git repositories, branches, commits, pull requests, pushes, and items in Azure Repos. Provides full programmatic control over Git-based source code hosted in Azure DevOps, including creating and reviewing pull requests, managing branches and tags, browsing repository content, and pushing commits.\n\nContact Support:\n Name: Microsoft Azure DevOps",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:10:48.000Z",
+    "updatedAt": "2026-10-21T21:10:48.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-5593f910-c4b8-4cf9-a98d-fecb43e2b133"
+  },
+  "item": [
+    {
+      "name": "git",
+      "item": [
+        {
+          "name": "repositories",
+          "item": [
+            {
+              "name": "{repositoryId}",
+              "item": [
+                {
+                  "name": "pullrequests",
+                  "item": [
+                    {
+                      "name": "{pullRequestId}",
+                      "item": [
+                        {
+                          "name": "reviewers",
+                          "item": [
+                            {
+                              "name": "{reviewerId}",
+                              "item": [
+                                {
+                                  "name": "Azure Repos Add or update a reviewer",
+                                  "id": "b3543e8e-2f16-4109-9fc2-db7dedbd3538",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "PUT",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"id\": \"<uuid>\",\n  \"displayName\": \"<string>\",\n  \"uniqueName\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"descriptor\": \"<string>\",\n  \"isContainer\": \"<boolean>\",\n  \"vote\": \"<integer>\",\n  \"reviewerUrl\": \"<uri>\",\n  \"hasDeclined\": \"<boolean>\",\n  \"isFlagged\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"votedFor\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n    }\n  ]\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers/:reviewerId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "git",
+                                        "repositories",
+                                        ":repositoryId",
+                                        "pullrequests",
+                                        ":pullRequestId",
+                                        "reviewers",
+                                        ":reviewerId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "b5ff0dc0-e045-4bef-be7d-c093fdc71a3e",
+                                          "key": "repositoryId",
+                                          "value": "<string>",
+                                          "description": "(Required) The ID or name of the repository"
+                                        },
+                                        {
+                                          "id": "deb53780-23ab-462d-9121-4cdd8da6f130",
+                                          "key": "pullRequestId",
+                                          "value": "<integer>",
+                                          "description": "(Required) ID of the pull request"
+                                        },
+                                        {
+                                          "id": "bacecc67-2660-48bb-b835-39a6550c12ca",
+                                          "key": "reviewerId",
+                                          "value": "<uuid>",
+                                          "description": "(Required) ID of the reviewer identity"
+                                        }
+                                      ]
+                                    },
+                                    "description": "Add a reviewer to a pull request or update an existing reviewer's vote. Vote values are 10 (approved), 5 (approved with suggestions), 0 (no vote), -5 (waiting for author), and -10 (rejected)."
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "9e0f3d86-7785-456e-a4cd-dbe97599e882",
+                                      "name": "Reviewer added or updated successfully",
+                                      "originalRequest": {
+                                        "method": "PUT",
+                                        "header": [
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: oauth2",
+                                            "key": "Authorization",
+                                            "value": "<token>"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"id\": \"<uuid>\",\n  \"displayName\": \"<string>\",\n  \"uniqueName\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"descriptor\": \"<string>\",\n  \"isContainer\": \"<boolean>\",\n  \"vote\": \"<integer>\",\n  \"reviewerUrl\": \"<uri>\",\n  \"hasDeclined\": \"<boolean>\",\n  \"isFlagged\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"votedFor\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n    }\n  ]\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers/:reviewerId",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "git",
+                                            "repositories",
+                                            ":repositoryId",
+                                            "pullrequests",
+                                            ":pullRequestId",
+                                            "reviewers",
+                                            ":reviewerId"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "repositoryId"
+                                            },
+                                            {
+                                              "key": "pullRequestId"
+                                            },
+                                            {
+                                              "key": "reviewerId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"id\": \"<uuid>\",\n  \"displayName\": \"<string>\",\n  \"uniqueName\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"descriptor\": \"<string>\",\n  \"isContainer\": \"<boolean>\",\n  \"vote\": \"<integer>\",\n  \"reviewerUrl\": \"<uri>\",\n  \"hasDeclined\": \"<boolean>\",\n  \"isFlagged\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"votedFor\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n    }\n  ]\n}",
+                                      "createdAt": "2026-10-21T21:10:48.000Z",
+                                      "updatedAt": "2026-10-21T21:10:48.000Z",
+                                      "uid": "35240-9e0f3d86-7785-456e-a4cd-dbe97599e882"
+                                    },
+                                    {
+                                      "id": "1fc8e9d9-b1f4-435f-902c-28111feb3c31",
+                                      "name": "Unauthorized",
+                                      "originalRequest": {
+                                        "method": "PUT",
+                                        "header": [
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: oauth2",
+                                            "key": "Authorization",
+                                            "value": "<token>"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"id\": \"<uuid>\",\n  \"displayName\": \"<string>\",\n  \"uniqueName\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"descriptor\": \"<string>\",\n  \"isContainer\": \"<boolean>\",\n  \"vote\": \"<integer>\",\n  \"reviewerUrl\": \"<uri>\",\n  \"hasDeclined\": \"<boolean>\",\n  \"isFlagged\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"votedFor\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n    }\n  ]\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers/:reviewerId",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "git",
+                                            "repositories",
+                                            ":repositoryId",
+                                            "pullrequests",
+                                            ":pullRequestId",
+                                            "reviewers",
+                                            ":reviewerId"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "repositoryId"
+                                            },
+                                            {
+                                              "key": "pullRequestId"
+                                            },
+                                            {
+                                              "key": "reviewerId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unauthorized",
+                                      "code": 401,
+                                      "_postman_previewlanguage": "text",
+                                      "header": [],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": null,
+                                      "createdAt": "2026-10-21T21:10:48.000Z",
+                                      "updatedAt": "2026-10-21T21:10:48.000Z",
+                                      "uid": "35240-1fc8e9d9-b1f4-435f-902c-28111feb3c31"
+                                    },
+                                    {
+                                      "id": "4b8dea28-ab74-4a9b-bda2-df382efc3a92",
+                                      "name": "Pull request or repository not found",
+                                      "originalRequest": {
+                                        "method": "PUT",
+                                        "header": [
+                                          {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: oauth2",
+                                            "key": "Authorization",
+                                            "value": "<token>"
+                                          }
+                                        ],
+                                        "body": {
+                                          "mode": "raw",
+                                          "raw": "{\n  \"id\": \"<uuid>\",\n  \"displayName\": \"<string>\",\n  \"uniqueName\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"descriptor\": \"<string>\",\n  \"isContainer\": \"<boolean>\",\n  \"vote\": \"<integer>\",\n  \"reviewerUrl\": \"<uri>\",\n  \"hasDeclined\": \"<boolean>\",\n  \"isFlagged\": \"<boolean>\",\n  \"isRequired\": \"<boolean>\",\n  \"votedFor\": [\n    {\n      \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n    },\n    {\n      \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n    }\n  ]\n}",
+                                          "options": {
+                                            "raw": {
+                                              "headerFamily": "json",
+                                              "language": "json"
+                                            }
+                                          }
+                                        },
+                                        "url": {
+                                          "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers/:reviewerId",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "git",
+                                            "repositories",
+                                            ":repositoryId",
+                                            "pullrequests",
+                                            ":pullRequestId",
+                                            "reviewers",
+                                            ":reviewerId"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "repositoryId"
+                                            },
+                                            {
+                                              "key": "pullRequestId"
+                                            },
+                                            {
+                                              "key": "reviewerId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Not Found",
+                                      "code": 404,
+                                      "_postman_previewlanguage": "text",
+                                      "header": [],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": null,
+                                      "createdAt": "2026-10-21T21:10:48.000Z",
+                                      "updatedAt": "2026-10-21T21:10:48.000Z",
+                                      "uid": "35240-4b8dea28-ab74-4a9b-bda2-df382efc3a92"
+                                    }
+                                  ],
+                                  "createdAt": "2026-10-21T21:10:48.000Z",
+                                  "updatedAt": "2026-10-21T21:10:48.000Z",
+                                  "uid": "35240-b3543e8e-2f16-4109-9fc2-db7dedbd3538"
+                                },
+                                {
+                                  "name": "Azure Repos Remove a reviewer",
+                                  "id": "d6f369cd-db30-4655-a9d7-e2d4e9db79f1",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "DELETE",
+                                    "header": [],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers/:reviewerId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "git",
+                                        "repositories",
+                                        ":repositoryId",
+                                        "pullrequests",
+                                        ":pullRequestId",
+                                        "reviewers",
+                                        ":reviewerId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "3aa32cf6-4f86-47c5-a155-716925660e2e",
+                                          "key": "repositoryId",
+                                          "value": "<string>",
+                                          "description": "(Required) The ID or name of the repository"
+                                        },
+                                        {
+                                          "id": "e4573ef1-0e64-4468-ab5b-dcd149579666",
+                                          "key": "pullRequestId",
+                                          "value": "<integer>",
+                                          "description": "(Required) ID of the pull request"
+                                        },
+                                        {
+                                          "id": "fa70ba48-0d95-4c05-9293-4c7c9a4309be",
+                                          "key": "reviewerId",
+                                          "value": "<uuid>",
+                                          "description": "(Required) ID of the reviewer identity to remove"
+                                        }
+                                      ]
+                                    },
+                                    "description": "Remove a reviewer from a pull request. Required reviewers added by branch policy cannot be removed."
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "97d9de09-4b89-4966-8d04-18cc41e4f8ee",
+                                      "name": "Reviewer removed successfully",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "description": "Added as a part of security scheme: oauth2",
+                                            "key": "Authorization",
+                                            "value": "<token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers/:reviewerId",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "git",
+                                            "repositories",
+                                            ":repositoryId",
+                                            "pullrequests",
+                                            ":pullRequestId",
+                                            "reviewers",
+                                            ":reviewerId"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "repositoryId"
+                                            },
+                                            {
+                                              "key": "pullRequestId"
+                                            },
+                                            {
+                                              "key": "reviewerId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "text",
+                                      "header": [],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": null,
+                                      "createdAt": "2026-10-21T21:10:48.000Z",
+                                      "updatedAt": "2026-10-21T21:10:48.000Z",
+                                      "uid": "35240-97d9de09-4b89-4966-8d04-18cc41e4f8ee"
+                                    },
+                                    {
+                                      "id": "382a61fc-9fc5-487c-87e2-a2aa15a6a1b6",
+                                      "name": "Unauthorized",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "description": "Added as a part of security scheme: oauth2",
+                                            "key": "Authorization",
+                                            "value": "<token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers/:reviewerId",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "git",
+                                            "repositories",
+                                            ":repositoryId",
+                                            "pullrequests",
+                                            ":pullRequestId",
+                                            "reviewers",
+                                            ":reviewerId"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "repositoryId"
+                                            },
+                                            {
+                                              "key": "pullRequestId"
+                                            },
+                                            {
+                                              "key": "reviewerId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unauthorized",
+                                      "code": 401,
+                                      "_postman_previewlanguage": "text",
+                                      "header": [],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": null,
+                                      "createdAt": "2026-10-21T21:10:48.000Z",
+                                      "updatedAt": "2026-10-21T21:10:48.000Z",
+                                      "uid": "35240-382a61fc-9fc5-487c-87e2-a2aa15a6a1b6"
+                                    },
+                                    {
+                                      "id": "3c83719d-ff38-4831-8de2-9831a8f84bdf",
+                                      "name": "Pull request or repository not found",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "description": "Added as a part of security scheme: oauth2",
+                                            "key": "Authorization",
+                                            "value": "<token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers/:reviewerId",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "git",
+                                            "repositories",
+                                            ":repositoryId",
+                                            "pullrequests",
+                                            ":pullRequestId",
+                                            "reviewers",
+                                            ":reviewerId"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "repositoryId"
+                                            },
+                                            {
+                                              "key": "pullRequestId"
+                                            },
+                                            {
+                                              "key": "reviewerId"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Not Found",
+                                      "code": 404,
+                                      "_postman_previewlanguage": "text",
+                                      "header": [],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": null,
+                                      "createdAt": "2026-10-21T21:10:48.000Z",
+                                      "updatedAt": "2026-10-21T21:10:48.000Z",
+                                      "uid": "35240-3c83719d-ff38-4831-8de2-9831a8f84bdf"
+                                    }
+                                  ],
+                                  "createdAt": "2026-10-21T21:10:48.000Z",
+                                  "updatedAt": "2026-10-21T21:10:48.000Z",
+                                  "uid": "35240-d6f369cd-db30-4655-a9d7-e2d4e9db79f1"
+                                }
+                              ],
+                              "id": "36bc3e2c-389c-4f45-a882-c750d47caad0",
+                              "createdAt": "2026-10-21T21:10:48.000Z",
+                              "updatedAt": "2026-10-21T21:10:48.000Z",
+                              "uid": "35240-36bc3e2c-389c-4f45-a882-c750d47caad0"
+                            },
+                            {
+                              "name": "Azure Repos List pull request reviewers",
+                              "id": "34640b5a-a810-41e0-85d8-151b1098c219",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "git",
+                                    "repositories",
+                                    ":repositoryId",
+                                    "pullrequests",
+                                    ":pullRequestId",
+                                    "reviewers"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "3c47b16b-8697-446d-84ee-80081330f02a",
+                                      "key": "repositoryId",
+                                      "value": "<string>",
+                                      "description": "(Required) The ID or name of the repository"
+                                    },
+                                    {
+                                      "id": "b1056499-99f6-44e0-8a93-2fbe38cb3fa1",
+                                      "key": "pullRequestId",
+                                      "value": "<integer>",
+                                      "description": "(Required) ID of the pull request"
+                                    }
+                                  ]
+                                },
+                                "description": "Retrieve all reviewers for a specific pull request, including their vote status and whether they are required reviewers."
+                              },
+                              "response": [
+                                {
+                                  "id": "f74b6fe1-7d88-4494-b250-4606c1be1534",
+                                  "name": "Successfully retrieved reviewers",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: oauth2",
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "git",
+                                        "repositories",
+                                        ":repositoryId",
+                                        "pullrequests",
+                                        ":pullRequestId",
+                                        "reviewers"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "repositoryId"
+                                        },
+                                        {
+                                          "key": "pullRequestId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "[\n  {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\",\n    \"isContainer\": \"<boolean>\",\n    \"vote\": \"<integer>\",\n    \"reviewerUrl\": \"<uri>\",\n    \"hasDeclined\": \"<boolean>\",\n    \"isFlagged\": \"<boolean>\",\n    \"isRequired\": \"<boolean>\",\n    \"votedFor\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n      }\n    ]\n  },\n  {\n    \"id\": \"<uuid>\",\n    \"displayName\": \"<string>\",\n    \"uniqueName\": \"<string>\",\n    \"url\": \"<uri>\",\n    \"imageUrl\": \"<uri>\",\n    \"descriptor\": \"<string>\",\n    \"isContainer\": \"<boolean>\",\n    \"vote\": \"<integer>\",\n    \"reviewerUrl\": \"<uri>\",\n    \"hasDeclined\": \"<boolean>\",\n    \"isFlagged\": \"<boolean>\",\n    \"isRequired\": \"<boolean>\",\n    \"votedFor\": [\n      {\n        \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n      },\n      {\n        \"value\": \"<Circular reference to #/components/schemas/IdentityRefWithVote detected>\"\n      }\n    ]\n  }\n]",
+                                  "createdAt": "2026-10-21T21:10:48.000Z",
+                                  "updatedAt": "2026-10-21T21:10:48.000Z",
+                                  "uid": "35240-f74b6fe1-7d88-4494-b250-4606c1be1534"
+                                },
+                                {
+                                  "id": "a758dff5-ddaf-4c5e-8d2e-1eb0ba2bd039",
+                                  "name": "Unauthorized",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: oauth2",
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "git",
+                                        "repositories",
+                                        ":repositoryId",
+                                        "pullrequests",
+                                        ":pullRequestId",
+                                        "reviewers"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "repositoryId"
+                                        },
+                                        {
+                                          "key": "pullRequestId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-10-21T21:10:48.000Z",
+                                  "updatedAt": "2026-10-21T21:10:48.000Z",
+                                  "uid": "35240-a758dff5-ddaf-4c5e-8d2e-1eb0ba2bd039"
+                                },
+                                {
+                                  "id": "db6a312f-f60b-45e7-b69f-e118c864bff1",
+                                  "name": "Pull request or repository not found",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "description": "Added as a part of security scheme: oauth2",
+                                        "key": "Authorization",
+                                        "value": "<token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/git/repositories/:repositoryId/pullrequests/:pullRequestId/reviewers",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "git",
+                                        "repositories",
+                                        ":repositoryId",
+                                        "pullrequests",
+                                        ":pullRequestId",
+                                        "reviewers"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "repositoryId"
+                                        },
+                                        {
+                                          "key": "pullRequestId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Not Found",
+                                  "code": 404,
+                                  "_postman_previewlanguage": "text",
+                                  "header": [],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": null,
+                                  "createdAt": "2026-10-21T21:10:48.000Z",
+                                  "updatedAt": "2026-10-21T21:10:48.000Z",
+                                  "uid": "35240-db6a312f-f60b-45e7-b69f-e118c864bff1"
+                                }
+                              ],
+                              "createdAt": "2026-10-21T21:10:48.000Z",
+                              "updatedAt": "2026-10-21T21:10:48.000Z",
+                              "uid": "35240-34640b5a-a810-41e0-85d8-151b1098c219"
+                            }
+                          ],
+                          "id": "ca2e264a-6cf9-4369-80fe-23a9bb7233f2",
+                          "createdAt": "2026-10-21T21:10:48.000Z",
+                          "updatedAt": "2026-10-21T21:10:48.000Z",
+                          "uid": "35240-ca2e264a-6cf9-4369-80fe-23a9bb7233f2"
+                        }
+                      ],
+                      "id": "0893d409-d7c6-46a7-8c5d-3f364bd68cd2",
+                      "createdAt": "2026-10-21T21:10:48.000Z",
+                      "updatedAt": "2026-10-21T21:10:48.000Z",
+                      "uid": "35240-0893d409-d7c6-46a7-8c5d-3f364bd68cd2"
+                    }
+                  ],
+                  "id": "175c3224-c48a-4caf-a1ed-9613b861b6b2",
+                  "createdAt": "2026-10-21T21:10:48.000Z",
+                  "updatedAt": "2026-10-21T21:10:48.000Z",
+                  "uid": "35240-175c3224-c48a-4caf-a1ed-9613b861b6b2"
+                }
+              ],
+              "id": "f3d4bb48-2680-4468-9acf-9480a6177886",
+              "createdAt": "2026-10-21T21:10:48.000Z",
+              "updatedAt": "2026-10-21T21:10:48.000Z",
+              "uid": "35240-f3d4bb48-2680-4468-9acf-9480a6177886"
+            }
+          ],
+          "id": "d1e19b98-ece9-4560-a493-dcae26d58d4f",
+          "createdAt": "2026-10-21T21:10:48.000Z",
+          "updatedAt": "2026-10-21T21:10:48.000Z",
+          "uid": "35240-d1e19b98-ece9-4560-a493-dcae26d58d4f"
+        }
+      ],
+      "id": "4826d727-0212-4215-b2b9-410d03cb336c",
+      "createdAt": "2026-10-21T21:10:48.000Z",
+      "updatedAt": "2026-10-21T21:10:48.000Z",
+      "uid": "35240-4826d727-0212-4215-b2b9-410d03cb336c"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "vso.code vso.code_write vso.code_manage",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://app.vssps.visualstudio.com/oauth2/token",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://app.vssps.visualstudio.com/oauth2/authorize",
+        "type": "string"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "organization",
+      "value": "myorganization"
+    },
+    {
+      "key": "project",
+      "value": "myproject"
+    },
+    {
+      "key": "baseUrl",
+      "value": "https://dev.azure.com/{{organization}}/{{project}}/_apis"
+    }
+  ]
+}

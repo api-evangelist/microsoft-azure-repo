@@ -1,36 +1,19 @@
 {
   "provider": "microsoft-azure-repo",
   "sources": [
-    "_original/azure-repo-git-api-openapi.yml"
+    "_original/microsoft-azure-repo-openapi.json"
   ],
   "outputs": [
-    "microsoft-azure-repo-commits-api-openapi.yml",
-    "microsoft-azure-repo-items-api-openapi.yml",
-    "microsoft-azure-repo-pull-request-reviewers-api-openapi.yml",
-    "microsoft-azure-repo-pull-request-threads-api-openapi.yml",
-    "microsoft-azure-repo-pull-requests-api-openapi.yml",
-    "microsoft-azure-repo-pushes-api-openapi.yml",
-    "microsoft-azure-repo-refs-api-openapi.yml",
-    "microsoft-azure-repo-repositories-api-openapi.yml",
-    "microsoft-azure-repo-stats-api-openapi.yml"
+    "microsoft-azure-repo-webapps-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "azure-repo-git-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "microsoft-azure-repo-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "microsoft-azure-repo-openapi.json: declared missing tag: WebApps",
+    "apis.yml register: written (+1 apis, 1 total)"
   ],
-  "skipped": [
-    "microsoft-azure-repo-commits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "microsoft-azure-repo-items-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "microsoft-azure-repo-pull-request-reviewers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "microsoft-azure-repo-pull-request-threads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "microsoft-azure-repo-pull-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "microsoft-azure-repo-pushes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "microsoft-azure-repo-refs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "microsoft-azure-repo-repositories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "microsoft-azure-repo-stats-api-openapi.yml: previously refined output, superseded by openapi/_original/"
-  ]
+  "skipped": []
 }
